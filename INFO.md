@@ -1,7 +1,10 @@
 # Info dump
 
 ## CI tools
-- https://docs.travis-ci.com/user/languages/javascript-with-nodejs
+- [Travis configuration for NodeJS](https://docs.travis-ci.com/user/languages/javascript-with-nodejs)
+- [Basic Travis](https://github.com/dwyl/learn-travis)
+- [Travis and integration tests](https://github.com/dwyl/learn-tdd)
+- [Environment variables](https://github.com/dwyl/learn-environment-variables/)
 
 ## MEAN tutorial
 - https://thinkster.io/mean-stack-tutorial
