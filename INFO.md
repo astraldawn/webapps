@@ -27,3 +27,6 @@
 - https://openvisconf.com/#videos
 - https://svbr.wistia.com/medias/qw0sv6nt25
 - https://www.kiln.digital/projects
+
+## Other useful information
+- [Updating node](http://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version), use which node and which npm
