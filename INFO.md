@@ -1,7 +1,10 @@
 # Info dump
 
 ## CI tools
-- https://docs.travis-ci.com/user/languages/javascript-with-nodejs
+- [Travis configuration for NodeJS](https://docs.travis-ci.com/user/languages/javascript-with-nodejs)
+- [Basic Travis](https://github.com/dwyl/learn-travis)
+- [Travis and integration tests](https://github.com/dwyl/learn-tdd)
+- [Environment variables](https://github.com/dwyl/learn-environment-variables/)
 
 ## MEAN tutorial
 - https://thinkster.io/mean-stack-tutorial
@@ -24,3 +27,6 @@
 - https://openvisconf.com/#videos
 - https://svbr.wistia.com/medias/qw0sv6nt25
 - https://www.kiln.digital/projects
+
+## Other useful information
+- [Updating node](http://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version), use which node and which npm
