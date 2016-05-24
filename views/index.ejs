@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flapper News</title>
+    <title>Webapps</title>
 
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
@@ -13,94 +13,15 @@
     <style> .glyphicon-thumbs-up {
         cursor: pointer
     } </style>
+
+    <!--<base href ="/">-->
 </head>
-<body ng-app="flapperNews">
+<body ng-app="webapps">
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <ui-view></ui-view>
-    </div>
+    <!-- Allows for multiple named views -->
+    <div class="col-md-6 col-md-offset-3" ui-view="main"></div>
 </div>
 
 </body>
-
-<!-- Template for home -->
-<script type="text/ng-template" id="/home.html">
-    <div class="page-header">
-        <h1>Flappy news</h1>
-    </div>
-
-    <div ng-repeat="post in posts | orderBy:'-upvotes'">
-        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
-        {{post.upvotes}}
-
-        <!-- ng-hide hides elements when angular expression evaluates to true -->
-            <span style="font-size:20px; margin-left:10px;">
-                <a ng-show="post.link" href="{{post.link}}">
-                    {{post.title}}
-                </a>
-
-                <span ng-hide="post.link">
-                    {{post.title}}
-                </span>
-
-                <span>
-                    <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
-                    item in the array -->
-                    <a href="#/posts/{{post._id}}">Comments</a>
-                </span>
-            </span>
-    </div>
-
-    <form ng-submit="addPost()" style="margin-top:30px">
-        <h3>Add a new post</h3>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Title" ng-model="title">
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Link" ng-model="link">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-</script>
-
-<!-- Posts template -->
-<script type="text/ng-template" id="/posts.html">
-    <div class="page-header">
-        <h3>
-            <a ng-show="post.link" href="{{post.link}}">
-                {{post.title}}
-            </a>
-            <span ng-hide="post.link">
-                {{post.title}}
-            </span>
-
-            <a href="{{home}}"> Home </a>
-        </h3>
-    </div>
-
-    <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
-        {{comment.upvotes}} - by {{comment.author}}
-
-        <span style="font-size:20px; margin-left:10px;">
-            {{comment.body}}
-        </span>
-    </div>
-
-    <form ng-submit="addComment()" style="margin-top:30px;">
-        <h3>Add a new comment</h3>
-
-        <div class="form-group">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Comment"
-                   ng-model="body">
-        </div>
-        <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-</script>
 </html>

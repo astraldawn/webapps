@@ -2,14 +2,12 @@
  * Created by mark on 12/05/16.
  */
 
-var app = angular.module('flapperNews', ['ui.router']);
+var app = angular.module('webapps', ['ui.router']);
 
 app.controller('MainCtrl', [
     '$scope',
     'posts', // injection of the post service
     function ($scope, posts) {
-        $scope.test = 'Hello world!';
-
         $scope.posts = posts.posts;
 
         $scope.addPost = function () {
@@ -47,11 +45,6 @@ app.controller('PostsCtrl', [
             if ($scope.body === '') {
                 return;
             }
-            // $scope.post.comments.push({
-            //     body: $scope.body,
-            //     author: 'user',
-            //     upvotes: 0
-            // });
 
             posts.addComment(post._id, {
                 body: $scope.body,
@@ -131,26 +124,37 @@ app.factory('posts', [
 app.config([
     '$stateProvider',
     '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {
+    '$locationProvider',
+    function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        // $locationProvider.html5Mode(true);
+
         $stateProvider.state('home', {
             url: '/home',
-            templateUrl: '/home.html',
-            controller: 'MainCtrl',
-            resolve: {
-                postPromise: ['posts', function (posts) {
-                    return posts.getAll();
-                }]
+            views: {
+                'main': {
+                    templateUrl: '/templates/home.ejs',
+                    controller: 'MainCtrl',
+                    resolve: {
+                        postPromise: ['posts', function (posts) {
+                            return posts.getAll();
+                        }]
+                    }
+                }
             }
         });
 
         $stateProvider.state('posts', {
             url: '/posts/{id}',
-            templateUrl: '/posts.html',
-            controller: 'PostsCtrl',
-            resolve: {
-                post: ['$stateParams', 'posts', function ($stateParams, posts) {
-                    return posts.get($stateParams.id);
-                }]
+            views: {
+                'main': {
+                    templateUrl: 'templates/posts.ejs',
+                    controller: 'PostsCtrl',
+                    resolve: {
+                        post: ['$stateParams', 'posts', function ($stateParams, posts) {
+                            return posts.get($stateParams.id);
+                        }]
+                    }
+                }
             }
         });
 
