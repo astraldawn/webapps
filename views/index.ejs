@@ -11,12 +11,21 @@
     <script src="/javascripts/angularApp.js"></script>
 
     <style> .glyphicon-thumbs-up {
-        cursor: pointer
-    } </style>
+            cursor: pointer
+        } </style>
 
     <!--<base href ="/">-->
 </head>
 <body ng-app="webapps">
+
+<nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+    <ul class="nav navbar-nav">
+        <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log out</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/#/login">Log in</a></li>
+        <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+    </ul>
+</nav>
 
 <div class="row">
     <!-- Allows for multiple named views -->

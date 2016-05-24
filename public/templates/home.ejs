@@ -16,6 +16,10 @@
             {{post.title}}
         </span>
 
+        <span ng-show="post.author">
+            posted by <a>{{post.author}}</a>
+        </span>
+
         <span>
             <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
             item in the array -->
@@ -24,7 +28,7 @@
     </span>
 </div>
 
-<form ng-submit="addPost()" style="margin-top:30px">
+<form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px">
     <h3>Add a new post</h3>
 
     <div class="form-group">
@@ -37,3 +41,7 @@
 
     <button type="submit" class="btn btn-primary">Post</button>
 </form>
+
+<div ng-hide="isLoggedIn()">
+    <h3>Need to login or register before adding a post</h3>
+</div>

@@ -3,9 +3,10 @@
         <a ng-show="post.link" href="{{post.link}}">
             {{post.title}}
         </a>
-            <span ng-hide="post.link">
-                {{post.title}}
-            </span>
+
+        <span ng-hide="post.link">
+            {{post.title}}
+        </span>
 
         <a href='#/home'> Home </a>
     </h3>
@@ -15,12 +16,12 @@
     <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
     {{comment.upvotes}} - by {{comment.author}}
 
-        <span style="font-size:20px; margin-left:10px;">
-            {{comment.body}}
-        </span>
+    <span style="font-size:20px; margin-left:10px;">
+        {{comment.body}}
+    </span>
 </div>
 
-<form ng-submit="addComment()" style="margin-top:30px;">
+<form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
     <h3>Add a new comment</h3>
 
     <div class="form-group">
@@ -31,3 +32,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Post</button>
 </form>
+
+<div ng-hide="isLoggedIn()">
+    <h3>Need to login or register before adding a comment</h3>
+</div>

@@ -13,6 +13,11 @@ require('./models/Comments');
 
 mongoose.connect('mongodb://localhost/news');
 
+// Authentication
+var passport = require('passport');
+require('./models/Users');
+require('./config/passport');
+
 // Establish routes
 
 var routes = require('./routes/index');
@@ -31,6 +36,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Authentication
+app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -65,5 +73,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+
 
 module.exports = app;
