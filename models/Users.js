@@ -6,29 +6,34 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
+// TODO: Possibly add new fields to the schema?
+
 var UserSchema = new mongoose.Schema({
     firstName: {
-		    type: String,
-				default: ''
-		},
-		lastName: {
-		    type: String,
-				default: ''
-		},
-		email: {
-		    type: String,
-				default: ''
-				match: [/.+\@.+\..+/, 'Please enter a valid e-mail address.']
-		},
-		username: {
-		    type: String,
-				lowercase: true,
-				unique: true
-		},
-		accCreated: {
-		  type: Date,
-			default: Date.now
-		},
+		type: String,
+		default: ''
+	},
+	lastName: {
+	    type: String,
+		default: ''
+	},
+	email: {
+	    type: String,
+		default: ''
+	},
+	description: {
+		type: String,
+		default: ''
+	},
+	username: {
+	    type: String,
+		lowercase: true,
+		unique: true
+	},
+	accCreated: {
+		type: Date,
+		default: Date.now
+	},
     hash: String,
     salt: String
 });

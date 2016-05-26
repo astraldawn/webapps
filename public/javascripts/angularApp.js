@@ -226,13 +226,27 @@ app.controller('NavCtrl', [
     }
 ]);
 
+// TODO: More stuff to add here.
+// Profile page controller
+app.controller('ProfCtrl', [
+    '$scope',
+	'auth',
+	function ($scope, auth) {
+	    $scope.isLoggedIn = auth.isLoggedIn;
+		$scope.currentUser = auth.currentUser;
+		$scope.logOut = auth.logOut;
+		
+		$scope.updateProfile = function() {
+			
+		}
+	}
+]);
+
 app.config([
     '$stateProvider',
     '$urlRouterProvider',
     '$locationProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider) {
-        // $locationProvider.html5Mode(true);
-
         $stateProvider.state('home', {
             url: '/home',
             views: {
@@ -293,6 +307,22 @@ app.config([
                 }
             }
         });
+
+		$stateProvider.state('profile', {
+			url: '/profile',
+			views: {
+				'main': {
+					templateUrl: 'templates/profile.ejs',
+					controller: 'ProfCtrl',
+					onEnter: ['$state', 'auth', function ($state, auth) {
+						if (!auth.isLoggedIn()) {
+							$state.go('home');
+							// TODO: Show error?
+						}
+					}]
+				}
+			}
+		});
 
         $urlRouterProvider.otherwise('home');
     }
