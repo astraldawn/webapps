@@ -7,9 +7,11 @@ var app = angular.module('webapps', ['ui.router']);
 app.controller('MainCtrl', [
     '$scope',
     'posts', // injection of the post service
+    'pwneddatas', // injection of pwned data
     'auth',
-    function ($scope, posts, auth) {
+    function ($scope, posts, pwneddatas, auth) {
         $scope.posts = posts.posts;
+        $scope.pwneddatas = pwneddatas.pwneddatas;
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.addPost = function () {
@@ -125,6 +127,35 @@ app.factory('posts', [
                 comment.upvotes += 1;
             });
         };
+
+        return o;
+    }
+]);
+
+// pwned data service
+app.factory('pwneddatas', [
+    '$http', // injection of http service
+    'auth', // inject the auth service
+    function ($http, auth) {
+        var o = {
+            pwneddatas: []
+        };
+
+        // Get all posts
+        o.getAll = function () {
+            return $http.get('/pwneddatas')
+                .success(function (data) {
+                    angular.copy(data, o.pwneddatas);
+                });
+        };
+
+        // // Get a single post
+        // o.get = function (id) {
+        //     return $http.get('/posts/' + id)
+        //         .then(function (res) { // promise
+        //             return res.data;
+        //         });
+        // };
 
         return o;
     }
@@ -290,6 +321,31 @@ app.config([
                             $state.go('home');
                         }
                     }]
+                }
+            }
+        });
+
+        $stateProvider.state('pwneddata', {
+            url: '/pwneddata',
+            views: {
+                'main': {
+                    templateUrl: 'templates/pwneddata.ejs',
+                    controller: 'MainCtrl',
+                    resolve: {
+                        pwneddataPromise: ['pwneddatas', function (pwneddatas) {
+                            return pwneddatas.getAll();
+                        }]
+                    }
+                }
+            }
+        });
+
+        $stateProvider.state('testgraph', {
+            url: '/testgraph',
+            views: {
+                'main': {
+                    templateUrl: 'pages/graph.ejs',
+                    controller: 'MainCtrl'
                 }
             }
         });

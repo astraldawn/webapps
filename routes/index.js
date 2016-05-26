@@ -17,6 +17,7 @@ var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
+var PwnedData = mongoose.model('Pwneddata');
 
 /* GET all posts */
 router.get('/posts', function (req, res, next) {
@@ -161,6 +162,16 @@ router.post('/login', function (req, res, next) {
             return res.status(401).json(info);
         }
     })(req, res, next);
-})
+});
+
+/* GET all pwned data */
+router.get('/pwneddatas', function (req, res, next) {
+    PwnedData.find(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        res.json(data);
+    });
+});
 
 module.exports = router;
