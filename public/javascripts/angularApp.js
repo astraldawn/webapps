@@ -308,21 +308,21 @@ app.config([
             }
         });
 
-		$stateProvider.state('profile', {
-			url: '/profile',
-			views: {
-				'main': {
-					templateUrl: 'templates/profile.ejs',
-					controller: 'ProfCtrl',
-					onEnter: ['$state', 'auth', function ($state, auth) {
-						if (!auth.isLoggedIn()) {
-							$state.go('home');
-							// TODO: Show error?
-						}
-					}]
-				}
-			}
-		});
+        $stateProvider.state('profile', {
+            url: '/profile',
+            views: {
+                'main': {
+                    templateUrl: 'templates/profile.ejs',
+                    controller: 'ProfCtrl',
+                    onEnter: ['$state', 'auth', function ($state, auth) {
+                        if (!auth.isLoggedIn()) {
+                            $state.go('home');
+                            // TODO: Show error?
+                        }
+                    }]
+                }
+            }
+        });
 
         $urlRouterProvider.otherwise('home');
     }
