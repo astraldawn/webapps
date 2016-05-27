@@ -230,16 +230,26 @@ app.controller('NavCtrl', [
 // Profile page controller
 app.controller('ProfCtrl', [
     '$scope',
-	'auth',
-	function ($scope, auth) {
-	    $scope.isLoggedIn = auth.isLoggedIn;
-		$scope.currentUser = auth.currentUser;
-		$scope.logOut = auth.logOut;
-		
-		$scope.updateProfile = function() {
-			
-		}
-	}
+    '$state',
+    'auth',
+    function ($scope, $state, auth) {
+        $scope.updateProfile = function() {
+			// TODO: Find current user.
+
+            if ($scope.firstName != '') {
+                user.firstName = $scope.firstName;
+            }
+            if ($scope.lastName != '') {
+                user.lastName = $scope.lastName;
+            }
+            if ($scope.email != '') {
+                user.email = $scope.email;
+            }
+            if ($scope.description != '') {
+                user.description = $scope.description;
+            }
+        }
+    }
 ]);
 
 app.config([
@@ -309,7 +319,7 @@ app.config([
         });
 
         $stateProvider.state('profile', {
-            url: '/profile',
+            url: '/users/{uid}',
             views: {
                 'main': {
                     templateUrl: 'templates/profile.ejs',
