@@ -17,6 +17,7 @@ var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
+var PwnedData = mongoose.model('Pwneddata');
 
 /* GET all posts */
 router.get('/posts', function (req, res, next) {
@@ -77,7 +78,6 @@ router.put('/posts/:post/upvote', auth, function (req, res, next) {
     });
 });
 
-
 /* Comments for a post */
 router.post('/posts/:post/comments', auth, function (req, res, next) {
     var comment = new Comment(req.body);
@@ -121,6 +121,54 @@ router.put('/posts/:post/comments/:comment/upvote', auth, function (req, res, ne
             return next(err);
         }
         res.json(comment);
+    });
+});
+
+/* Registration */
+router.post('/register', function (req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
+    var user = new User();
+
+    user.username = req.body.username;
+    user.setPassword(req.body.password);
+
+    user.save(function (err) {
+        if (err) {
+            return next(err);
+        }
+        return res.json({token: user.generateJWT()});
+    });
+});
+
+/* Login */
+router.post('/login', function (req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+
+        if (user) {
+            return res.json({token: user.generateJWT()});
+        } else {
+            return res.status(401).json(info);
+        }
+    })(req, res, next);
+});
+
+/* GET all pwned data */
+router.get('/pwneddatas', function (req, res, next) {
+    PwnedData.find(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        res.json(data);
     });
 });
 

@@ -11,12 +11,16 @@ var mongoose = require('mongoose');
 require('./models/Posts');
 require('./models/Comments');
 
-mongoose.connect('mongodb://localhost/news');
-
 // Authentication
 var passport = require('passport');
 require('./models/Users');
 require('./config/passport');
+
+// Data
+require('./models/Pwneddatas');
+
+// Connect to DB
+mongoose.connect('mongodb://localhost/webapps');
 
 // Establish routes
 
@@ -73,6 +77,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
