@@ -1,5 +1,9 @@
+/* Contains all functionality associated with users, including the authentication */
 var express = require('express');
 var router = express.Router();
+
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 /* Loading user */
 router.param('user', function (req, res, next, id) {
