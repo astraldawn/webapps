@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Webapps</title>
 
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -20,17 +20,16 @@
 </head>
 <body ng-app="webapps">
 
-<nav class="navbar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/#/home">WebApps</a>
-        </div>
+<nav class="navbar navbar-static-top navbar-dark bg-inverse">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/#/home">WebApps</a>
+    </div>
 
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/#/home">Home</a></li>
-            <li><a href="/#/pwneddata">Pwned Data</a></li>
-            <li><a href="/#/testgraph">Test graph</a></li>
-        </ul>
+    <ul class="nav navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="/#/home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#/pwneddata">Pwned Data</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#/testgraph">Test graph</a></li>
+    </ul>
 
         <ul class="nav navbar-nav navbar-right" ng-controller="NavCtrl">
             <li ng-show="isLoggedIn()"><a href="#/users/{{currentUser()}}">{{currentUser()}}</a></li>

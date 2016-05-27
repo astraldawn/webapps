@@ -1,28 +1,25 @@
-<div class="page-header">
-    <h1>Webapps</h1>
-</div>
+<head><link href="../stylesheets/signin.css" rel="stylesheet"></head>
 
 <div ng-show="error" class="alert alert-danger row">
     <span>{{error.message}}</span>
 </div>
 
-<form ng-submit="register()" style="margin-top:30px;">
-    <h3>Register</h3>
+<form class="form-signin" ng-submit="register()">
+    <h3>Register your account.</h3>
 
-    <div class="form-group">
+    <label for="username" class="sr-only">Username</label>
         <input type="text"
                class="form-control"
                placeholder="Username"
                ng-model="user.username">
-    </div>
+    </label>
 
-    <div class="form-group">
+    <label for="password" class="sr-only">Password</label>
         <input type="password"
                class="form-control"
                placeholder="Password"
                ng-model="user.password">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-
+    </label>
+    <br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 </form>
