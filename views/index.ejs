@@ -53,7 +53,7 @@
 
         <ul class="nav navbar-nav navbar-right" ng-controller="NavCtrl">
             <li ng-show="isLoggedIn()"><a href="#/users/{{currentUser()}}">{{currentUser()}}</a></li>
-            <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log out</a></li>
+            <li ng-show="isLoggedIn()"><a href="/#/home" ng-click="logOut()">Log out</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/login">Sign in</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
         </ul>
