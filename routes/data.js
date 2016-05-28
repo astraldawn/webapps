@@ -39,24 +39,44 @@ router.get('/allusers', function (req, res, next) {
     });
 });
 
-/* GET data from a specific username */
-router.param('data_user', function (req, res, next, id) {
+/* GET logon data from a specific username */
+router.param('data_logon', function (req, res, next, id) {
     var query = LogonData.find({user_id: id});
 
-    query.exec(function (err, data_user) {
+    query.exec(function (err, data) {
         if (err) {
             return next(err);
         }
-        if (!data_user) {
+        if (!data) {
             return next(new Error('cannot find data'));
         }
-        req.data_user = data_user;
+        req.data = data;
         return next();
     });
 });
 
-router.get('/userdata/:data_user', function (req, res) {
-    res.json(req.data_user);
+router.get('/userdata/logon/:data_logon', function (req, res) {
+    res.json(req.data);
+});
+
+/* GET psychometric data from a specific username */
+router.param('data_psycho', function (req, res, next, id) {
+    var query = PsychoData.find({user_id: id});
+
+    query.exec(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        if (!data) {
+            return next(new Error('cannot find data'));
+        }
+        req.data = data;
+        return next();
+    });
+});
+
+router.get('/userdata/psycho/:data_psycho', function (req, res) {
+    res.json(req.data);
 });
 
 
