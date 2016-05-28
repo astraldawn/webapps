@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
 // DB connection
 var mongoose = require('mongoose');
 require('./models/Posts');
@@ -23,9 +22,10 @@ require('./models/Pwneddatas');
 mongoose.connect('mongodb://localhost/webapps');
 
 // Establish routes
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
+var posts = require('./routes/posts');
 
 var app = express();
 
@@ -45,6 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', routes);
+app.use('/', auth);
+app.use('/posts', posts);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

@@ -35,8 +35,13 @@ node_modules
 # IDE
 .idea
 
+<<<<<<< HEAD
 # MACOSX
 .DS_Store
 */.DS_Store
 .DS_Store
 .DS_Store?
+=======
+# Others
+.DS_Store
+>>>>>>> origin/profile_pages

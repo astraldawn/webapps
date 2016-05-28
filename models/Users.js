@@ -6,8 +6,34 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
+// TODO: Possibly add new fields to the schema?
+
 var UserSchema = new mongoose.Schema({
-    username: {type: String, lowercase: true, unique: true},
+    firstName: {
+        type: String,
+        default: ''
+    },
+    lastName: {
+        type: String,
+        default: ''
+    },
+    email: {
+        type: String,
+        default: ''
+    },
+    description: {
+        type: String,
+        default: ''
+    },
+    username: {
+        type: String,
+        lowercase: true,
+        unique: true
+    },
+    accCreated: {
+        type: Date,
+        default: Date.now
+    },
     hash: String,
     salt: String
 });
@@ -34,7 +60,10 @@ UserSchema.methods.generateJWT = function () {
         exp: parseInt(exp.getTime() / 1000),
     }, 'SECRET');
 
-    // SECRET should be an environment variable, should not be hard coded (#envvar), same as routes/index.js
+    // SECRET should be an environment variable, should not be hard coded 
+		// (#envvar), same as routes/index.js
 }
+
+// TODO: Find a possible not used username based on user info.
 
 mongoose.model('User', UserSchema);

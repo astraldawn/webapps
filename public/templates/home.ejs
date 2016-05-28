@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>WebApps</h1>
+    <h1>Web Apps</h1>
 </div>
 
 <div ng-repeat="post in posts | orderBy:'-upvotes'">
@@ -17,7 +17,7 @@
         </span>
 
         <span ng-show="post.author">
-            posted by <a>{{post.author}}</a>
+            posted by <a href="#/users/{{post.author}}">{{post.author}}</a>
         </span>
 
         <span>
