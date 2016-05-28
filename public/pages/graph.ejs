@@ -1,1 +1,11 @@
+<ui-select ng-model="user.name" theme="bootstrap" style="width: 300px;">
+    <ui-select-match placeholder="Select users...">{{$item}}</ui-select-match>
+    <ui-select-choices refresh="funcAsync($select.search)" refresh-delay="0" repeat="user in availableUsers | filter:$select.search">
+      {{user}}
+    </ui-select-choices>
+</ui-select>
+
+<br >
+
 <div id="logon" style="width: 960px; height: 800px;"></div>
+

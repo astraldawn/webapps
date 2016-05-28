@@ -2,7 +2,7 @@
  * Created by mark on 12/05/16.
  */
 
-var app = angular.module('webapps', ['ui.router']);
+var app = angular.module('webapps', ['ui.router','ui.select','ngSanitize']);
 
 app.config([
     '$stateProvider',
