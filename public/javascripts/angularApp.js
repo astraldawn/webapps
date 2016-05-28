@@ -90,8 +90,8 @@ app.config([
             url: '/chronology',
             views: {
                 'main': {
-                    templateUrl: 'templates/chronology.ejs',
-                    controller: 'MainCtrl',
+                    templateUrl: 'pages/chronology.ejs',
+                    controller: 'ChronoCtrl',
                     resolve: {
                         chronodataPromise: ['chronodatas', function (chronodatas) {
                             return chronodatas.getAll();
