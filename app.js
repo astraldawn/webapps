@@ -17,6 +17,8 @@ require('./config/passport');
 
 // Data
 require('./models/Chronodatas');
+require('./models/Psychodatas');
+require('./models/Logondatas');
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/webapps');
@@ -26,6 +28,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var posts = require('./routes/posts');
+var data = require('./routes/data');
 
 var app = express();
 
@@ -46,6 +49,7 @@ app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/', auth);
+app.use('/', data);
 app.use('/posts', posts);
 app.use('/users', users);
 
