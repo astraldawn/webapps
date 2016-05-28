@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* DB setup */
 var mongoose = require('mongoose');
-var PwnedData = mongoose.model('Pwneddata');
+var ChronoData = mongoose.model('Chronodata');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -11,8 +11,8 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET all pwned data */
-router.get('/pwneddatas', function (req, res, next) {
-    PwnedData.find(function (err, data) {
+router.get('/chronodatas', function (req, res, next) {
+    ChronoData.find(function (err, data) {
         if (err) {
             return next(err);
         }

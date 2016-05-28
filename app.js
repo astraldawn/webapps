@@ -16,7 +16,7 @@ require('./models/Users');
 require('./config/passport');
 
 // Data
-require('./models/Pwneddatas');
+require('./models/Chronodatas');
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/webapps');

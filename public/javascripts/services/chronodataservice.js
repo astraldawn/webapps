@@ -1,17 +1,17 @@
 // pwned data service
-app.factory('pwneddatas', [
+app.factory('chronodatas', [
     '$http', // injection of http service
     'auth', // inject the auth service
     function ($http, auth) {
         var o = {
-            pwneddatas: []
+            chronodatas: []
         };
 
         // Get all posts
         o.getAll = function () {
-            return $http.get('/pwneddatas')
+            return $http.get('/chronodatas')
                 .success(function (data) {
-                    angular.copy(data, o.pwneddatas);
+                    angular.copy(data, o.chronodatas);
                 });
         };
 
