@@ -39,4 +39,25 @@ router.get('/allusers', function (req, res, next) {
     });
 });
 
+/* GET data from a specific username */
+router.param('data_user', function (req, res, next, id) {
+    var query = LogonData.find({user_id: id});
+
+    query.exec(function (err, data_user) {
+        if (err) {
+            return next(err);
+        }
+        if (!data_user) {
+            return next(new Error('cannot find data'));
+        }
+        req.data_user = data_user;
+        return next();
+    });
+});
+
+router.get('/userdata/:data_user', function (req, res) {
+    res.json(req.data_user);
+});
+
+
 module.exports = router;
