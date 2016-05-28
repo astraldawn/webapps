@@ -105,7 +105,10 @@ app.controller('GraphCtrl', [
 
     return date.getFullYear() + "-" 
     + ("0" + (date.getMonth() + 1)).slice(-2) + "-"
-    + ("0" + date.getDate()).slice(-2);
+    + ("0" + date.getDate()).slice(-2)
+    + " " + date.getHours()
+    + ":" + date.getMinutes()
+    + ":" + date.getSeconds();
   }
 
   function generateData(arr) {
@@ -115,8 +118,7 @@ app.controller('GraphCtrl', [
     var logoff_x = [];
     var logoff_y = [];
 
-    var i;
-    for(i = 0; i < arr.length; i++) {
+    for(var i = 0; i < arr.length; i++) {
         if(arr[i].activity == "Logon") {
           logon_x.push(formatDate(arr[i].date));
           logon_y.push(arr[i].user);
