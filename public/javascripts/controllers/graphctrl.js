@@ -4,21 +4,25 @@
 
  app.controller('GraphCtrl', [
     '$scope',
+    '$http',
     function ($scope, $http) {
 
-    //Search function    
-  $scope.availableUsers = [];
   
+    //Search function    
+  $scope.user = {};
+  $scope.availableUsers = [];
+  var url = '/allusers';
+
   $scope.funcAsync = function (query) {
-        $http.get('test.json').then(
-        function (response) {
-          $scope.availableUsers = response.data;
-          console.log(response);
-        },
-        function () {
-          console.log('Error');
-        }
-      );
+          $http.get(url).then(
+          function (response) {
+            $scope.availableUsers = response.data;
+            console.log(response);
+          },
+          function () {
+            console.log('Error');
+          }
+        );
   }
 
 
