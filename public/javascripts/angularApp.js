@@ -86,15 +86,15 @@ app.config([
             }
         });
 
-        $stateProvider.state('pwneddata', {
-            url: '/pwneddata',
+        $stateProvider.state('chronodata', {
+            url: '/chronology',
             views: {
                 'main': {
-                    templateUrl: 'templates/pwneddata.ejs',
-                    controller: 'MainCtrl',
+                    templateUrl: 'pages/chronology.ejs',
+                    controller: 'ChronoCtrl',
                     resolve: {
-                        pwneddataPromise: ['pwneddatas', function (pwneddatas) {
-                            return pwneddatas.getAll();
+                        chronodataPromise: ['chronodatas', function (chronodatas) {
+                            return chronodatas.getAll();
                         }]
                     }
                 }

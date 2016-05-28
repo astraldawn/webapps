@@ -5,11 +5,9 @@
 app.controller('MainCtrl', [
     '$scope',
     'posts', // injection of the post service
-    'pwneddatas', // injection of pwned data
     'auth',
-    function ($scope, posts, pwneddatas, auth) {
+    function ($scope, posts, auth) {
         $scope.posts = posts.posts;
-        $scope.pwneddatas = pwneddatas.pwneddatas;
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.addPost = function () {

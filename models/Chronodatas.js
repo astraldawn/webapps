@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose');
 
-var PwneddataSchema = new mongoose.Schema({
+var ChronodataSchema = new mongoose.Schema({
     Title: String,
     Name: String,
     Domain: String,
@@ -20,4 +20,4 @@ var PwneddataSchema = new mongoose.Schema({
     LogoType: String
 });
 
-mongoose.model('Pwneddata', PwneddataSchema);
+mongoose.model('Chronodata', ChronodataSchema);
