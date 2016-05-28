@@ -26,7 +26,7 @@
   }
 
   $scope.reloadGraph = function () {
-      var graphUrl = "/userdata/" + $scope.user.selected;
+      var graphUrl = "/userdata/logon/" + $scope.user.selected;
       $http.get(graphUrl).then(
         function(response) {
           generateData(response.data);
