@@ -70,7 +70,14 @@ app.controller('ChronoCtrl', [
 
             if(data[i].PwnCount < 5000000) continue;
 
-            var obj = {"text":{}, "start_date":{}};
+            var obj = {"media":{}, "text":{}, "start_date":{}};
+
+            var title = data[i].Title;
+            title = title.toLowerCase().replace(/ /g,"");
+            title = title.toLowerCase().replace(".com","");
+
+            obj.media["url"] = "//logo.clearbit.com/" + title + ".com?size=150";
+
             obj.text["headline"] = data[i].Title;
             obj.text["text"] = data[i].Description;
 
