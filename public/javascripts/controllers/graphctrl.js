@@ -37,27 +37,6 @@
       );
   }
 
-
-    //Sample JSON input
-    //   var sampleJSON = [
-    //   {
-    //     "id": "{F3X8-Y2GT43DR-4906OHBL}",
-    //     "date": "02/02/2010 02:19:18",
-    //     "user_id": "DNS1759",
-    //     "pc": "PC-0414",
-    //     "activity": "Logon"
-    // },
-    // {
-    //     "id": "{F3X8-Y2GT43DR-4906OHBL}",
-    //     "date": "02/02/2010 20:53:18",
-    //     "user_id": "DNS1759",
-    //     "pc": "PC-0414",
-    //     "activity": "Logoff"
-    // }
-    // ];
-
-    // generateData(sampleJSON);
-
     function formatDate(d) {
     //assume MM/DD/YYYY HH:MM:SS
     var date = new Date(d);
@@ -71,40 +50,110 @@
 }
 
 function generateData(arr) {
-    var logon_x = [];
-    var logon_text = [];
-    var logon_y = [];
-    //TODO: Add the different types of activities
-    //var y_axis = ["Logon/Logoff", "Device Access", "HTTP Activities", 
-    //"Email Access", "File Access"];
-    
-    var logoff_x = [];
-    var logoff_y = [];
-    var logoff_text = [];
+    var logon_x = [],
+        logon_y = [],
+        logon_text = [],
+        logoff_x = [],
+        logoff_y = [],
+        logoff_text = [];
+
+    var connect_x = [],
+        connect_y = [],
+        connect_text = [],
+        disconnect_x = [],
+        disconnect_y = [],
+        disconnect_text = [];
+
+    var fopen = [],
+        fwrite = [],
+        fcopy = [],
+        fdelete = [];
 
 
     for(var i = 0; i < arr.length; i++) {
-        if(arr[i].activity == 'Logon') {
-          var date = formatDate(arr[i].date);
+      var date = formatDate(arr[i].date);
+
+      switch (arr[i].activity) {
+        case "Logon":
           logon_x.push(date);
           logon_y.push("Logon/Logoff");
           logon_text.push('User ' + arr[i].user_id + 
             ' <br>on '+ arr[i].pc+ 
             ' <br>@ ' + date);
-
-      }else if(arr[i].activity == 'Logoff'){
-          var date = formatDate(arr[i].date);
-          logoff_x.push(formatDate(arr[i].date));
+          break;
+        case "Logoff":
+          logoff_x.push(date);
           logoff_y.push("Logon/Logoff");
           logoff_text.push('User ' + arr[i].user_id + 
             ' <br>on '+ arr[i].pc+ 
             ' <br>@ ' + date);
-      }
+          break;
 
-        //Implement the rest of the activities
+        case: "Connect":
+          connect_x.push(date);
+          connect_y.push("Device Access");
+          connect_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>' + arr[i].file_tree+
+            ' <br>@ ' + date);
+          break;
+        case: "Disconnect":
+          disconnect_x.push(date);
+          disconnect_y.push("Device Access");
+          disconnect_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>' + arr[i].file_tree+
+            ' <br>@ ' + date);
+          break;
+
+        case: 'Open':
+          fopen_x.push(date);
+          fopen_y.push("File Access");
+          fopen_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>File: ' + arr[i].filename+
+            //' <br>From: ' + arr[i].from_removable_media+
+            //' <br>To: ' + arr[i].to_removable_media+
+            ' <br>Content: ' + arr[i].content);
+
+        case: 'Write':
+          fwrite_x.push(date);
+          fwrite_y.push("File Access");
+          fwrite_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>File: ' + arr[i].filename+
+            //' <br>From: ' + arr[i].from_removable_media+
+            //' <br>To: ' + arr[i].to_removable_media+
+            ' <br>Content: ' + arr[i].content);
+
+        case: 'Copy':
+          fcopy_x.push(date);
+          fcopy_y.push("File Access");
+          fcopy_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>File: ' + arr[i].filename+
+            //' <br>From: ' + arr[i].from_removable_media+
+            //' <br>To: ' + arr[i].to_removable_media+
+            ' <br>Content: ' + arr[i].content);
+
+        case: 'Delete':
+          fdelete_x.push(date);
+          fdelete_y.push("File Access");
+          fdelete_text.push('User ' + arr[i].user_id +
+            ' <br>on ' + arr[i].pc+
+            ' <br>File: ' + arr[i].filename+
+            //' <br>From: ' + arr[i].from_removable_media+
+            //' <br>To: ' + arr[i].to_removable_media+
+            ' <br>Content: ' + arr[i].content);
+
+      }
+      
+
     }
 
-    var trace1 = 
+  //Logoff and logon
+
+  var trace1 = 
     {
       x: logon_x,
       y: logon_y,
@@ -127,6 +176,82 @@ function generateData(arr) {
       hoverinfo: 'text+name',
       type: 'scatter'
   };
+
+  //Connect and disconnect
+
+  var trace3 = 
+  {
+      x: connect_x,
+      y: connect_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: connect_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  var trace4 = 
+  {
+      x: disconnect_x,
+      y: disconnect_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: disconnect_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  var trace5 =
+  {
+      x: fopen_x,
+      y: fopen_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: fopen_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  var trace6 =
+  {
+      x: fwrite_x,
+      y: fwrite_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: fwrite_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  var trace7 =
+  {
+      x: fcopy_x,
+      y: fcopy_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: fcopy_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  var trace8 =
+  {
+      x: fdelete_x,
+      y: fdelete_y,
+      name: 'Connect',
+      mode: 'markers',
+      marker: { color: 'rgb(255, 0, 0)' },
+      text: fdelete_text,
+      hoverinfo: 'text+name',
+      type: 'scatter'
+  };
+
+  //Open and write and copy and delete
 
   var layout = {
     title: "Activity chart",
