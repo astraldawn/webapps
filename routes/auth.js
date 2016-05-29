@@ -4,6 +4,8 @@ var router = express.Router();
 /* Load required modules */
 var passport = require('passport');
 var jwt = require('express-jwt');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 /* Registration */
 router.post('/register', function (req, res, next) {
