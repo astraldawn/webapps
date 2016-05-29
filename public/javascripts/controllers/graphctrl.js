@@ -2,12 +2,37 @@
  * Created by mark on 27/05/16.
  */
 
+
+ // app.factory('JSONService', function($http) {
+ //    var getData = function() {
+ //      var urls = ["/userdata/logon/" + $scope.user.selected,
+ //                  "/userdata/file/" + $scope.user.selected,
+ //                  "/userdata/device/" + $scope.user.selected];
+
+ //      var requests = []
+
+ //      for(var i = 0; i < urls.length; i++) {
+ //        requests.push($http.get(urls[i]));
+ //      }
+
+ //      var data = [];
+ //      $q.all(requests).then(function (ret) {
+ //        data = data.concat(ret[0],ret[1],ret[2]);
+ //      },
+ //      function (err) {
+ //        console.log("Errors");
+ //      });
+ //    };
+
+ //    return { getData: getData };
+ // });
+
  app.controller('GraphCtrl', [
     '$scope',
     '$http',
-    function ($scope, $http) {
+    '$q',
+    function ($scope, $http, $q) {
 
-  
     //Search function    
   $scope.user = {};
   $scope.availableUsers = [];
@@ -26,16 +51,29 @@
   }
 
   $scope.reloadGraph = function () {
-      var graphUrl = "/userdata/logon/" + $scope.user.selected;
-      $http.get(graphUrl).then(
-        function(response) {
-          generateData(response.data);
-        },
-        function() {
-          console.log('Error');
-        }
-      );
+      var urls = ["/userdata/logon/" + $scope.user.selected,
+                  "/userdata/device/" + $scope.user.selected,
+                  "/userdata/file/" + $scope.user.selected];
+
+      var requests = []
+
+      for(var i = 0; i < urls.length; i++) {
+        requests.push($http.get(urls[i]));
+      }
+
+      var data = [];
+      $q.all(requests).then(function (ret) {
+        data = data.concat(ret[0].data,ret[1].data,ret[2].data);
+        //data = data.concat(ret[0].data, ret[1].data);
+        generateData(data);
+      },
+      function (err) {
+        console.log("Errors");
+      });
+
+      
   }
+
 
     function formatDate(d) {
     //assume MM/DD/YYYY HH:MM:SS
@@ -64,10 +102,18 @@ function generateData(arr) {
         disconnect_y = [],
         disconnect_text = [];
 
-    var fopen = [],
-        fwrite = [],
-        fcopy = [],
-        fdelete = [];
+    var fopen_x = [],
+        fopen_y = [],
+        fopen_text = [],
+        fwrite_x = [],
+        fwrite_y = [],
+        fwrite_text = [],
+        fcopy_x = [],
+        fcopy_y = [],
+        fcopy_text = [],
+        fdelete_x = [];
+        fdelete_y = [];
+        fdelete_text = [];
 
 
     for(var i = 0; i < arr.length; i++) {
@@ -89,7 +135,7 @@ function generateData(arr) {
             ' <br>@ ' + date);
           break;
 
-        case: "Connect":
+        case "Connect":
           connect_x.push(date);
           connect_y.push("Device Access");
           connect_text.push('User ' + arr[i].user_id +
@@ -97,7 +143,7 @@ function generateData(arr) {
             ' <br>' + arr[i].file_tree+
             ' <br>@ ' + date);
           break;
-        case: "Disconnect":
+        case "Disconnect":
           disconnect_x.push(date);
           disconnect_y.push("Device Access");
           disconnect_text.push('User ' + arr[i].user_id +
@@ -106,46 +152,49 @@ function generateData(arr) {
             ' <br>@ ' + date);
           break;
 
-        case: 'Open':
+        case 'File Open':
           fopen_x.push(date);
           fopen_y.push("File Access");
           fopen_text.push('User ' + arr[i].user_id +
             ' <br>on ' + arr[i].pc+
-            ' <br>File: ' + arr[i].filename+
+            ' <br>File: ' + arr[i].filename);
             //' <br>From: ' + arr[i].from_removable_media+
             //' <br>To: ' + arr[i].to_removable_media+
-            ' <br>Content: ' + arr[i].content);
+            //' <br>Content: ' + arr[i].content);
+          break;
 
-        case: 'Write':
+        case 'File Write':
           fwrite_x.push(date);
           fwrite_y.push("File Access");
           fwrite_text.push('User ' + arr[i].user_id +
             ' <br>on ' + arr[i].pc+
-            ' <br>File: ' + arr[i].filename+
+            ' <br>File: ' + arr[i].filename);
             //' <br>From: ' + arr[i].from_removable_media+
             //' <br>To: ' + arr[i].to_removable_media+
-            ' <br>Content: ' + arr[i].content);
+            //' <br>Content: ' + arr[i].content);
+          break;
 
-        case: 'Copy':
+        case 'File Copy':
           fcopy_x.push(date);
           fcopy_y.push("File Access");
           fcopy_text.push('User ' + arr[i].user_id +
             ' <br>on ' + arr[i].pc+
-            ' <br>File: ' + arr[i].filename+
+            ' <br>File: ' + arr[i].filename);
             //' <br>From: ' + arr[i].from_removable_media+
             //' <br>To: ' + arr[i].to_removable_media+
-            ' <br>Content: ' + arr[i].content);
+            //' <br>Content: ' + arr[i].content);
+          break;
 
-        case: 'Delete':
+        case 'File Delete':
           fdelete_x.push(date);
           fdelete_y.push("File Access");
           fdelete_text.push('User ' + arr[i].user_id +
             ' <br>on ' + arr[i].pc+
-            ' <br>File: ' + arr[i].filename+
+            ' <br>File: ' + arr[i].filename);
             //' <br>From: ' + arr[i].from_removable_media+
             //' <br>To: ' + arr[i].to_removable_media+
-            ' <br>Content: ' + arr[i].content);
-
+            //' <br>Content: ' + arr[i].content);
+          break;
       }
       
 
@@ -185,7 +234,6 @@ function generateData(arr) {
       y: connect_y,
       name: 'Connect',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: connect_text,
       hoverinfo: 'text+name',
       type: 'scatter'
@@ -195,21 +243,21 @@ function generateData(arr) {
   {
       x: disconnect_x,
       y: disconnect_y,
-      name: 'Connect',
+      name: 'Disconnect',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: disconnect_text,
       hoverinfo: 'text+name',
       type: 'scatter'
   };
 
+  // File Access
+
   var trace5 =
   {
       x: fopen_x,
       y: fopen_y,
-      name: 'Connect',
+      name: 'File Open',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: fopen_text,
       hoverinfo: 'text+name',
       type: 'scatter'
@@ -219,9 +267,8 @@ function generateData(arr) {
   {
       x: fwrite_x,
       y: fwrite_y,
-      name: 'Connect',
+      name: 'File Write',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: fwrite_text,
       hoverinfo: 'text+name',
       type: 'scatter'
@@ -231,9 +278,8 @@ function generateData(arr) {
   {
       x: fcopy_x,
       y: fcopy_y,
-      name: 'Connect',
+      name: 'File Copy',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: fcopy_text,
       hoverinfo: 'text+name',
       type: 'scatter'
@@ -243,9 +289,8 @@ function generateData(arr) {
   {
       x: fdelete_x,
       y: fdelete_y,
-      name: 'Connect',
+      name: 'File Delete',
       mode: 'markers',
-      marker: { color: 'rgb(255, 0, 0)' },
       text: fdelete_text,
       hoverinfo: 'text+name',
       type: 'scatter'
@@ -255,10 +300,10 @@ function generateData(arr) {
 
   var layout = {
     title: "Activity chart",
-    hodemode: 'closest'
+    hovermode: 'closest'
 };
 
-var data = [trace1,trace2];
+var data = [trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8];
 
 
 Plotly.newPlot('logon', data, layout, {displayModeBar: false});
