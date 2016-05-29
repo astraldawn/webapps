@@ -5,6 +5,9 @@ var router = express.Router();
 var passport = require('passport');
 var jwt = require('express-jwt');
 
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 /* Registration */
 router.post('/register', function (req, res, next) {
     if (!req.body.username || !req.body.password) {
