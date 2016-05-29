@@ -19,6 +19,8 @@ require('./config/passport');
 require('./models/Chronodatas');
 require('./models/Psychodatas');
 require('./models/Logondatas');
+require('./models/Filedatas');
+require('./models/Devicedatas');
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/webapps');

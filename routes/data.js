@@ -10,6 +10,10 @@ var mongoose = require('mongoose');
 var ChronoData = mongoose.model('Chronodata');
 var LogonData = mongoose.model('Logondata');
 var PsychoData = mongoose.model('Psychodata');
+var DeviceData = mongoose.model('Devicedata');
+var FileData = mongoose.model('Filedata');
+
+var datalimit = 500;
 
 /* GET all chronological data */
 router.get('/chronodatas', function (req, res, next) {
@@ -41,7 +45,7 @@ router.get('/allusers', function (req, res, next) {
 
 /* GET logon data from a specific username */
 router.param('data_logon', function (req, res, next, id) {
-    var query = LogonData.find({user_id: id});
+    var query = LogonData.find({user_id: id}).limit(datalimit);
 
     query.exec(function (err, data) {
         if (err) {
@@ -76,6 +80,47 @@ router.param('data_psycho', function (req, res, next, id) {
 });
 
 router.get('/userdata/psycho/:data_psycho', function (req, res) {
+    res.json(req.data);
+});
+
+/* GET device data from a specific username */
+router.param('data_device', function (req, res, next, id) {
+    var query = DeviceData.find({user_id: id}).limit(datalimit);
+
+    query.exec(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        if (!data) {
+            return next(new Error('cannot find data'));
+        }
+        req.data = data;
+        return next();
+    });
+});
+
+router.get('/userdata/device/:data_device', function (req, res) {
+    res.json(req.data);
+});
+
+
+/* GET file data from a specific username */
+router.param('data_file', function (req, res, next, id) {
+    var query = FileData.find({user_id: id}).limit(datalimit);
+
+    query.exec(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        if (!data) {
+            return next(new Error('cannot find data'));
+        }
+        req.data = data;
+        return next();
+    });
+});
+
+router.get('/userdata/file/:data_file', function (req, res) {
     res.json(req.data);
 });
 
