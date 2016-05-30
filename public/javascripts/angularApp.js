@@ -106,7 +106,7 @@ app.config([
             views: {
                 'main': {
                     templateUrl: 'pages/graph.ejs',
-                    controller: 'GraphCtrl'
+                    controller: 'GraphBarCtrl'
                 }
             }
         });
