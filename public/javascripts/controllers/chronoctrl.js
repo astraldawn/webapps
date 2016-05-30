@@ -54,6 +54,7 @@ app.controller('ChronoCtrl', [
             ]
         };
 
+        /* Data declaration */
         var timeline_json = {
             "title": {
                 "text": {
@@ -64,25 +65,42 @@ app.controller('ChronoCtrl', [
             "events": []
         };
 
+        var trace1 = {
+            x: [],
+            y: [],
+            type: 'bar'
+        };
+
         var data = $scope.chronodatas;
+        var year_summary = {};
+
+        /* Data processing */
         for (var i = 0; i < data.length; i++) {
             var cur = data[i];
 
-            if(data[i].PwnCount < 5000000) continue;
+            // Date
+            var date = new Date(data[i].BreachDate);
 
-            var obj = {"media":{}, "text":{}, "start_date":{}};
+            if (year_summary[date.getFullYear()]) {
+                year_summary[date.getFullYear()] += data[i].Count;
+            } else {
+                year_summary[date.getFullYear()] = data[i].Count;
+            }
+
+            // Only interested in events that occur often
+            if (data[i].Count < 5000000) continue;
+
+            var obj = {"media": {}, "text": {}, "start_date": {}};
 
             var title = data[i].Title;
-            title = title.toLowerCase().replace(/ /g,"");
-            title = title.toLowerCase().replace(".com","");
+            title = title.toLowerCase().replace(/ /g, "");
+            title = title.toLowerCase().replace(".com", "");
 
             obj.media["url"] = "//logo.clearbit.com/" + title + ".com?size=150";
 
             obj.text["headline"] = data[i].Title;
             obj.text["text"] = data[i].Description;
 
-            // Date
-            var date = new Date(data[i].BreachDate);
             obj.start_date["year"] = date.getFullYear();
             obj.start_date["month"] = date.getMonth() + 1;
             obj.start_date["day"] = date.getDate();
@@ -90,24 +108,22 @@ app.controller('ChronoCtrl', [
             timeline_json.events.push(obj);
         }
 
+        for (var key in year_summary) {
+            trace1.x.push(key);
+            trace1.y.push(year_summary[key]);
+        }
+
+
+        /* Plot the timeline */
         window.timeline = new TL.Timeline('chrono-timeline', timeline_json);
 
-        var trace1 = {
-            x: [0, 1, 2, 3, 4, 5],
-            y: [1.5, 1, 1.3, 0.7, 0.8, 0.9],
-            type: 'scatter'
+        var display_1_data = [trace1];
+        var layout = {
+            title: "Yearly summary",
+            hovermode: 'closest'
         };
 
-        var trace2 = {
-            x: [0, 1, 2, 3, 4, 5],
-            y: [1, 0.5, 0.7, -1.2, 0.3, 0.4],
-            type: 'bar'
-        };
-
-        data = [trace1, trace2];
-
-
-        Plotly.newPlot('chrono-display-1', data);
+        Plotly.newPlot('chrono-display-1', display_1_data, layout, {displayModeBar: false});
 
     }
 ]);
