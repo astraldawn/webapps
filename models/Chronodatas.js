@@ -10,7 +10,7 @@ var ChronodataSchema = new mongoose.Schema({
     Domain: String,
     BreachDate: Date,
     AddedDate: Date,
-    PwnCount: Number,
+    Count: Number,
     Description: String,
     DataClasses: [String],
     IsVerified: Boolean,
