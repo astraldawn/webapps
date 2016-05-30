@@ -298,7 +298,13 @@ function generateData(arr) {
   var layout = {
     title: "Activity chart",
     hovermode: 'closest',
-    barmode: 'stack'
+    barmode: 'stack',
+    xaxis: {
+            rangeslider: {}
+        },
+        yaxis: {
+            fixedrange: true
+    }
   };
 
 var data = [trace1,trace2,trace3,trace4,trace5,trace6,trace7,trace8];
