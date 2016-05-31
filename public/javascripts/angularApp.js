@@ -107,7 +107,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
         views: {
             'main': {
                 templateUrl: 'pages/graph.ejs',
-                controller: 'GraphBarCtrl'
+                controller: 'GraphNodeCtrl'
             }
         }
     });

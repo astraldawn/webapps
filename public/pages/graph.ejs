@@ -1,9 +1,9 @@
-<ui-select ng-model="user.selected" on-select="reloadGraph()" theme="bootstrap" reset-search-input="false" style="width: 300px;">
-    <ui-select-match placeholder="Select users...">{{user.selected}}</ui-select-match>
-    <ui-select-choices refresh="funcAsync($select.search)" position='down' minimum-input-length="2" refresh-delay="0" repeat="user in availableUsers | filter:$select.search">
-      {{user}}
+<ui-select ng-model="dept.selected" on-select="reloadGraph()" theme="bootstrap" reset-search-input="false" style="width: 300px;">
+    <ui-select-match placeholder="Select department...">{{dept.selected}}</ui-select-match>
+    <ui-select-choices refresh="funcAsync($select.search)" position='down' minimum-input-length="2" refresh-delay="0" repeat="dept in availableDept | filter:$select.search">
+      {{dept}}
     </ui-select-choices>
 </ui-select>
 <br>
 
-<div id="logon" style="width: 960px; height: 800px;"></div>
+<div id="nodegraph" style="width: 960px; height: 800px;"></div>
