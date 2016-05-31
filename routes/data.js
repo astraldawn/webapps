@@ -43,7 +43,7 @@ router.get('/allusers', function (req, res, next) {
     });
 });
 
-/* GET all usernames */
+/* GET all department names */
 router.get('/alldept', function (req, res, next) {
     var query = UserData.distinct("department");
 
