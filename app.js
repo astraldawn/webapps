@@ -17,7 +17,7 @@ require('./config/passport');
 
 // Data
 require('./models/Chronodatas');
-require('./models/Psychodatas');
+require('./models/Userdatas');
 require('./models/Logondatas');
 require('./models/Filedatas');
 require('./models/Devicedatas');
