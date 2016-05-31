@@ -1,13 +1,28 @@
 GraphNodeCtrl.$inject = ['$scope', '$http'];
 
 angular.module('webapps')
-    .controller('GraphNodeCtrl', GraphNodeCtrl);
+.controller('GraphNodeCtrl', GraphNodeCtrl);
 
 function GraphNodeCtrl($scope, $http) {
     //Search function
     $scope.dept = {};
+    $scope.compareDept = {};
     $scope.availableDept = [];
     var url = '/alldept';
+
+
+    sampleData = [
+    {
+        "source" : "DNS1758",
+        "target" : "SHD2394"
+    },
+    {
+        "source" : "DNS1758",
+        "target" : "SHD2394"
+    }
+    ];
+
+    generateData(sampleData, '#nodeGraph');
 
     $scope.funcAsync = function (query) {
         $http.get(url).then(
@@ -21,117 +36,98 @@ function GraphNodeCtrl($scope, $http) {
         );
     };
 
-
-
-var sampleJSON = [
-{
-"from: DNS1758",
-"to: SHD2394"
-},
-{
-"from: DNS1758",
-"to: SHD2394"
-},
-{
-"from: SHD2394",
-"to: DNS1758"
-}
-];
-
-generateData(sampleJSON);
-
-  
     $scope.reloadGraph = function () {
-        generateData($scope.dept.selected);
+        generateData($scope.dept.selected, '#nodeGraph');
     };
 
-    function generateData(links) {
-        alert("woo");
+    $scope.reloadCompareGraph = function () {
+        generateData($scope.dept.selected, '#compareNodeGraph');  
+    };
+
+    function generateData(links, graphID) {
         var nodes = {};
 
         links.forEach(function(link) {
-            link.from = nodes[link.from] || 
-                (nodes[link.from] = {name: link.from});
-            link.to = nodes[link.to] || 
-                (nodes[link.to] = {name: link.to});
-            link.count = (typeof link.count === 'undefined') ? 1 : link.count+1;
+            link.source = nodes[link.source] || 
+            (nodes[link.source] = {name: link.source});
+            link.target = nodes[link.target] || 
+            (nodes[link.target] = {name: link.target});
+            link.value = (typeof link.value === 'undefined') ? 1 : link.value+1;
         });
 
-        var width = 960,
-            height = 500;
+        var width = 500,
+        height = 500;
 
         var force = d3.layout.force()
-            .nodes(d3.values(nodes))
-            .links(links)
-            .size([width, height])
-            .linkDistance(60)
-            .charge(-300)
-            .on("tick", tick)
-            .start();
+        .nodes(d3.values(nodes))
+        .links(links)
+        .size([width, height])
+        .linkDistance(60)
+        .charge(-300)
+        .on("tick", tick)
+        .start();
 
-        var svg = d3.select("#nodegraph").append("svg")
-            .attr("width", width)
-            .attr("height", height);
+        var svg = d3.select(graphID).append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
         // build the arrow.
         svg.append("svg:defs").selectAll("marker")
             .data(["end"])      // Different link/path types can be defined here
           .enter().append("svg:marker")    // This section adds in the arrows
-            .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 15)
-            .attr("refY", -1.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("orient", "auto")
+          .attr("id", String)
+          .attr("viewBox", "0 -5 10 10")
+          .attr("refX", 15)
+          .attr("refY", -1.5)
+          .attr("markerWidth", 6)
+          .attr("markerHeight", 6)
+          .attr("orient", "auto")
           .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5");
+          .attr("d", "M0,-5L10,0L0,5");
 
         // add the links and the arrows
         var path = svg.append("svg:g").selectAll("path")
-            .data(force.links())
-          .enter().append("svg:path")
+        .data(force.links())
+        .enter().append("svg:path")
         //    .attr("class", function(d) { return "link " + d.type; })
-            .attr("class", "link")
-            .attr("marker-end", "url(#end)");
+        .attr("class", "link")
+        .attr("marker-end", "url(#end)");
 
         // define the nodes
         var node = svg.selectAll(".node")
-            .data(force.nodes())
-            .enter().append("g")
-            .attr("class", "node")
-            .call(force.drag);
+        .data(force.nodes())
+        .enter().append("g")
+        .attr("class", "node")
+        .call(force.drag);
 
         // add the nodes
         node.append("circle")
-            .attr("r", 5);
+        .attr("r", 5);
 
         // add the text 
         node.append("text")
-            .attr("x", 12)
-            .attr("dy", ".35em")
-            .text(function(d) { return d.name; });
+        .attr("x", 12)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.name; });
 
         // add the curvy lines
         function tick() {
             path.attr("d", function(d) {
-                var dx = d.to.x - d.from.x,
-                    dy = d.to.y - d.from.y,
-                    dr = Math.sqrt(dx * dx + dy * dy);
+                var dx = d.target.x - d.source.x,
+                dy = d.target.y - d.source.y,
+                dr = Math.sqrt(dx * dx + dy * dy);
                 return "M" + 
-                    d.from.x + "," + 
-                    d.from.y + "A" + 
-                    dr + "," + dr + " 0 0,1 " + 
-                    d.to.x + "," + 
-                    d.to.y;
+                d.source.x + "," + 
+                d.source.y + "A" + 
+                dr + "," + dr + " 0 0,1 " + 
+                d.target.x + "," + 
+                d.target.y;
             });
 
             node
-                .attr("transform", function(d) { 
+            .attr("transform", function(d) { 
                 return "translate(" + d.x + "," + d.y + ")"; });
         }
 
-        });
-    }
-
-}
+    };
+};

@@ -1,9 +1,24 @@
-<ui-select ng-model="dept.selected" on-select="reloadGraph()" theme="bootstrap" reset-search-input="false" style="width: 300px;">
+<head><link href="../stylesheets/graph.css" rel="stylesheet"></head>
+<h1 class="text-center">Behaviour</h1>
+<br>
+<div id="graphLayout">
+
+<ui-select ng-model="dept.selected" id="searchBar" class="leftGraph" on-select="reloadGraph()" theme="bootstrap" reset-search-input="false">
     <ui-select-match placeholder="Select department...">{{dept.selected}}</ui-select-match>
-    <ui-select-choices refresh="funcAsync($select.search)" position='down' minimum-input-length="2" refresh-delay="0" repeat="dept in availableDept | filter:$select.search">
+    <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0" repeat="dept in availableDept | filter:$select.search">
       {{dept}}
     </ui-select-choices>
 </ui-select>
+
+<ui-select ng-model="compareDebt.selected" id="searchBar" class="rightGraph" class="compareSearchBar" on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
+    <ui-select-match placeholder="Select department...">{{compareDebt.selected}}</ui-select-match>
+    <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0" repeat="dept in availableDept | filter:$select.search">
+      {{dept}}
+    </ui-select-choices>
+</ui-select>
+
 <br>
 
-<div id="nodegraph" style="width: 960px; height: 800px;"></div>
+<div id="nodeGraph" class="leftGraph"></div>
+<div id="compareNodeGraph" class="rightGraph"></div>
+</div>
