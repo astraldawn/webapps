@@ -55,7 +55,7 @@ function GraphNodeCtrl($scope, $http) {
 
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
-                (nodes[link.source] = {name: link.source});
+                (nodes[link.source] = {name: ''});
                 link.target = nodes[link.target] || 
                 (nodes[link.target] = {name: link.target});
             });
