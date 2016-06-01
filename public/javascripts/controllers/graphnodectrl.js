@@ -30,6 +30,8 @@ function GraphNodeCtrl($scope, $http) {
         generateData($scope.dept.selected, '#compareNodeGraph');  
     };
 
+    //testing
+    // generateData("lol","lol");
     function generateData(dept, graphID) {
 
         var url = "/emaildata/" + dept;
@@ -42,13 +44,21 @@ function GraphNodeCtrl($scope, $http) {
                 console.log('URL not found.');
             }
 
+            //testing
+            // var links = [
+            // {
+            //     "source" : "lol",
+            //     "target" : "haha"
+            // }
+            // ];
+            // graphID = '#nodeGraph';
+
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
                 (nodes[link.source] = {name: link.source});
                 link.target = nodes[link.target] || 
                 (nodes[link.target] = {name: link.target});
             });
-            
 
             var width = 500,
             height = 500;
@@ -57,14 +67,27 @@ function GraphNodeCtrl($scope, $http) {
             .nodes(d3.values(nodes))
             .links(links)
             .size([width, height])
-            .linkDistance(80)
+            .linkDistance(60)
             .charge(-300)
             .on("tick", tick)
             .start();
 
+            var zoom = d3.behavior.zoom()
+            .scaleExtent([0.1, 10])
+            .on("zoom", zoomed);
+
             var svg = d3.select(graphID).append("svg")
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", height)
+            .attr("pointer-events", "all")
+              .append('svg:g')
+                .call(zoom)
+              .append('svg:g');
+
+            svg.append('svg:rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'none');
 
         // build the arrow.
         svg.append("svg:defs").selectAll("marker")
@@ -123,6 +146,14 @@ function GraphNodeCtrl($scope, $http) {
             .attr("transform", function(d) { 
                 return "translate(" + d.x + "," + d.y + ")"; });
         }
+
+
+        function zoomed() {
+          svg.attr("transform",
+              "translate(" + d3.event.translate + ")"
+              + " scale(" + d3.event.scale + ")");
+        }
+
     });
 };
 };
