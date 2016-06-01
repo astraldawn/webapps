@@ -19,7 +19,7 @@ function GraphNodeCtrl($scope, $http) {
             function () {
                 console.log('Error');
             }
-        );
+            );
     };
 
     $scope.reloadGraph = function () {
@@ -34,37 +34,37 @@ function GraphNodeCtrl($scope, $http) {
 
         var url = "/emaildata/" + dept;
 
-        var nodes = {};
-
         d3.json(url, function(error, links) {
+
+            var nodes = {};
             
             if(error) {
                 console.log('URL not found.');
             }
 
             links.forEach( function(link) {
-            link.source = nodes[link.source] || 
-            (nodes[link.source] = {name: link.source});
-            link.target = nodes[link.target] || 
-            (nodes[link.target] = {name: link.target});
+                link.source = nodes[link.source] || 
+                (nodes[link.source] = {name: link.source});
+                link.target = nodes[link.target] || 
+                (nodes[link.target] = {name: link.target});
             });
-        });
+            
 
-        var width = 500,
-        height = 500;
+            var width = 500,
+            height = 500;
 
-        var force = d3.layout.force()
-        .nodes(d3.values(nodes))
-        .links(links)
-        .size([width, height])
-        .linkDistance(80)
-        .charge(-300)
-        .on("tick", tick)
-        .start();
+            var force = d3.layout.force()
+            .nodes(d3.values(nodes))
+            .links(links)
+            .size([width, height])
+            .linkDistance(80)
+            .charge(-300)
+            .on("tick", tick)
+            .start();
 
-        var svg = d3.select(graphID).append("svg")
-        .attr("width", width)
-        .attr("height", height);
+            var svg = d3.select(graphID).append("svg")
+            .attr("width", width)
+            .attr("height", height);
 
         // build the arrow.
         svg.append("svg:defs").selectAll("marker")
@@ -123,6 +123,6 @@ function GraphNodeCtrl($scope, $http) {
             .attr("transform", function(d) { 
                 return "translate(" + d.x + "," + d.y + ")"; });
         }
-
-    };
+    });
+};
 };
