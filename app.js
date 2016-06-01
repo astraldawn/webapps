@@ -17,10 +17,11 @@ require('./config/passport');
 
 // Data
 require('./models/Chronodatas');
-require('./models/Psychodatas');
+require('./models/Userdatas');
 require('./models/Logondatas');
 require('./models/Filedatas');
 require('./models/Devicedatas');
+require('./models/Emaildatas');
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/webapps');
@@ -31,6 +32,7 @@ var users = require('./routes/users');
 var auth = require('./routes/auth');
 var posts = require('./routes/posts');
 var data = require('./routes/data');
+var emaildata = require('./routes/emaildata');
 
 var app = express();
 
@@ -54,6 +56,7 @@ app.use('/', auth);
 app.use('/', data);
 app.use('/posts', posts);
 app.use('/users', users);
+app.use('/emaildata', emaildata);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
