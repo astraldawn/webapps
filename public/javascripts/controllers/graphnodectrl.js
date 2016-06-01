@@ -10,20 +10,6 @@ function GraphNodeCtrl($scope, $http) {
     $scope.availableDept = [];
     var url = '/alldept';
 
-
-    sampleData = [
-    {
-        "source" : "DNS1758",
-        "target" : "SHD2394"
-    },
-    {
-        "source" : "DNS1758",
-        "target" : "SHD2394"
-    }
-    ];
-
-    generateData(sampleData, '#nodeGraph');
-
     $scope.funcAsync = function (query) {
         $http.get(url).then(
             function (response) {
@@ -44,15 +30,24 @@ function GraphNodeCtrl($scope, $http) {
         generateData($scope.dept.selected, '#compareNodeGraph');  
     };
 
-    function generateData(links, graphID) {
-        var nodes = {};
+    function generateData(dept, graphID) {
 
-        links.forEach(function(link) {
+        var url = "/emaildata/" + dept;
+
+        d3.json(url, function(error, links) {
+            
+            if(error) {
+                console.log('URL not found.');
+            }
+
+            var nodes = {};
+
+            links.forEach( function(link) {
             link.source = nodes[link.source] || 
             (nodes[link.source] = {name: link.source});
             link.target = nodes[link.target] || 
             (nodes[link.target] = {name: link.target});
-            link.value = (typeof link.value === 'undefined') ? 1 : link.value+1;
+            });
         });
 
         var width = 500,
@@ -62,7 +57,7 @@ function GraphNodeCtrl($scope, $http) {
         .nodes(d3.values(nodes))
         .links(links)
         .size([width, height])
-        .linkDistance(60)
+        .linkDistance(80)
         .charge(-300)
         .on("tick", tick)
         .start();
