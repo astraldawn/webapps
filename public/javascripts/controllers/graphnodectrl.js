@@ -34,13 +34,13 @@ function GraphNodeCtrl($scope, $http) {
 
         var url = "/emaildata/" + dept;
 
+        var nodes = {};
+
         d3.json(url, function(error, links) {
             
             if(error) {
                 console.log('URL not found.');
             }
-
-            var nodes = {};
 
             links.forEach( function(link) {
             link.source = nodes[link.source] || 
