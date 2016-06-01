@@ -74,6 +74,7 @@ function GraphNodeCtrl($scope, $http) {
 
             var zoom = d3.behavior.zoom()
             .scaleExtent([0.1, 10])
+            .scale(0.1)
             .on("zoom", zoomed);
 
             var svg = d3.select(graphID).append("svg")
