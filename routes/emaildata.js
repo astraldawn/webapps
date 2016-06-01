@@ -55,7 +55,7 @@ router.param('department', function (req, res, next, id) {
             }
 
             var len = result.findUsers.length;
-            len = 10;
+            // len = 50;
 
             for (var i = 0; i < len; i++) {
                 var aggregate_func = makeAggregateFunc(result.findUsers[i]);
