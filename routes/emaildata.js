@@ -45,7 +45,7 @@ router.param('department', function (req, res, next, id) {
                             }],
                         function (err, res) {
                             var output = res.map(function (item) {
-                                return {to: obj.user_id, from: item._id, count: item.count};
+                                return {target: obj.user_id, source: item._id, value: item.count};
                             });
                             callback(null, output);
                         }
@@ -73,9 +73,9 @@ router.param('department', function (req, res, next, id) {
                 function (err, results) {
                     var merged = [].concat.apply([], results);
                     for (i = 0; i < merged.length; i++) {
-                        var cur = merged[i].from;
+                        var cur = merged[i].source;
                         if (emailMap[cur] !== undefined) {
-                            merged[i]["from"] = emailMap[cur];
+                            merged[i]["source"] = emailMap[cur];
                         }
                     }
                     res.json(merged);
