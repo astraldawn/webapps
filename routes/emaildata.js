@@ -7,30 +7,26 @@ var router = express.Router();
 
 /* DB setup */
 var mongoose = require('mongoose');
+var UserData = mongoose.model('Userdata');
 var EmailData = mongoose.model('Emaildata');
 
-var datalimit = 500;
-
-/* GET logon data from a specific username */
+/* GET email data from a specific department */
 router.param('department', function (req, res, next, id) {
-    // var query = LogonData.find({user_id: id}).limit(datalimit);
-    //
-    // query.exec(function (err, data) {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    //     if (!data) {
-    //         return next(new Error('cannot find data'));
-    //     }
-    //     req.data = data;
-    //     return next();
-    // });
-    return next();
+    var query = UserData.find({department: id}, {_id: 0});
+    query.select("user_id");
+
+    query.exec().then(
+        function (users) {
+            var tmp = users.map(function (user) {
+                return user.user_id;
+            });
+            res.json(tmp);
+        }
+    )
 });
 
 router.get('/:department', function (req, res) {
-    // res.json(req.data);
-    res.json("hello world");
+    res.json(req.data);
 });
 
 
