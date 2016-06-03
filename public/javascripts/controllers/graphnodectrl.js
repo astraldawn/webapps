@@ -38,7 +38,7 @@ function GraphNodeCtrl($scope, $http) {
     function generateData(dept, graphID) {
         var url = "/emaildata/" + dept;
 
-        d3.json(url, function(error, links) {
+        d3.json(url, function (error, links) {
 
             var nodes = {};
 
@@ -63,11 +63,18 @@ function GraphNodeCtrl($scope, $http) {
             // ];
             // graphID = '#nodeGraph';
 
-            links.forEach( function(link) {
-                link.source = nodes[link.source] || 
-                (nodes[link.source] = {name: '', group: link.sd});
-                link.target = nodes[link.target] || 
-                (nodes[link.target] = {name: link.target, group: link.td});
+            var maxValue = 0;
+            var targetGroup = links[0].td;
+
+            links.forEach(function (link) {
+                link.target = nodes[link.target] ||
+                    (nodes[link.target] = {name: link.target, group: link.td});
+            });
+
+            links.forEach(function (link) {
+                link.source = nodes[link.source] ||
+                    (nodes[link.source] = {name: '', group: link.sd});
+                maxValue = Math.max(maxValue, link.value);
             });
 
             clearData(graphID);
@@ -81,7 +88,9 @@ function GraphNodeCtrl($scope, $http) {
                 .nodes(d3.values(nodes))
                 .links(links)
                 .size([width, height])
-                .linkDistance(function(d) { return  d.value + 200; }) 
+                .linkDistance(function (d) {
+                    return maxValue - d.value;
+                })
                 .charge(-300)
                 .on("tick", tick)
                 .start();
@@ -96,6 +105,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
+                .attr("transform", "translate("+width/2+","+height/2+") scale(0.15)")
                 .call(zoom)
                 .append('svg:g');
 
@@ -131,12 +141,18 @@ function GraphNodeCtrl($scope, $http) {
                 .data(force.nodes())
                 .enter().append("g")
                 .attr("class", "node")
-                .style("fill", function(d) { return color(d.group); })
+                .style("fill", function (d) {
+                    return color(d.group);
+                })
                 .call(force.drag);
 
             // add the nodes
             node.append("circle")
-                .attr("r", 5);
+                .attr("r", function (d) {
+                    var nodeSize = 10;
+                    if (d.group == targetGroup) return nodeSize * 2;
+                    else return nodeSize;
+                });
 
             // add the text
             node.append("text")
@@ -167,13 +183,12 @@ function GraphNodeCtrl($scope, $http) {
             }
 
 
-
             function zoomed() {
                 svg.attr("transform",
                     "translate(" + d3.event.translate + ")"
                     + " scale(" + d3.event.scale + ")");
             }
 
-    });
-};
+        });
+    };
 };
