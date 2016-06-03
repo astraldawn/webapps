@@ -31,12 +31,12 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     //testing
-    // generateData("lol","lol");
+    generateData("lol","lol");
     function generateData(dept, graphID) {
 
-        var url = "/emaildata/" + dept;
+        // var url = "/emaildata/" + dept;
 
-        d3.json(url, function(error, links) {
+        // d3.json(url, function(error, links) {
 
             var nodes = {};
             
@@ -44,14 +44,20 @@ function GraphNodeCtrl($scope, $http) {
                 console.log('URL not found.');
             }
 
-            //testing
-            // var links = [
-            // {
-            //     "source" : "lol",
-            //     "target" : "haha"
-            // }
-            // ];
-            // graphID = '#nodeGraph';
+            testing
+            var links = [
+            {
+                "source" : "lol",
+                "target" : "haha",
+                "group" : "1"
+            },
+            {
+                "source" : "moo",
+                "target" : "hehe",
+                "group" : "2"
+            }
+            ];
+            graphID = '#nodeGraph';
 
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
@@ -157,6 +163,6 @@ function GraphNodeCtrl($scope, $http) {
               + " scale(" + d3.event.scale + ")");
         }
 
-    });
+    // });
 };
 };
