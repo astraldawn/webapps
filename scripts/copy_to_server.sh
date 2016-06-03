@@ -1,1 +1,1 @@
-rsync -avz -e 'ssh' ../data root@188.166.145.19:/opt/webapps/
+rsync -avz -e 'ssh' ../data mark@imperial.statustoday.com:/home/mark/webapps/
