@@ -19,7 +19,6 @@ text {
 #nodeGraph, #compareNodeGraph {
   width: 500px;
   height: 500px;
-  border: 0.5px solid black;
 }
 
 #searchBar {
