@@ -34,7 +34,11 @@ function GraphNodeCtrl($scope, $http) {
 
     //testing
     // generateData("lol","lol");
-    
+
+    function clearData(graphID) {
+        d3.select(graphID).selectAll("*").remove();
+    }
+
     function generateData(dept, graphID) {
         var url = "/emaildata/" + dept;
 
@@ -69,6 +73,8 @@ function GraphNodeCtrl($scope, $http) {
                 link.target = nodes[link.target] || 
                 (nodes[link.target] = {name: link.target, group: link.td});
             });
+
+            clearData(graphID);
 
             var width = d3.select(graphID).style("width").split("px").shift();
             var height = width * 0.8;
