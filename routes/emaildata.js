@@ -27,13 +27,11 @@ function aggregateEmail(user_id, min_weight, threshold, start, end) {
         // EmailData.aggregate().match({to: obj.user_id}).group({_id: '$from', count: {$sum: 1}});
         var process = Math.random();
         if (process < threshold) {
-            var start = new Date("2010-01-01T00:00:00.0Z");
-            var end = new Date("2010-01-02T00:00:00.0Z");
             EmailData.aggregate([
                     {
                         $match: {
-                            user_id: user_id
-                            // date: {$gte: start, $lt: end}
+                            user_id: user_id,
+                            date: {$gte: start, $lte: end}
                         }
                     },
                     {
@@ -72,14 +70,20 @@ router.param('department', function (req, res, next, dept) {
                 query.exec(cb);
             },
             startDate: function (cb) {
-                cb();
+                var query = EmailData.find({}, {_id:0});
+                query.sort({date: 1}).limit(1).select("date");
+                query.exec(cb);
             },
             endDate: function (cb) {
-                cb();
+                var query = EmailData.find({}, {_id:0});
+                query.sort({date: -1}).limit(1).select("date");
+                query.exec(cb);
             }
         }, function (err, result) {
-            result.id = dept;
+            req.id = dept;
             req.result = result;
+            req.startDate = result.startDate[0].date;
+            req.endDate = result.endDate[0].date;
             return next();
         }
     );
@@ -102,12 +106,26 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
 
     var result = req.result;
     var id = req.id;
-    var startDate = req.startDate;
-    var endDate = req.endDate;
+    var startDate = new Date(req.startDate);
+    var endDate = new Date(req.endDate);
     var len = result.findUsers.length;
 
-    var threshold = 0.4; // Each query has 40% chance of running
-    var min_weight = 100; // Minimum edge weight
+    var day_diff = (endDate - startDate) / (3600 * 24 * 1000);
+
+    // Safety check
+    if (day_diff < 1) {
+        res.json("Invalid request");
+        return;
+    }
+
+    var min_weight = 0;
+    var threshold = 1; // Each query has 40% chance of running
+
+    if (day_diff < 100) {
+        min_weight = day_diff;
+    } else {
+        min_weight = 100;
+    }
 
     for (var i = 0; i < len; i++) {
         var c_user = result.findUsers[i].user_id;
@@ -158,6 +176,13 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
             res.json(output);
         }
     );
+});
+
+router.get('/:department/getdate', function (req, res) {
+    var output = {};
+    output["startDate"] = req.startDate;
+    output["endDate"] = req.endDate;
+    res.json(output);
 });
 
 // router.get('/:department', function (req, res) {
