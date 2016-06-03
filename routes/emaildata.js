@@ -11,6 +11,36 @@ var async = require('async');
 var UserData = mongoose.model('Userdata');
 var EmailData = mongoose.model('Emaildata');
 
+function aggregateEmail(obj) {
+    return function (callback) {
+        // var aggregate_query =
+        // EmailData.aggregate().match({to: obj.user_id}).group({_id: '$from', count: {$sum: 1}});
+
+        var start = new Date("2010-01-01T00:00:00.0Z");
+        var end = new Date("2010-01-02T00:00:00.0Z");
+        EmailData.aggregate([
+                {
+                    $match: {
+                        user_id: obj.user_id
+                        // date: {$gte: start, $lt: end}
+                    }
+                },
+                {
+                    $group: {_id: "$from", count: {$sum: 1}}
+                }],
+            function (err, res) {
+                var output = res.map(function (item) {
+                    if (item.count > 100) {
+                        return {target: obj.user_id, source: item._id, value: item.count};
+                    }
+                });
+                callback(null, output);
+            }
+        );
+    };
+    // callback(null, obj.user_id);
+}
+
 /* GET email data from a specific department */
 router.param('department', function (req, res, next, id) {
     async.parallel({
@@ -32,41 +62,11 @@ router.param('department', function (req, res, next, id) {
         }, function (err, result) {
             var aggregatefuncs = [];
 
-            function makeAggregateFunc(obj) {
-                return function (callback) {
-                    // var aggregate_query =
-                    // EmailData.aggregate().match({to: obj.user_id}).group({_id: '$from', count: {$sum: 1}});
-
-                    var start = new Date("2010-01-01T00:00:00.0Z");
-                    var end = new Date("2010-01-02T00:00:00.0Z");
-                    EmailData.aggregate([
-                            {
-                                $match: {
-                                    user_id: obj.user_id
-                                    // date: {$gte: start, $lt: end}
-                                }
-                            },
-                            {
-                                $group: {_id: "$from", count: {$sum: 1}}
-                            }],
-                        function (err, res) {
-                            var output = res.map(function (item) {
-                                if (item.count > 100) {
-                                    return {target: obj.user_id, source: item._id, value: item.count};
-                                }
-                            });
-                            callback(null, output);
-                        }
-                    );
-                };
-                // callback(null, obj.user_id);
-            }
-
             var len = result.findUsers.length;
             // len = 10;
 
             for (var i = 0; i < len; i++) {
-                var aggregate_func = makeAggregateFunc(result.findUsers[i]);
+                var aggregate_func = aggregateEmail(result.findUsers[i]);
                 aggregatefuncs.push(aggregate_func);
             }
 
