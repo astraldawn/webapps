@@ -55,13 +55,15 @@ function GraphNodeCtrl($scope, $http) {
 
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
-                (nodes[link.source] = {name: ''});
+                (nodes[link.source] = {name: '', group: link.group});
                 link.target = nodes[link.target] || 
-                (nodes[link.target] = {name: link.target});
+                (nodes[link.target] = {name: link.target, group: link.group});
             });
 
             var width = 500,
             height = 500;
+
+            var color = d3.scale.category20();
 
             var force = d3.layout.force()
             .nodes(d3.values(nodes))
@@ -116,6 +118,7 @@ function GraphNodeCtrl($scope, $http) {
         .data(force.nodes())
         .enter().append("g")
         .attr("class", "node")
+        .style("fill", function(d) { return color(d.group); })
         .call(force.drag);
 
         // add the nodes
