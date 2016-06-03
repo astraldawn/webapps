@@ -4,15 +4,19 @@ angular.module('webapps')
     .controller('GraphNodeCtrl', GraphNodeCtrl);
 
 function GraphNodeCtrl($scope, $http) {
+    
     //Search function
     $scope.dept = {};
     $scope.compareDept = {};
     $scope.availableDept = [];
+    $scope.displayLeftGraph = false;
 
-    var url = '/alldept';
+    var departmentUrl = '/alldept';
+    var dateUrl = '/date/';
+    var emailUrl = "/emaildata/";
 
     $scope.funcAsync = function (query) {
-        $http.get(url).then(
+        $http.get(departmentUrl).then(
             function (response) {
                 $scope.availableDept = response.data;
                 console.log(response);
@@ -28,7 +32,7 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadCompareGraph = function () {
-        generateData($scope.dept.selected, '#compareNodeGraph');
+        generateData($scope.compareDebt.selected, '#compareNodeGraph');
     };
 
     function clearData(graphID) {
@@ -36,9 +40,15 @@ function GraphNodeCtrl($scope, $http) {
     }
 
     function generateData(dept, graphID) {
-        var url = "/emaildata/" + dept;
+        dateUrl += dept;
 
-        d3.json(url, function(error, links) {
+        d3.json(dateUrl, function(error, dates)) {
+            
+        }
+
+        emailUrl += dept;
+
+        d3.json(emailUrl, function(error, links) {
 
             var nodes = {};
 
