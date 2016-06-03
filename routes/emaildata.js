@@ -119,7 +119,7 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     }
 
     var min_weight = 0;
-    var threshold = 1; // Each query has 40% chance of running
+    var threshold = 0.4; // Each query has 40% chance of running
 
     if (day_diff < 100) {
         min_weight = day_diff;
