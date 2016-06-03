@@ -68,7 +68,6 @@ function GraphNodeCtrl($scope, $http) {
                 (nodes[link.source] = {name: '', group: link.sd});
                 link.target = nodes[link.target] || 
                 (nodes[link.target] = {name: link.target, group: link.td});
-                link.value = link.value*2;
             });
 
             clearData(graphID);
@@ -82,7 +81,7 @@ function GraphNodeCtrl($scope, $http) {
                 .nodes(d3.values(nodes))
                 .links(links)
                 .size([width, height])
-                .linkDistance(60)
+                .linkDistance(function(d) { return  d.value + 200; }) 
                 .charge(-300)
                 .on("tick", tick)
                 .start();
