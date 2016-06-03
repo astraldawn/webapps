@@ -26,6 +26,16 @@ text {
   width: 300px;
 }
 
+.graphdatepicker {
+   }
+  .graphdatepicker h4 {
+    display: inline-block;
+  }
+  .graphdatepicker p {
+    display: inline-block; }
+  .graphdatepicker md-datepicker {
+    display: inline-block; }
+
 
 /*.leftGraph {*/
 /*float: left;*/

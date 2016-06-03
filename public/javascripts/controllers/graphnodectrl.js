@@ -9,10 +9,11 @@ function GraphNodeCtrl($scope, $http) {
     $scope.dept = {};
     $scope.compareDept = {};
     $scope.availableDept = [];
-    $scope.displayLeftGraph = false;
+    $scope.leftGraphDisplay = true;
+    $scope.rightGraphDisplay = true;
 
     var departmentUrl = '/alldept';
-    var dateUrl = '/date/';
+    var dateUrl = '/getdate';
     var emailUrl = "/emaildata/";
 
     $scope.funcAsync = function (query) {
@@ -28,25 +29,55 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadGraph = function () {
+        generateGraphDates($scope.dept.selected,'leftGraph');
         generateData($scope.dept.selected, '#nodeGraph');
     };
 
     $scope.reloadCompareGraph = function () {
+        generateGraphDates($scope.compareDebt.selected,'rightGraph');
         generateData($scope.compareDebt.selected, '#compareNodeGraph');
+    };
+
+    $scope.filterLeftGraphByDate = function () {
+        if($scope.leftGraphDateFrom > $scope.leftGraphDateTo) {
+            return;
+        } else {
+            generateData($scope.dept.selected, '#nodeGraph');
+        }
     };
 
     function clearData(graphID) {
         d3.select(graphID).selectAll("*").remove();
     }
 
+    function generateGraphDates(dept, graph) {
+        dateUrl = dept + dateUrl;
+
+        d3.json(dateUrl, function(error, dates) {
+            if(graph === "leftGraph") {
+                $scope.leftGraphMinDate = dates[0].startDate;
+                $scope.leftGraphDateFrom = dates[0].startDate;
+                $scope.leftGraphMaxDate = dates[0].endDate;
+                $scope.leftGraphDateTo = dates[0].endDate;
+                $scope.leftGraphDisplay = false;
+            } else {
+                $scope.rightGraphMinDate = dates[0].startDate;
+                $scope.rightGraphDateFrom = dates[0].startDate;
+                $scope.rightGraphMaxDate = dates[0].endDate;
+                $scope.rightGraphDateTo = dates[0].endDate;
+                $scope.rightGraphDisplay = false;
+            }
+        });
+    }
+
     function generateData(dept, graphID) {
-        dateUrl += dept;
-
-        d3.json(dateUrl, function(error, dates)) {
-            
-        }
-
-        emailUrl += dept;
+        if(graphID === '#nodeGraph') {
+            emailUrl += dept + "," + $scope.leftGraphDateFrom + ","
+                        + $scope.leftGraphDateTo;    
+        } else {
+            emailUrl += dept + "," + $scope.rightGraphDateFrom + ","
+                        + $scope.rightGraphDateTo;    
+        } 
 
         d3.json(emailUrl, function(error, links) {
 
@@ -73,11 +104,18 @@ function GraphNodeCtrl($scope, $http) {
             // ];
             // graphID = '#nodeGraph';
 
-            links.forEach( function(link) {
-                link.source = nodes[link.source] || 
-                (nodes[link.source] = {name: '', group: link.sd});
-                link.target = nodes[link.target] || 
-                (nodes[link.target] = {name: link.target, group: link.td});
+            var maxValue = 0;
+            var targetGroup = links[0].td;
+
+            links.forEach(function (link) {
+                link.target = nodes[link.target] ||
+                    (nodes[link.target] = {name: link.target, group: link.td});
+            });
+
+            links.forEach(function (link) {
+                link.source = nodes[link.source] ||
+                    (nodes[link.source] = {name: '', group: link.sd});
+                maxValue = Math.max(maxValue, link.value);
             });
 
             clearData(graphID);
@@ -91,7 +129,9 @@ function GraphNodeCtrl($scope, $http) {
                 .nodes(d3.values(nodes))
                 .links(links)
                 .size([width, height])
-                .linkDistance(function(d) { return  d.value + 200; }) 
+                .linkDistance(function (d) {
+                    return maxValue - d.value;
+                })
                 .charge(-300)
                 .on("tick", tick)
                 .start();
@@ -106,6 +146,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
+                .attr("transform", "translate("+width/2+","+height/2+") scale(0.15)")
                 .call(zoom)
                 .append('svg:g');
 
@@ -141,12 +182,18 @@ function GraphNodeCtrl($scope, $http) {
                 .data(force.nodes())
                 .enter().append("g")
                 .attr("class", "node")
-                .style("fill", function(d) { return color(d.group); })
+                .style("fill", function (d) {
+                    return color(d.group);
+                })
                 .call(force.drag);
 
             // add the nodes
             node.append("circle")
-                .attr("r", 5);
+                .attr("r", function (d) {
+                    var nodeSize = 10;
+                    if (d.group == targetGroup) return nodeSize * 2;
+                    else return nodeSize;
+                });
 
             // add the text
             node.append("text")
@@ -177,13 +224,12 @@ function GraphNodeCtrl($scope, $http) {
             }
 
 
-
             function zoomed() {
                 svg.attr("transform",
                     "translate(" + d3.event.translate + ")"
                     + " scale(" + d3.event.scale + ")");
             }
 
-    });
-};
+        });
+    };
 };

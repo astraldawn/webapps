@@ -15,28 +15,32 @@ function aggregateEmail(obj) {
     return function (callback) {
         // var aggregate_query =
         // EmailData.aggregate().match({to: obj.user_id}).group({_id: '$from', count: {$sum: 1}});
-
-        var start = new Date("2010-01-01T00:00:00.0Z");
-        var end = new Date("2010-01-02T00:00:00.0Z");
-        EmailData.aggregate([
-                {
-                    $match: {
-                        user_id: obj.user_id
-                        // date: {$gte: start, $lt: end}
-                    }
-                },
-                {
-                    $group: {_id: "$from", count: {$sum: 1}}
-                }],
-            function (err, res) {
-                var output = res.map(function (item) {
-                    if (item.count > 100) {
-                        return {target: obj.user_id, source: item._id, value: item.count};
-                    }
-                });
-                callback(null, output);
-            }
-        );
+        var process = Math.random();
+        if (process > 0.75) {
+            var start = new Date("2010-01-01T00:00:00.0Z");
+            var end = new Date("2010-01-02T00:00:00.0Z");
+            EmailData.aggregate([
+                    {
+                        $match: {
+                            user_id: obj.user_id
+                            // date: {$gte: start, $lt: end}
+                        }
+                    },
+                    {
+                        $group: {_id: "$from", count: {$sum: 1}}
+                    }],
+                function (err, res) {
+                    var output = res.map(function (item) {
+                        if (item.count > 100) {
+                            return {target: obj.user_id, source: item._id, value: item.count};
+                        }
+                    });
+                    callback(null, output);
+                }
+            );
+        } else {
+            callback(null, null)
+        }
     };
     // callback(null, obj.user_id);
 }
