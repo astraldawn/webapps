@@ -8,7 +8,6 @@ function GraphNodeCtrl($scope, $http) {
     $scope.dept = {};
     $scope.compareDept = {};
     $scope.availableDept = [];
-    // $scope.allLinks = [];
 
     var url = '/alldept';
 
@@ -32,46 +31,44 @@ function GraphNodeCtrl($scope, $http) {
         generateData($scope.dept.selected, '#compareNodeGraph');
     };
 
-    //testing
-    // generateData("lol","lol");
-
     function clearData(graphID) {
         d3.select(graphID).selectAll("*").remove();
     }
 
     function generateData(dept, graphID) {
-        var url = "/emaildata/" + dept;
+        // var url = "/emaildata/" + dept;
 
-        d3.json(url, function(error, links) {
+        // d3.json(url, function(error, links) {
 
             var nodes = {};
 
-            if (error) {
-                console.log('URL not found.');
-            }
+            // if (error) {
+            //     console.log('URL not found.');
+            // }
 
             // testing
-            // var links = [
-            // {
-            //     "source" : "lol",
-            //     "target" : "haha",
-            //     "sd" : "1",
-            //     "td" : "2"
-            // },
-            // {
-            //     "source" : "moo",
-            //     "target" : "hehe",
-            //     "sd" : "1",
-            //     "td" : "2"
-            // }
-            // ];
-            // graphID = '#nodeGraph';
+            var links = [
+            {
+                "source" : "lol",
+                "target" : "haha",
+                "sd" : "1",
+                "td" : "2"
+            },
+            {
+                "source" : "moo",
+                "target" : "hehe",
+                "sd" : "1",
+                "td" : "2"
+            }
+            ];
+            graphID = '#nodeGraph';
 
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
                 (nodes[link.source] = {name: '', group: link.sd});
                 link.target = nodes[link.target] || 
                 (nodes[link.target] = {name: link.target, group: link.td});
+                link.value = link.value*2;
             });
 
             clearData(graphID);
@@ -178,6 +175,6 @@ function GraphNodeCtrl($scope, $http) {
                     + " scale(" + d3.event.scale + ")");
             }
 
-    });
+    // });
 };
 };
