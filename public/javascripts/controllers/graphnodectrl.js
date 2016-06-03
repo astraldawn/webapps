@@ -8,6 +8,8 @@ function GraphNodeCtrl($scope, $http) {
     $scope.dept = {};
     $scope.compareDept = {};
     $scope.availableDept = [];
+    // $scope.allLinks = [];
+
     var url = '/alldept';
 
     $scope.funcAsync = function (query) {
@@ -31,12 +33,12 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     //testing
-    generateData("lol","lol");
+    // generateData("lol","lol");
+    
     function generateData(dept, graphID) {
+        var url = "/emaildata/" + dept;
 
-        // var url = "/emaildata/" + dept;
-
-        // d3.json(url, function(error, links) {
+        d3.json(url, function(error, links) {
 
             var nodes = {};
 
@@ -44,30 +46,30 @@ function GraphNodeCtrl($scope, $http) {
                 console.log('URL not found.');
             }
 
-            testing
-            var links = [
-            {
-                "source" : "lol",
-                "target" : "haha",
-                "group" : "1"
-            },
-            {
-                "source" : "moo",
-                "target" : "hehe",
-                "group" : "2"
-            }
-            ];
-            graphID = '#nodeGraph';
+            // testing
+            // var links = [
+            // {
+            //     "source" : "lol",
+            //     "target" : "haha",
+            //     "sd" : "1",
+            //     "td" : "2"
+            // },
+            // {
+            //     "source" : "moo",
+            //     "target" : "hehe",
+            //     "sd" : "1",
+            //     "td" : "2"
+            // }
+            // ];
+            // graphID = '#nodeGraph';
 
             links.forEach( function(link) {
                 link.source = nodes[link.source] || 
-                (nodes[link.source] = {name: '', group: link.group});
+                (nodes[link.source] = {name: '', group: link.sd});
                 link.target = nodes[link.target] || 
-                (nodes[link.target] = {name: link.target, group: link.group});
+                (nodes[link.target] = {name: link.target, group: link.td});
             });
 
-            // var width = 500,
-            //     height = 500;
             var width = d3.select(graphID).style("width").split("px").shift();
             var height = width * 0.8;
 
@@ -170,6 +172,6 @@ function GraphNodeCtrl($scope, $http) {
                     + " scale(" + d3.event.scale + ")");
             }
 
-    // });
+    });
 };
 };
