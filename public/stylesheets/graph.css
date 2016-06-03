@@ -17,24 +17,24 @@ text {
 }
 
 #nodeGraph, #compareNodeGraph {
-  width: 500px;
-  height: 500px;
-  border: 0.5px solid black;
+  /*width: 500px;*/
+  /*height: 500px;*/
+  /*border: 0.5px solid black;*/
 }
 
 #searchBar {
   width: 300px;
 }
 
-.leftGraph {
-  float: left;
-}
+/*.leftGraph {*/
+/*float: left;*/
+/*}*/
 
-.rightGraph {
-  margin-left: 625px;
-}
+/*.rightGraph {*/
+/*margin-left: 625px;*/
+/*}*/
 
-#graphLayout {
-  margin-left: -25%;
-  position: relative;
-}
+/*#graphLayout {*/
+  /*margin-left: -25%;*/
+  /*position: relative;*/
+/*}*/

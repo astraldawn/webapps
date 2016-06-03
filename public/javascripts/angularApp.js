@@ -102,8 +102,8 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
         }
     });
 
-    $stateProvider.state('testgraph', {
-        url: '/testgraph',
+    $stateProvider.state('behaviour', {
+        url: '/behaviour',
         views: {
             'main': {
                 templateUrl: 'pages/graph.ejs',
