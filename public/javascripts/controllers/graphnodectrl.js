@@ -4,7 +4,7 @@ angular.module('webapps')
     .controller('GraphNodeCtrl', GraphNodeCtrl);
 
 function GraphNodeCtrl($scope, $http) {
-    
+
     //Search function
     $scope.dept = {};
     $scope.compareDept = {};
@@ -14,6 +14,8 @@ function GraphNodeCtrl($scope, $http) {
 
     var departmentUrl = '/alldept';
     var dateUrl = '/getdate';
+    var dateUrlfix = '/getdate';
+    var emailUrlfix = "/emaildata/";
     var emailUrl = "/emaildata/";
 
     $scope.funcAsync = function (query) {
@@ -29,17 +31,17 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadGraph = function () {
-        generateGraphDates($scope.dept.selected,'leftGraph');
-        generateData($scope.dept.selected, '#nodeGraph');
+        generateGraphDates($scope.dept.selected, 'leftGraph');
+        // generateData($scope.dept.selected, '#nodeGraph');
     };
 
     $scope.reloadCompareGraph = function () {
-        generateGraphDates($scope.compareDebt.selected,'rightGraph');
-        generateData($scope.compareDebt.selected, '#compareNodeGraph');
+        generateGraphDates($scope.compareDebt.selected, 'rightGraph');
+        // generateData($scope.compareDebt.selected, '#compareNodeGraph');
     };
 
     $scope.filterLeftGraphByDate = function () {
-        if($scope.leftGraphDateFrom > $scope.leftGraphDateTo) {
+        if ($scope.leftGraphDateFrom > $scope.leftGraphDateTo) {
             return;
         } else {
             generateData($scope.dept.selected, '#nodeGraph');
@@ -51,35 +53,42 @@ function GraphNodeCtrl($scope, $http) {
     }
 
     function generateGraphDates(dept, graph) {
-        dateUrl = dept + dateUrl;
+        dateUrl = emailUrlfix + dept + dateUrlfix;
 
-        d3.json(dateUrl, function(error, dates) {
-            if(graph === "leftGraph") {
-                $scope.leftGraphMinDate = dates[0].startDate;
-                $scope.leftGraphDateFrom = dates[0].startDate;
-                $scope.leftGraphMaxDate = dates[0].endDate;
-                $scope.leftGraphDateTo = dates[0].endDate;
+        d3.json(dateUrl, function (error, dates) {
+            console.log(dates.startDate);
+            if (graph === "leftGraph") {
+                $scope.leftGraphMinDate = dates.startDate;
+                $scope.leftGraphDateFrom = dates.startDate;
+                $scope.leftGraphMaxDate = dates.endDate;
+                $scope.leftGraphDateTo = dates.endDate;
                 $scope.leftGraphDisplay = false;
+
+                generateData($scope.dept.selected, '#nodeGraph');
             } else {
-                $scope.rightGraphMinDate = dates[0].startDate;
-                $scope.rightGraphDateFrom = dates[0].startDate;
-                $scope.rightGraphMaxDate = dates[0].endDate;
-                $scope.rightGraphDateTo = dates[0].endDate;
+                $scope.rightGraphMinDate = dates.startDate;
+                $scope.rightGraphDateFrom = dates.startDate;
+                $scope.rightGraphMaxDate = dates.endDate;
+                $scope.rightGraphDateTo = dates.endDate;
                 $scope.rightGraphDisplay = false;
+
+
+                generateData($scope.compareDebt.selected, '#compareNodeGraph');
             }
         });
     }
 
     function generateData(dept, graphID) {
-        if(graphID === '#nodeGraph') {
-            emailUrl += dept + "," + $scope.leftGraphDateFrom + ","
-                        + $scope.leftGraphDateTo;    
+        if (graphID === '#nodeGraph') {
+            console.log($scope.leftGraphDateFrom);
+            emailUrl = emailUrlfix + dept + "/" + $scope.leftGraphDateFrom + "/"
+                + $scope.leftGraphDateTo;
         } else {
-            emailUrl += dept + "," + $scope.rightGraphDateFrom + ","
-                        + $scope.rightGraphDateTo;    
-        } 
+            emailUrl = emailUrlfix + dept + "/" + $scope.rightGraphDateFrom + "/"
+                + $scope.rightGraphDateTo;
+        }
 
-        d3.json(emailUrl, function(error, links) {
+        d3.json(emailUrl, function (error, links) {
 
             var nodes = {};
 
@@ -146,7 +155,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
-                .attr("transform", "translate("+width/2+","+height/2+") scale(0.15)")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom)
                 .append('svg:g');
 
