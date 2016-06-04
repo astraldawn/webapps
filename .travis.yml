@@ -1,6 +1,10 @@
 language: node_js
-node_js:
-  - 0.12
+node_js: 'stable'
 
 notifications:
   email: false
+  
+before_install:
+- echo -e "Host scurker.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- openssl aes-256-cbc -K $encrypted_6a5cf90fd664_key -iv $encrypted_6a5cf90fd664_iv -in deploy-key.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
