@@ -35,7 +35,7 @@ router.get('/allusers', function (req, res, next) {
         }
         var output = [];
         for (var i = 0; i < data.length; i++) {
-            if (data[i].user_id != "") {
+            if (data[i].user_id !== "") {
                 output.push(data[i].user_id);
             }
         }
@@ -53,7 +53,7 @@ router.get('/alldept', function (req, res, next) {
         }
         var output = [];
         for (var i = 0; i < data.length; i++) {
-            if (data[i] != "") {
+            if (data[i] !== "") {
                 output.push(data[i]);
             }
         }
