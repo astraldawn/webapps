@@ -78,9 +78,7 @@ function GraphBarCtrl($scope, $http, $q) {
             //assume MM/DD/YYYY HH:MM:SS
             var date = new Date(d);
 
-            return date.getFullYear() + "-"
-                + ("0" + (date.getMonth() + 1)).slice(-2) + "-"
-                + ("0" + date.getDate()).slice(-2);
+            return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
         }
 
         function generateData(arr) {
@@ -317,5 +315,5 @@ function GraphBarCtrl($scope, $http, $q) {
             // });
 
         }
-    }
+    };
 }

@@ -83,7 +83,7 @@ function GraphNodeCtrl($scope, $http) {
                 
                 generateData($scope.compareDept.selected, graph);
             }
-            
+
         });
     }
 
@@ -155,8 +155,8 @@ function GraphNodeCtrl($scope, $http) {
 
             // Arrows
             svg.append("svg:defs").selectAll("marker")
-                .data(["end"])      
-                .enter().append("svg:marker")    
+                .data(["end"])
+                .enter().append("svg:marker")
                 .attr("id", String)
                 .attr("viewBox", "0 -5 10 10")
                 .attr("refX", 15)

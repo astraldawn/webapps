@@ -14,17 +14,17 @@ function ProfCtrl($scope, $state, auth) {
     $scope.updateProfile = function () {
         // TODO: Find current user.
 
-        if ($scope.firstName != '') {
+        if ($scope.firstName !== '') {
             user.firstName = $scope.firstName;
         }
-        if ($scope.lastName != '') {
+        if ($scope.lastName !== '') {
             user.lastName = $scope.lastName;
         }
-        if ($scope.email != '') {
+        if ($scope.email !== '') {
             user.email = $scope.email;
         }
-        if ($scope.description != '') {
+        if ($scope.description !== '') {
             user.description = $scope.description;
         }
-    }
+    };
 }

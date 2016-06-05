@@ -61,8 +61,8 @@ UserSchema.methods.generateJWT = function () {
     }, 'SECRET');
 
     // SECRET should be an environment variable, should not be hard coded 
-		// (#envvar), same as routes/index.js
-}
+    // (#envvar), same as routes/index.js
+};
 
 // TODO: Find a possible not used username based on user info.
 

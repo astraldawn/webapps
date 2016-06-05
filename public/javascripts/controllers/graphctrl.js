@@ -2,31 +2,6 @@
  * Created by mark on 27/05/16.
  */
 
-
-// app.factory('JSONService', function($http) {
-//    var getData = function() {
-//      var urls = ["/userdata/logon/" + $scope.user.selected,
-//                  "/userdata/file/" + $scope.user.selected,
-//                  "/userdata/device/" + $scope.user.selected];
-
-//      var requests = []
-
-//      for(var i = 0; i < urls.length; i++) {
-//        requests.push($http.get(urls[i]));
-//      }
-
-//      var data = [];
-//      $q.all(requests).then(function (ret) {
-//        data = data.concat(ret[0],ret[1],ret[2]);
-//      },
-//      function (err) {
-//        console.log("Errors");
-//      });
-//    };
-
-//    return { getData: getData };
-// });
-
 GraphCtrl.$inject = ['$scope', '$http', '$q'];
 
 angular.module('webapps')
@@ -79,12 +54,12 @@ function GraphCtrl($scope, $http, $q) {
         //assume MM/DD/YYYY HH:MM:SS
         var date = new Date(d);
 
-        return date.getFullYear() + "-"
-            + ("0" + (date.getMonth() + 1)).slice(-2) + "-"
-            + ("0" + date.getDate()).slice(-2)
-            + " " + date.getHours()
-            + ":" + date.getMinutes()
-            + ":" + date.getSeconds();
+        return date.getFullYear() + "-" +
+            ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
+            ("0" + date.getDate()).slice(-2) +
+            " " + date.getHours() +
+            ":" + date.getMinutes() +
+            ":" + date.getSeconds();
     }
 
     function generateData(arr) {

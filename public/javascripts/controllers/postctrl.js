@@ -28,5 +28,5 @@ function PostsCtrl($scope, posts, post, auth) {
 
     $scope.incrementUpvotes = function (comment) {
         posts.upvoteComment(post, comment);
-    }
+    };
 }

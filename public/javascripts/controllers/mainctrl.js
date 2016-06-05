@@ -30,6 +30,6 @@ function MainCtrl($scope, posts, auth) {
     // Pass by instance
     $scope.incrementUpvotes = function (post) {
         posts.upvote(post);
-    }
+    };
 
 }
