@@ -63,8 +63,7 @@ function GraphNodeCtrl($scope, $http) {
         var dateUrl = appendEmailUrl + dept + appendDateUrl;
 
         d3.json(dateUrl, function (error, dates) {
-            alert(dates.startDate);
-            alert(dates.endDate);
+            alert("updated");
             var startDate = dates.startDate;
             var endDate = dates.endDate;
             if (graph === leftGraph) {
