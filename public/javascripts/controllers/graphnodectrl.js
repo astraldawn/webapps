@@ -80,7 +80,7 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
                 $scope.rightGraphDisplay = false;
-                
+
                 generateData($scope.compareDept.selected, graph);
             }
 
@@ -91,11 +91,11 @@ function GraphNodeCtrl($scope, $http) {
         var emailUrl;
 
         if (graphID === leftGraph) {
-            emailUrl = appendEmailUrl + dept + "/" + $scope.leftGraphDateFrom + "/"
-                + $scope.leftGraphDateTo;
+            emailUrl = appendEmailUrl + dept + "/" + $scope.leftGraphDateFrom + "/" +
+                $scope.leftGraphDateTo;
         } else {
-            emailUrl = appendEmailUrl + dept + "/" + $scope.rightGraphDateFrom + "/"
-                + $scope.rightGraphDateTo;
+            emailUrl = appendEmailUrl + dept + "/" + $scope.rightGraphDateFrom + "/" +
+                $scope.rightGraphDateTo;
         }
 
         d3.json(emailUrl, function (error, links) {
@@ -223,10 +223,10 @@ function GraphNodeCtrl($scope, $http) {
 
             function zoomed() {
                 svg.attr("transform",
-                    "translate(" + d3.event.translate + ")"
-                    + " scale(" + d3.event.scale + ")");
+                    "translate(" + d3.event.translate + ")" +
+                    " scale(" + d3.event.scale + ")");
             }
 
         });
-    };
-};
+    }
+}
