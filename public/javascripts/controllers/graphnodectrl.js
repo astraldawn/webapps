@@ -11,7 +11,7 @@ function GraphNodeCtrl($scope, $http) {
     $scope.availableDept = [];
     $scope.leftGraphDisplay = true;
     $scope.rightGraphDisplay = true;
-
+    
     var departmentUrl = '/alldept';
     var appendDateUrl = '/getdate';
     var appendEmailUrl = "/emaildata/";

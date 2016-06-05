@@ -26,7 +26,7 @@
 
     <br/>
 
-    <div id="nodeGraph" class="leftGraph"></div>
+    <div id="nodeGraph" class="leftGraph" ng-dblclick="isFullScreen = !isFullScreen" ng-class="{fullscreen: isFullScreen}"></div>
     <div ng-cloak="" class="graphdatepicker">
         <md-content>
         <h4 ng-hide='leftGraphDisplay'>From:</h4>
@@ -51,7 +51,7 @@
 
 <br/>
 
-    <div id="compareNodeGraph" class="rightGraph"></div>
+    <div id="compareNodeGraph" class="rightGraph" ng-dblclick="isFullScreen = !isFullScreen" ng-class="{fullscreen: isFullScreen}"></div>
     <div ng-cloak="" class="graphdatepicker">
         <md-content>
         <h4 ng-hide='rightGraphDisplay'>From:</h4>
