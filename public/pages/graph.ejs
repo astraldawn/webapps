@@ -40,9 +40,9 @@
 
 <div class="col-md-5 col-md-offset-2">
 
-    <ui-select ng-model="compareDebt.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
+    <ui-select ng-model="compareDept.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
     on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
-    <ui-select-match placeholder="Select department...">{{compareDebt.selected}}</ui-select-match>
+    <ui-select-match placeholder="Select department...">{{compareDept.selected}}</ui-select-match>
     <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
     repeat="dept in availableDept | filter:$select.search">
     {{dept}}
