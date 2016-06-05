@@ -72,14 +72,16 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.leftGraphMaxDate = endDate;
                 $scope.leftGraphDateTo = endDate;
                 $scope.leftGraphDisplay = false;
+                generateData($scope.debt.selected, graph);
             } else {
                 $scope.rightGraphMinDate = startDate;
                 $scope.rightGraphDateFrom = startDate;
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
                 $scope.rightGraphDisplay = false;
+                generateData($scope.compareDebt.selected, graph);
             }
-            generateData($scope.compareDebt.selected, graph);
+            
         });
     }
 
