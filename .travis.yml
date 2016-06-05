@@ -3,10 +3,12 @@ node_js: 'stable'
 
 notifications:
   email: false
-  
-after_success:
-- git remote add deploy ssh://mark@imperial.statustoday.com/home/mark/deployment
-- git push deploy
+
+deploy:
+    provider: script
+    script: scripts/deploy.sh
+    on:
+        branch: master
 
 before_install:
 - echo -e "Host imperial.statustoday.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
