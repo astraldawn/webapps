@@ -32,10 +32,14 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadGraph = function () {
+        alert("WOOT");
+        alert($scope.debt.selected);
         generateGraphDates($scope.dept.selected, leftGraph);
     };
 
     $scope.reloadCompareGraph = function () {
+        alert("OLLA");
+        alert($scope.compareDebt.selected);
         generateGraphDates($scope.compareDebt.selected, rightGraph);
     };
 
