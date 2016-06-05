@@ -70,7 +70,10 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.leftGraphDateFrom = startDate;
                 $scope.leftGraphMaxDate = endDate;
                 $scope.leftGraphDateTo = endDate;
-                $scope.leftGraphDisplay = false;
+
+                $scope.$apply(function () {
+                    $scope.leftGraphDisplay = false;
+                });
 
                 generateData($scope.dept.selected, graph);
 
@@ -80,6 +83,10 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
                 $scope.rightGraphDisplay = false;
+
+                $scope.$apply(function () {
+                    $scope.rightGraphDisplay = false;
+                });
 
                 generateData($scope.compareDept.selected, graph);
             }
