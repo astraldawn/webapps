@@ -32,15 +32,11 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadGraph = function () {
-        alert("WOOT");
-        alert($scope.debt.selected);
         generateGraphDates($scope.dept.selected, leftGraph);
     };
 
     $scope.reloadCompareGraph = function () {
-        alert("OLLA");
-        alert($scope.compareDebt.selected);
-        generateGraphDates($scope.compareDebt.selected, rightGraph);
+        generateGraphDates($scope.compareDept.selected, rightGraph);
     };
 
     $scope.filterLeftGraphByDate = function () {
@@ -67,7 +63,6 @@ function GraphNodeCtrl($scope, $http) {
         var dateUrl = appendEmailUrl + dept + appendDateUrl;
 
         d3.json(dateUrl, function (error, dates) {
-            alert("updated");
             var startDate = dates.startDate;
             var endDate = dates.endDate;
             if (graph === leftGraph) {
@@ -76,14 +71,14 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.leftGraphMaxDate = endDate;
                 $scope.leftGraphDateTo = endDate;
                 $scope.leftGraphDisplay = false;
-                generateData($scope.debt.selected, graph);
+                generateData($scope.dept.selected, graph);
             } else {
                 $scope.rightGraphMinDate = startDate;
                 $scope.rightGraphDateFrom = startDate;
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
                 $scope.rightGraphDisplay = false;
-                generateData($scope.compareDebt.selected, graph);
+                generateData($scope.compareDept.selected, graph);
             }
             
         });
