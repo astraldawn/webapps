@@ -11,7 +11,7 @@ function GraphNodeCtrl($scope, $http) {
     $scope.availableDept = [];
     $scope.leftGraphDisplay = true;
     $scope.rightGraphDisplay = true;
-    
+
     var departmentUrl = '/alldept';
     var appendDateUrl = '/getdate';
     var appendEmailUrl = "/emaildata/";
@@ -150,6 +150,8 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("width", width)
                 .attr("height", height)
                 .attr("pointer-events", "all")
+                .attr('ng-dblclick', 'isFullScreen = !isFullScreen')
+                .attr('ng-class', '{fullscreen: isFullScreen}')
                 .append('svg:g')
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom)
