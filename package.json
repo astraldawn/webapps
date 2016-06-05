@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "./node_modules/jshint/bin/jshint hello.js"
+    "test": "grunt test"
   },
   "dependencies": {
     "angular-fullpage.js": "^0.2.3",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-ng-annotate": "^2.0.2"
   }

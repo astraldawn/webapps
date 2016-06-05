@@ -81,11 +81,11 @@ function GraphNodeCtrl($scope, $http) {
     function generateData(dept, graphID) {
         if (graphID === '#nodeGraph') {
             console.log($scope.leftGraphDateFrom);
-            emailUrl = emailUrlfix + dept + "/" + $scope.leftGraphDateFrom + "/"
-                + $scope.leftGraphDateTo;
+            emailUrl = emailUrlfix + dept + "/" + $scope.leftGraphDateFrom + "/" +
+                $scope.leftGraphDateTo;
         } else {
-            emailUrl = emailUrlfix + dept + "/" + $scope.rightGraphDateFrom + "/"
-                + $scope.rightGraphDateTo;
+            emailUrl = emailUrlfix + dept + "/" + $scope.rightGraphDateFrom + "/" +
+                $scope.rightGraphDateTo;
         }
 
         d3.json(emailUrl, function (error, links) {
@@ -235,10 +235,10 @@ function GraphNodeCtrl($scope, $http) {
 
             function zoomed() {
                 svg.attr("transform",
-                    "translate(" + d3.event.translate + ")"
-                    + " scale(" + d3.event.scale + ")");
+                    "translate(" + d3.event.translate + ")" +
+                    " scale(" + d3.event.scale + ")");
             }
 
         });
-    };
-};
+    }
+}
