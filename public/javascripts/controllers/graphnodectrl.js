@@ -13,10 +13,8 @@ function GraphNodeCtrl($scope, $http) {
     $scope.rightGraphDisplay = true;
 
     var departmentUrl = '/alldept';
-    var dateUrl = '/getdate';
     var dateUrlfix = '/getdate';
     var emailUrlfix = "/emaildata/";
-    var emailUrl = "/emaildata/";
 
     $scope.funcAsync = function (query) {
         $http.get(departmentUrl).then(
@@ -48,15 +46,24 @@ function GraphNodeCtrl($scope, $http) {
         }
     };
 
+    $scope.filterRightGraphByDate = function () {
+        if ($scope.rightGraphDateFrom > $scope.rightGraphDateTo) {
+            return;
+        } else {
+            generateData($scope.compareDept.selected, '#compareNodeGraph');
+        }
+    };
+
     function clearData(graphID) {
         d3.select(graphID).selectAll("*").remove();
     }
 
     function generateGraphDates(dept, graph) {
-        dateUrl = emailUrlfix + dept + dateUrlfix;
+        var dateUrl = emailUrlfix + dept + dateUrlfix;
 
         d3.json(dateUrl, function (error, dates) {
-            console.log(dates.startDate);
+            alert(dates.startDate);
+            alert(dates.endDate);
             if (graph === "leftGraph") {
                 $scope.leftGraphMinDate = dates.startDate;
                 $scope.leftGraphDateFrom = dates.startDate;
@@ -79,6 +86,8 @@ function GraphNodeCtrl($scope, $http) {
     }
 
     function generateData(dept, graphID) {
+        var emailUrl;
+
         if (graphID === '#nodeGraph') {
             console.log($scope.leftGraphDateFrom);
             emailUrl = emailUrlfix + dept + "/" + $scope.leftGraphDateFrom + "/"
