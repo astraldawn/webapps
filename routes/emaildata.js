@@ -155,7 +155,7 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
             var query_dept = departmentMap[id];
             var output = [];
             for (i = 0; i < merged.length; i++) {
-                if (merged[i] !== undefined) {
+                if (merged[i] !== null && merged[i] !== undefined) {
                     var cur = merged[i].source;
                     var output_tmp = {};
                     output_tmp.target = merged[i].target;
