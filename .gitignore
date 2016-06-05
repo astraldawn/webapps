@@ -35,5 +35,14 @@ node_modules
 # IDE
 .idea
 
+# MACOSX
+*/.DS_Store
+.DS_Store
+.DS_Store?
+
 # Others
 .DS_Store
+
+# Data files
+data
+public/js-safe

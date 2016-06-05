@@ -7,6 +7,9 @@ var jwt = require('express-jwt');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 /* Registration */
 router.post('/register', function (req, res, next) {
     /* Some error checking.*/

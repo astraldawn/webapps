@@ -1,0 +1,51 @@
+path.link {
+  fill: none;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+circle {
+  /*fill: #00ff00;*/
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+text {
+  fill: #000;
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+#nodeGraph, #compareNodeGraph {
+  /*width: 500px;*/
+  /*height: 500px;*/
+  /*border: 0.5px solid black;*/
+}
+
+#searchBar {
+  width: 300px;
+}
+
+.graphdatepicker {
+   }
+  .graphdatepicker h4 {
+    display: inline-block;
+  }
+  .graphdatepicker p {
+    display: inline-block; }
+  .graphdatepicker md-datepicker {
+    display: inline-block; }
+
+
+/*.leftGraph {*/
+/*float: left;*/
+/*}*/
+
+/*.rightGraph {*/
+/*margin-left: 625px;*/
+/*}*/
+
+/*#graphLayout {*/
+  /*margin-left: -25%;*/
+  /*position: relative;*/
+/*}*/
