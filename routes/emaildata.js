@@ -47,7 +47,7 @@ function aggregateEmail(user_id, min_weight, threshold, start, end) {
                 }
             );
         } else {
-            callback(null, null)
+            callback(null, null);
         }
     };
 }
@@ -137,8 +137,8 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     for (i = 0; i < result.allUsers.length; i++) {
         var email = result.allUsers[i].email;
         emailMap[email] = {};
-        emailMap[email]["user_id"] = result.allUsers[i].user_id;
-        emailMap[email]["department"] = result.allUsers[i].department;
+        emailMap[email].user_id = result.allUsers[i].user_id;
+        emailMap[email].department = result.allUsers[i].department;
     }
 
     var departmentMap = {};
@@ -155,21 +155,21 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
             var query_dept = departmentMap[id];
             var output = [];
             for (i = 0; i < merged.length; i++) {
-                if (merged[i] != undefined) {
+                if (merged[i] !== null && merged[i] !== undefined) {
                     var cur = merged[i].source;
                     var output_tmp = {};
-                    output_tmp["target"] = merged[i].target;
-                    output_tmp["source"] = cur;
-                    output_tmp["value"] = merged[i].value;
+                    output_tmp.target = merged[i].target;
+                    output_tmp.source = cur;
+                    output_tmp.value = merged[i].value;
                     if (emailMap[cur] !== undefined) {
-                        var cur_id = emailMap[cur]["user_id"];
-                        var cur_dept = emailMap[cur]["department"];
-                        output_tmp["source"] = cur_id;
-                        output_tmp["sd"] = departmentMap[cur_dept];
+                        var cur_id = emailMap[cur].user_id;
+                        var cur_dept = emailMap[cur].department;
+                        output_tmp.source = cur_id;
+                        output_tmp.sd = departmentMap[cur_dept];
                     } else {
-                        output_tmp["sd"] = external;
+                        output_tmp.sd = external;
                     }
-                    output_tmp["td"] = query_dept;
+                    output_tmp.td = query_dept;
                     output.push(output_tmp);
                 }
             }
@@ -180,8 +180,8 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
 
 router.get('/:department/getdate', function (req, res) {
     var output = {};
-    output["startDate"] = req.startDate;
-    output["endDate"] = req.endDate;
+    output.startDate = req.startDate;
+    output.endDate = req.endDate;
     res.json(output);
 });
 

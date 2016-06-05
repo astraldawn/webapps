@@ -25,6 +25,9 @@ module.exports = function (grunt) {
                 src: ['./public/js/app.js'],
                 dest: './public/js/app.js'
             }
+        },
+        jshint: {
+            all: ['./public/javascripts/**/*.js', './routes/*.js', './models/*.js']
         }
     });
 
@@ -32,7 +35,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     //register grunt default task
     grunt.registerTask('default', ['ngAnnotate', 'concat', 'uglify']);
+    grunt.registerTask('test', ['jshint']);
 };
