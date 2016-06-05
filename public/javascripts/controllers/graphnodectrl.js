@@ -194,9 +194,7 @@ function GraphNodeCtrl($scope, $http) {
 
             node.append("circle")
                 .attr("r", function (d) {
-                    var nodeSize = 10;
-                    if (d.group == targetGroup) return nodeSize * 2;
-                    else return nodeSize;
+                    return 25;
                 });
 
             // Text
