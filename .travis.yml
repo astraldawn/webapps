@@ -6,7 +6,7 @@ notifications:
   
 after_success:
 - git remote add deploy ssh://mark@statustoday.com/home/mark/deployment
-- git push deploy master
+- git push deploy
 
 before_install:
 - echo -e "Host imperial.statustoday.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
