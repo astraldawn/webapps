@@ -112,7 +112,7 @@ function GraphNodeCtrl($scope, $http) {
             var maxValue = 0;
 
             var targetGroup = '';
-            if(links[0] != null) {
+            if(links[0] !== null || links[0] !== undefined) {
                targetGroup = links[0].td;
             }
 
