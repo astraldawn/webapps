@@ -25,31 +25,31 @@ function aggregateEmail(user_id, min_weight, threshold, start, end) {
     return function (callback) {
         // var aggregate_query =
         // EmailData.aggregate().match({to: obj.user_id}).group({_id: '$from', count: {$sum: 1}});
-        var process = Math.random();
-        if (process < threshold) {
-            EmailData.aggregate([
-                    {
-                        $match: {
-                            user_id: user_id,
-                            date: {$gte: start, $lte: end}
-                        }
-                    },
-                    {
-                        $group: {_id: "$from", count: {$sum: 1}}
-                    }],
-                function (err, res) {
-                    var output = res.map(function (item) {
-                        if (item.count > min_weight) {
-                            return {target: user_id, source: item._id, value: item.count};
-                        }
-                    });
-                    callback(null, output);
-                }
-            );
-        } else {
-            callback(null, null);
-        }
+        // var process = Math.random();
+        // if (process < threshold) {
+        EmailData.aggregate([
+                {
+                    $match: {
+                        user_id: user_id,
+                        date: {$gte: start, $lte: end}
+                    }
+                },
+                {
+                    $group: {_id: "$from", count: {$sum: 1}}
+                }],
+            function (err, res) {
+                var output = res.map(function (item) {
+                    if (item.count > min_weight) {
+                        return {target: user_id, source: item._id, value: item.count};
+                    }
+                });
+                callback(null, output);
+            }
+        );
     };
+// else {
+//             callback(null, null);
+//         }
 }
 
 /* GET email data from a specific department */
@@ -70,12 +70,12 @@ router.param('department', function (req, res, next, dept) {
                 query.exec(cb);
             },
             startDate: function (cb) {
-                var query = EmailData.find({}, {_id:0});
+                var query = EmailData.find({}, {_id: 0});
                 query.sort({date: 1}).limit(1).select("date");
                 query.exec(cb);
             },
             endDate: function (cb) {
-                var query = EmailData.find({}, {_id:0});
+                var query = EmailData.find({}, {_id: 0});
                 query.sort({date: -1}).limit(1).select("date");
                 query.exec(cb);
             }
