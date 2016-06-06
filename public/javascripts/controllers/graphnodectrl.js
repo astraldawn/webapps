@@ -110,7 +110,11 @@ function GraphNodeCtrl($scope, $http) {
             var nodes = {};
 
             var maxValue = 0;
-            var targetGroup = links[0].td;
+
+            var targetGroup = '';
+            if(links[0] !== null || links[0] !== undefined) {
+               targetGroup = links[0].td;
+            }
 
             links.forEach(function (link) {
                 link.target = nodes[link.target] ||
@@ -150,8 +154,6 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("width", width)
                 .attr("height", height)
                 .attr("pointer-events", "all")
-                .attr('ng-dblclick', 'isFullScreen = !isFullScreen')
-                .attr('ng-class', '{fullscreen: isFullScreen}')
                 .append('svg:g')
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom)
