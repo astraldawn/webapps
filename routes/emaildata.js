@@ -118,19 +118,19 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
         return;
     }
 
-    var min_weight = 0;
+    var min_weight = 2;
     var threshold = 1;
 
     /* Scale possibility of each query running to the input size */
-    if (len > 50) {
-        len = 50;
+    if (len > 25) {
+        len = 25;
     }
-
-    if (day_diff < 5) {
-        min_weight = day_diff;
-    } else {
-        min_weight = 5;
-    }
+    //
+    // if (day_diff < 5) {
+    //     min_weight = day_diff;
+    // } else {
+    //     min_weight = 5;
+    // }
 
     for (var i = 0; i < len; i++) {
         var c_user = result.findUsers[i].user_id;
