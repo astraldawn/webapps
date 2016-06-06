@@ -122,14 +122,14 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     var threshold = 1;
 
     /* Scale possibility of each query running to the input size */
-    if (len > 60) {
-        threshold = 60 / len;
+    if (len > 50) {
+        len = 50;
     }
 
-    if (day_diff < 30) {
+    if (day_diff < 5) {
         min_weight = day_diff;
     } else {
-        min_weight = 30;
+        min_weight = 5;
     }
 
     for (var i = 0; i < len; i++) {
