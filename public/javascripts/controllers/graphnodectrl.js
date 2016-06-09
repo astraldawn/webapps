@@ -131,7 +131,7 @@ function GraphNodeCtrl($scope, $http) {
             clearData(graphID);
 
             var width = d3.select(graphID).style("width").split("px").shift();
-            var height = width * 0.75;
+            var height = width * 0.60;
 
             var color = d3.scale.category20();
 
