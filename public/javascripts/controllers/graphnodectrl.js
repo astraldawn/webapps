@@ -140,7 +140,7 @@ function GraphNodeCtrl($scope, $http) {
                 .links(links)
                 .size([width, height])
                 .linkDistance(function (d) {
-                    return maxValue - d.value;
+                    return maxValue - d.value + 20;
                 })
                 .charge(-300)
                 .on("tick", tick)
@@ -154,40 +154,43 @@ function GraphNodeCtrl($scope, $http) {
             var svg = d3.select(graphID).append("svg")
                 .attr("width", width)
                 .attr("height", height)
-                .attr("pointer-events", "all")
-                //.append('svg:g')
-                //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
-                .call(zoom);
+                .attr("pointer-events", "all");
+            //.append('svg:g');
+            //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
+            //.call(zoom);
 
-            svg.append('svg:rect')
+            var vis = svg.append('vis:g');
+            vis.call(zoom);
+
+            vis.append('vis:rect')
                 .attr('width', width)
                 .attr('height', height)
                 .attr('fill', 'none');
 
-            // Arrows
-            svg.append("svg:defs").selectAll("marker")
-                .data(["end"])
-                .enter().append("svg:marker")
-                .attr("id", String)
-                .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 15)
-                .attr("refY", -1.5)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
-                .attr("orient", "auto")
-                .append("svg:path")
-                .attr("d", "M0,-5L10,0L0,5");
+            // // Arrows
+            // vis.append("vis:defs").selectAll("marker")
+            //     .data(["end"])
+            //     .enter().append("vis:marker")
+            //     .attr("id", String)
+            //     .attr("viewBox", "0 -5 10 10")
+            //     .attr("refX", 15)
+            //     .attr("refY", -1.5)
+            //     .attr("markerWidth", 6)
+            //     .attr("markerHeight", 6)
+            //     .attr("orient", "auto")
+            //     .append("vis:path")
+            //     .attr("d", "M0,-5L10,0L0,5");
 
             // Links
-            var path = svg.append("svg:g").selectAll("path")
+            var path = vis.append("vis:g").selectAll("path")
                 .data(force.links())
-                .enter().append("svg:path")
+                .enter().append("vis:path")
                 //    .attr("class", function(d) { return "link " + d.type; })
                 .attr("class", "link")
                 .attr("marker-end", "url(#end)");
 
             // Nodes
-            var node = svg.selectAll(".node")
+            var node = vis.selectAll(".node")
                 .data(force.nodes())
                 .enter().append("g")
                 .attr("class", "node")
@@ -205,8 +208,10 @@ function GraphNodeCtrl($scope, $http) {
                 .data(color.domain())
                 .enter().insert("g", ":first-child")
                 .attr("class", "legend")
-                .attr("transform", function(d, i) { 
-                    return "translate(0," + i * 20 + ")"; });
+                .attr("transform", function (d, i) {
+                    console.log(color.domain());
+                    return "translate(0," + i * 20 + ")";
+                });
 
             legend.append("rect")
                 .attr("x", width - 18)
@@ -219,9 +224,11 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
-                .text(function(d) {
-                    var desc = $scope.availableDept[d-1] || "External";
-                    return desc; });
+                .text(function (d) {
+                    var desc = $scope.availableDept[d - 1] || "External";
+                    return desc;
+                });
+
 
             // Text
             // node.append("text")
@@ -253,7 +260,7 @@ function GraphNodeCtrl($scope, $http) {
 
 
             function zoomed() {
-                svg.attr("transform",
+                vis.attr("transform",
                     "translate(" + d3.event.translate + ")" +
                     " scale(" + d3.event.scale + ")");
                 // svg.selectAll(".legend")
