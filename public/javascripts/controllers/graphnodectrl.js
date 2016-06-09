@@ -165,9 +165,9 @@ function GraphNodeCtrl($scope, $http) {
                 .call(zoom);
 
             // Arrows
-            svg.append("svg:defs").selectAll("marker")
+            svg.append("svg:rect:defs").selectAll("marker")
                 .data(["end"])
-                .enter().append("svg:marker")
+                .enter().append("svg:rect:marker")
                 .attr("id", String)
                 .attr("viewBox", "0 -5 10 10")
                 .attr("refX", 15)
@@ -179,9 +179,9 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("d", "M0,-5L10,0L0,5");
 
             // Links
-            var path = svg.append("svg:g").selectAll("path")
+            var path = svg.append("svg:rect:g").selectAll("path")
                 .data(force.links())
-                .enter().append("svg:path")
+                .enter().append("svg:rect:path")
                 //    .attr("class", function(d) { return "link " + d.type; })
                 .attr("class", "link")
                 .attr("marker-end", "url(#end)");
