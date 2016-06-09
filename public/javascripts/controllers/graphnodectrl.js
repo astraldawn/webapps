@@ -204,10 +204,9 @@ function GraphNodeCtrl($scope, $http) {
 
             var legend = svg.selectAll(".legend")
                 .data(color.domain())
-                .enter().append("g")
+                .enter().insert("g", ":first-child")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
-                    console.log(i);
                     return "translate(0," + i * 20 + ")"; });
 
             legend.append("rect")
