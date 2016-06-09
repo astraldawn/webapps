@@ -218,7 +218,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("transform", function(d, i) { 
                     return "translate(-10," + i * 20 + ")"; });
 
-            legend.append("rect")
+            legend.append("rectangle")
                 .attr("x", width - 18)
                 .attr("width", 18)
                 .attr("height", 18)
