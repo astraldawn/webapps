@@ -211,11 +211,12 @@ function GraphNodeCtrl($scope, $http) {
             //         return d.name;
             //     });
 
-            var legend = svg.selectAll(".legend")
+            var legend = d3.select(graphID).selectAll(".legend")
                 .data(color.domain())
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
+                    alert(i);
                     return "translate(0," + i * 20 + ")"; });
 
             legend.append("rect")
@@ -258,12 +259,12 @@ function GraphNodeCtrl($scope, $http) {
                 svg.attr("transform",
                     "translate(" + d3.event.translate + ")" +
                     " scale(" + d3.event.scale + ")");
-                svg.selectAll(".legend")
-                .attr("transform", function(d, i) { 
-                    console.log("translate(0," + ((i * 20) + d3.event.translate[1]) + ")");
+                // svg.selectAll(".legend")
+                // .attr("transform", function(d, i) { 
+                //     console.log("translate(0," + ((i * 20) + d3.event.translate[1]) + ")");
 
-                    return "translate(0," + ((i * 20) + d3.event.translate[1]) + ")";
-                     });
+                //     return "translate(0," + ((i * 20) + d3.event.translate[1]) + ")";
+                //      });
 
             }
 
