@@ -157,7 +157,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(1)")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.4)")
                 .call(zoom)
                 .append('svg:g');
 
@@ -211,27 +211,33 @@ function GraphNodeCtrl($scope, $http) {
                     return d.name;
                 });
 
-            var legend = svg.selectAll(".legend")
-                .data(color.domain())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { 
-                    return "translate(50," + i * 40 + ")"; });
+            var legend = svg.append("g")
+                .attr("class","legend")
+                .attr("transform","translate(50,30)")
+                .style("font-size","12px")
+                .call(d3.legend);
 
-            legend.append("rect")
-                .attr("x", width - 18)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", color);
+            // var legend = svg.selectAll(".legend")
+            //     .data(color.domain())
+            //     .enter().append("g")
+            //     .attr("class", "legend")
+            //     .attr("transform", function(d, i) { 
+            //         return "translate(50," + i * 40 + ")"; });
 
-            legend.append("text")
-                .attr("x", width - 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .text(function(d) {
-                    var desc = $scope.availableDept[d-1] || "External";
-                    return desc; });
+            // legend.append("rect")
+            //     .attr("x", width - 18)
+            //     .attr("width", 18)
+            //     .attr("height", 18)
+            //     .style("fill", color);
+
+            // legend.append("text")
+            //     .attr("x", width - 24)
+            //     .attr("y", 9)
+            //     .attr("dy", ".35em")
+            //     .style("text-anchor", "end")
+            //     .text(function(d) {
+            //         var desc = $scope.availableDept[d-1] || "External";
+            //         return desc; });
 
             // Curve lines
             function tick() {
