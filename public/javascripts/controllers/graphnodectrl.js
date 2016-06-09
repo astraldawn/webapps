@@ -161,6 +161,29 @@ function GraphNodeCtrl($scope, $http) {
                 .call(zoom)
                 .append('svg:g');
 
+            var legend = svg.selectAll(".legend")
+                .data(color.domain())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { 
+                    return "translate(0," + i * 20 + ")"; });
+
+            legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+            legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) {
+                    var desc = $scope.availableDept[d-1] || "External";
+                    return desc; });
+
+
             svg.append('svg:rect')
                 .attr('width', width)
                 .attr('height', height)
@@ -210,28 +233,6 @@ function GraphNodeCtrl($scope, $http) {
                 .text(function (d) {
                     return d.name;
                 });
-
-            var legend = svg.selectAll(".legend")
-                .data(color.domain())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { 
-                    return "translate(-10," + i * 20 + ")"; });
-
-            legend.append("rectangle")
-                .attr("x", width - 18)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", color);
-
-            legend.append("text")
-                .attr("x", width - 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .text(function(d) {
-                    var desc = $scope.availableDept[d-1] || "External";
-                    return desc; });
 
             // Curve lines
             function tick() {
