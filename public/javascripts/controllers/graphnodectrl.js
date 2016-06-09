@@ -157,7 +157,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
-                //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom)
                 .append('svg:g');
 
@@ -216,7 +216,7 @@ function GraphNodeCtrl($scope, $http) {
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
-                    return "translate(50," + i * 40 + ")"; });
+                    return "translate(-10," + i * 20 + ")"; });
 
             legend.append("rect")
                 .attr("x", width - 18)
