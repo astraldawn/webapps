@@ -70,14 +70,10 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.leftGraphDateFrom = startDate;
                 $scope.leftGraphMaxDate = endDate;
                 $scope.leftGraphDateTo = endDate;
-                $scope.leftGraphDisplay = false;
-                console.log("Left Graph Dates:");
 
-                console.log('Min: ' + $scope.leftGraphMinDate);
-                console.log('Max: ' + $scope.leftGraphMaxDate);
-                console.log('From: ' + $scope.leftGraphDateFrom);
-                console.log('To: ' + $scope.leftGraphDateTo);
-
+                $scope.$apply(function () {
+                    $scope.leftGraphDisplay = false;
+                });
                 generateData($scope.dept.selected, graph);
 
             } else {
@@ -86,6 +82,11 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
                 $scope.rightGraphDisplay = false;
+
+                $scope.$apply(function () {
+                    $scope.rightGraphDisplay = false;
+                });
+
                 generateData($scope.compareDept.selected, graph);
             }
 
@@ -96,11 +97,11 @@ function GraphNodeCtrl($scope, $http) {
         var emailUrl;
 
         if (graphID === leftGraph) {
-            emailUrl = appendEmailUrl + dept + "/" + $scope.leftGraphDateFrom + "/"
-                + $scope.leftGraphDateTo;
+            emailUrl = appendEmailUrl + dept + "/" + $scope.leftGraphDateFrom + "/" +
+                $scope.leftGraphDateTo;
         } else {
-            emailUrl = appendEmailUrl + dept + "/" + $scope.rightGraphDateFrom + "/"
-                + $scope.rightGraphDateTo;
+            emailUrl = appendEmailUrl + dept + "/" + $scope.rightGraphDateFrom + "/" +
+                $scope.rightGraphDateTo;
         }
 
         d3.json(emailUrl, function (error, links) {
@@ -108,7 +109,11 @@ function GraphNodeCtrl($scope, $http) {
             var nodes = {};
 
             var maxValue = 0;
-            var targetGroup = links[0].td;
+
+            var targetGroup = '';
+            if (links[0] !== null || links[0] !== undefined) {
+                targetGroup = links[0].td;
+            }
 
             links.forEach(function (link) {
                 link.target = nodes[link.target] ||
@@ -192,9 +197,7 @@ function GraphNodeCtrl($scope, $http) {
 
             node.append("circle")
                 .attr("r", function (d) {
-                    var nodeSize = 10;
-                    if (d.group == targetGroup) return nodeSize * 2;
-                    else return nodeSize;
+                    return 25;
                 });
 
             // Text
@@ -228,10 +231,10 @@ function GraphNodeCtrl($scope, $http) {
 
             function zoomed() {
                 svg.attr("transform",
-                    "translate(" + d3.event.translate + ")"
-                    + " scale(" + d3.event.scale + ")");
+                    "translate(" + d3.event.translate + ")" +
+                    " scale(" + d3.event.scale + ")");
             }
 
         });
-    };
-};
+    }
+}
