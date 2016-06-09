@@ -156,9 +156,8 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("width", width)
                 .attr("height", height)
                 .attr("pointer-events", "all");
-                //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
 
-            svg.append('svg:g').call(zoom);
+            svg.append('g').call(zoom);
 
             svg.append('svg:rect')
                 .attr('width', width)
