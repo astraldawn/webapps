@@ -216,7 +216,7 @@ function GraphNodeCtrl($scope, $http) {
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
-                    return "translate(0," + i * 30 + ")"; });
+                    return "translate(0," + i * 40 + ")"; });
 
             legend.append("rect")
                 .attr("x", width - 18)
@@ -229,7 +229,8 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
-                .text(function(d) { return d; });
+                .text(function(d) { 
+                    return $scope.availableDept[d-1]; });
 
             // Curve lines
             function tick() {
