@@ -17,7 +17,10 @@ function GraphNodeCtrl($scope, $http) {
     var appendEmailUrl = "/emaildata/";
 
     var leftGraph = '#nodeGraph';
+    var leftLegend = '#leftLegend';
+
     var rightGraph = '#compareNodeGraph';
+    var rightLegend = '#rightLegend';
 
     $scope.funcAsync = function (query) {
         $http.get(departmentUrl).then(
@@ -32,18 +35,18 @@ function GraphNodeCtrl($scope, $http) {
     };
 
     $scope.reloadGraph = function () {
-        generateGraphDates($scope.dept.selected, leftGraph);
+        generateGraphDates($scope.dept.selected, leftGraph, leftLegend);
     };
 
     $scope.reloadCompareGraph = function () {
-        generateGraphDates($scope.compareDept.selected, rightGraph);
+        generateGraphDates($scope.compareDept.selected, rightGraph, rightLegend);
     };
 
     $scope.filterLeftGraphByDate = function () {
         if ($scope.leftGraphDateFrom > $scope.leftGraphDateTo) {
             return;
         } else {
-            generateData($scope.dept.selected, leftGraph);
+            generateData($scope.dept.selected, leftGraph, leftLegend);
         }
     };
 
@@ -51,7 +54,7 @@ function GraphNodeCtrl($scope, $http) {
         if ($scope.rightGraphDateFrom > $scope.rightGraphDateTo) {
             return;
         } else {
-            generateData($scope.compareDept.selected, rightGraph);
+            generateData($scope.compareDept.selected, rightGraph, rightLegend);
         }
     };
 
@@ -59,7 +62,7 @@ function GraphNodeCtrl($scope, $http) {
         d3.select(graphID).selectAll("*").remove();
     }
 
-    function generateGraphDates(dept, graph) {
+    function generateGraphDates(dept, graph, legend) {
         var dateUrl = appendEmailUrl + dept + appendDateUrl;
 
         d3.json(dateUrl, function (error, dates) {
@@ -78,7 +81,7 @@ function GraphNodeCtrl($scope, $http) {
                     $scope.leftGraphDisplay = false;
                 });
 
-                generateData($scope.dept.selected, graph);
+                generateData($scope.dept.selected, graph, legend);
 
             } else {
                 $scope.rightGraphMinDate = minDate;
@@ -90,13 +93,13 @@ function GraphNodeCtrl($scope, $http) {
                     $scope.rightGraphDisplay = false;
                 });
 
-                generateData($scope.compareDept.selected, graph);
+                generateData($scope.compareDept.selected, graph, legend);
             }
 
         });
     }
 
-    function generateData(dept, graphID) {
+    function generateData(dept, graphID, legend) {
         var emailUrl;
 
         if (graphID === leftGraph) {
@@ -211,11 +214,11 @@ function GraphNodeCtrl($scope, $http) {
                     return d.name;
                 });
 
-            var legend = svg.selectAll(".legend")
+            var legend = d3.select(legend)
                 .data(color.domain())
                 .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+                .attr("class", "legend");
+                //.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
             legend.append("rect")
                 .attr("x", width - 18)
@@ -228,7 +231,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
-                .text(function(d) { return d; });
+                .text(function(d) { return d.group; });
 
             // Curve lines
             function tick() {
