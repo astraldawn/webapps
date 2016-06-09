@@ -260,7 +260,10 @@ function GraphNodeCtrl($scope, $http) {
                     " scale(" + d3.event.scale + ")");
                 svg.selectAll(".legend")
                 .attr("transform", function(d, i) { 
-                    console.log(i);
+                    console.log("translate(0," + (i * 20) + d3.event.translate + ")" +
+                    " scale(" + (i * 20) + d3.event.scale + ")");
+
+                    
                     return "translate(0," + (i * 20) + d3.event.translate + ")" +
                     " scale(" + (i * 20) + d3.event.scale + ")"; });
 
