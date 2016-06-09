@@ -154,20 +154,21 @@ function GraphNodeCtrl($scope, $http) {
 
             var svg = d3.select(graphID).append("svg")
                 .attr("width", width)
-                .attr("height", height);
-                
+                .attr("height", height)
+                .attr("pointer-events", "all")
+                //.append('svg:g')
+                //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
+                .call(zoom);
+
             svg.append('svg:rect')
                 .attr('width', width)
                 .attr('height', height)
-                .attr('fill', 'none')
-                .attr("pointer-events", "all")
-                .append('svg:g')
-                .call(zoom);
+                .attr('fill', 'none');
 
             // Arrows
-            svg.append("svg:rect:defs").selectAll("marker")
+            svg.append("svg:defs").selectAll("marker")
                 .data(["end"])
-                .enter().append("svg:rect:marker")
+                .enter().append("svg:marker")
                 .attr("id", String)
                 .attr("viewBox", "0 -5 10 10")
                 .attr("refX", 15)
@@ -179,9 +180,9 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("d", "M0,-5L10,0L0,5");
 
             // Links
-            var path = svg.append("svg:rect:g").selectAll("path")
+            var path = svg.append("svg:g").selectAll("path")
                 .data(force.links())
-                .enter().append("svg:rect:path")
+                .enter().append("svg:path")
                 //    .attr("class", function(d) { return "link " + d.type; })
                 .attr("class", "link")
                 .attr("marker-end", "url(#end)");
