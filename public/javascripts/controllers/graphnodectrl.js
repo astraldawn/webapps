@@ -200,7 +200,7 @@ function GraphNodeCtrl($scope, $http) {
 
             node.append("circle")
                 .attr("r", function (d) {
-                    return 25;
+                    return 15;
                 });
 
             // Text
@@ -231,7 +231,7 @@ function GraphNodeCtrl($scope, $http) {
                 .style("text-anchor", "end")
                 .text(function(d) {
                     var desc = $scope.availableDept[d-1] || "External";
-                    return $scope.availableDept[d-1]; });
+                    return desc; });
 
             // Curve lines
             function tick() {
