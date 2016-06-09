@@ -16,6 +16,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             'main': {
                 templateUrl: '/templates/home.ejs',
                 controller: 'MainCtrl',
+                controllerAs: 'main',
                 resolve: {
                     postPromise: ['posts', function (posts) {
                         return posts.getAll();

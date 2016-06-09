@@ -77,7 +77,6 @@ function GraphNodeCtrl($scope, $http) {
                 $scope.$apply(function () {
                     $scope.leftGraphDisplay = false;
                 });
-
                 generateData($scope.dept.selected, graph);
 
             } else {
@@ -114,8 +113,8 @@ function GraphNodeCtrl($scope, $http) {
             var maxValue = 0;
 
             var targetGroup = '';
-            if(links[0] !== null || links[0] !== undefined) {
-               targetGroup = links[0].td;
+            if (links[0] !== null || links[0] !== undefined) {
+                targetGroup = links[0].td;
             }
 
             links.forEach(function (link) {

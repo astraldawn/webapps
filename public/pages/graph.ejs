@@ -2,66 +2,74 @@
     <link href="../stylesheets/graph.css" rel="stylesheet">
 </head>
 
-<h1 class="text-center">Behaviour analysis - Email</h1>
+<div class="col-md-6 col-md-offset-3">
+    <h3 class="text-center">Behaviour analysis - Department</h3>
 
-<p class="text-center text-justify">Ullamcorper penatibus rutrum ante cubilia cum scelerisque feugiat et a ut placerat at nisl fames
-    placerat proin vestibulum potenti sapien ornare vestibulum egestas. Sed a aptent a vestibulum dui vestibulum
-    parturient urna neque facilisi convallis class in fusce urna phasellus egestas adipiscing. Vestibulum parturient ut
-    facilisi litora condimentum molestie eleifend sociis ultrices ligula consequat phasellus velit suspendisse in
-    aliquet cras a auctor condimentum.</p>
+    <p class="text-center text-justify">In this section, we hope to show how employee behaviour (based on their emails),
+        differs between departments. Select two different departments to compare their behaviour.</p>
 
     <br />
 
-    <div class="row">
-        <div class="col-md-5">
-            <ui-select ng-model="dept.selected" id="searchBar" class="leftGraph" on-select="reloadGraph()"
-            theme="bootstrap"
-            reset-search-input="false">
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <ui-select ng-model="dept.selected" id="searchBar" class="leftGraph" on-select="reloadGraph()"
+                   theme="bootstrap"
+                   reset-search-input="false">
             <ui-select-match placeholder="Select department...">{{dept.selected}}</ui-select-match>
             <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
-            repeat="dept in availableDept | filter:$select.search">
-            {{dept}}
-        </ui-select-choices>
-    </ui-select>
+                               repeat="dept in availableDept | filter:$select.search">
+                {{dept}}
+            </ui-select-choices>
+        </ui-select>
 
-    <br/>
+        <br/>
 
-    <div id="nodeGraph" class="leftGraph"></div>
-    <div ng-cloak="" class="graphdatepicker">
-        <md-content>
-        <h4 ng-hide='leftGraphDisplay'>From:</h4>
-        <md-datepicker ng-model="leftGraphDateFrom" md-placeholder="Date" md-min-date="leftGraphMinDate" md-max-date="leftGraphMaxDate" ng-hide='leftGraphDisplay' ng-change='filterLeftGraphByDate()'></md-datepicker>
-        <br />
-        <h4 ng-hide='leftGraphDisplay'>To:</h4>
-        <md-datepicker ng-model="leftGraphDateTo" md-placeholder="Date" md-min-date="leftGraphMinDate" md-max-date="leftGraphMaxDate" ng-hide='leftGraphDisplay' ng-change='filterLeftGraphByDate()'></md-datepicker>
-        </md-content>
+        <div id="nodeGraph" class="leftGraph"></div>
+        <div ng-cloak="" class="graphdatepicker">
+            <md-content>
+                <h4 ng-hide='leftGraphDisplay'>From:</h4>
+                <md-datepicker ng-model="leftGraphDateFrom" md-placeholder="Date" md-min-date="leftGraphMinDate"
+                               md-max-date="leftGraphMaxDate" ng-hide='leftGraphDisplay'
+                               ng-change='filterLeftGraphByDate()'></md-datepicker>
+                <br/>
+                <h4 ng-hide='leftGraphDisplay'>To:</h4>
+                <md-datepicker ng-model="leftGraphDateTo" md-placeholder="Date" md-min-date="leftGraphMinDate"
+                               md-max-date="leftGraphMaxDate" ng-hide='leftGraphDisplay'
+                               ng-change='filterLeftGraphByDate()'></md-datepicker>
+            </md-content>
+        </div>
     </div>
-</div>
 
-<div class="col-md-5 col-md-offset-2">
+    <div class="col-md-6">
 
-    <ui-select ng-model="compareDept.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
-    on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
-    <ui-select-match placeholder="Select department...">{{compareDept.selected}}</ui-select-match>
-    <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
-    repeat="dept in availableDept | filter:$select.search">
-    {{dept}}
-</ui-select-choices>
-</ui-select>
+        <ui-select ng-model="compareDept.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
+                   on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
+            <ui-select-match placeholder="Select department...">{{compareDept.selected}}</ui-select-match>
+            <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
+                               repeat="dept in availableDept | filter:$select.search">
+                {{dept}}
+            </ui-select-choices>
+        </ui-select>
 
-<br/>
+        <br/>
 
-    <div id="compareNodeGraph" class="rightGraph"></div>
-    <div ng-cloak="" class="graphdatepicker">
-        <md-content>
-        <h4 ng-hide='rightGraphDisplay'>From:</h4>
-        <md-datepicker ng-model="rightGraphDateFrom" md-placeholder="Date" md-min-date="rightGraphMinDate" md-max-date="rightGraphMaxDate" ng-hide='rightGraphDisplay' ng-change='filterRightGraphByDate()'></md-datepicker>
-        <br />
-        <h4 ng-hide='rightGraphDisplay'>To:</h4>
-        <md-datepicker ng-model="rightGraphDateTo" md-placeholder="Date" md-min-date="rightGraphMinDate" md-max-date="rightGraphMaxDate" ng-hide='rightGraphDisplay' ng-change='filterRightGraphByDate()'></md-datepicker>
-        </md-content>
+        <div id="compareNodeGraph" class="rightGraph"></div>
+        <div ng-cloak="" class="graphdatepicker">
+            <md-content>
+                <h4 ng-hide='rightGraphDisplay'>From:</h4>
+                <md-datepicker ng-model="rightGraphDateFrom" md-placeholder="Date" md-min-date="rightGraphMinDate"
+                               md-max-date="rightGraphMaxDate" ng-hide='rightGraphDisplay'
+                               ng-change='filterRightGraphByDate()'></md-datepicker>
+                <br/>
+                <h4 ng-hide='rightGraphDisplay'>To:</h4>
+                <md-datepicker ng-model="rightGraphDateTo" md-placeholder="Date" md-min-date="rightGraphMinDate"
+                               md-max-date="rightGraphMaxDate" ng-hide='rightGraphDisplay'
+                               ng-change='filterRightGraphByDate()'></md-datepicker>
+            </md-content>
+        </div>
     </div>
-</div>
 </div>
 
 <br/>

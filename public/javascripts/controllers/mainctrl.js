@@ -2,12 +2,12 @@
  * Created by mark on 27/05/16.
  */
 
-MainCtrl.$inject = ['$scope', 'posts', 'auth'];
+MainCtrl.$inject = ['$scope', 'posts', 'auth', '$state'];
 
 angular.module('webapps')
     .controller('MainCtrl', MainCtrl);
 
-function MainCtrl($scope, posts, auth) {
+function MainCtrl($scope, posts, auth, $state) {
     $scope.posts = posts.posts;
     $scope.isLoggedIn = auth.isLoggedIn;
 
@@ -31,5 +31,13 @@ function MainCtrl($scope, posts, auth) {
     $scope.incrementUpvotes = function (post) {
         posts.upvote(post);
     };
+
+    var _this = this;
+
+    _this.mainOptions = {
+        navigation: true,
+        navigationPosition: 'right',
+        scrollingSpeed: 1000
+    }
 
 }
