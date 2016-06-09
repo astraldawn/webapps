@@ -120,7 +120,7 @@ function GraphNodeCtrl($scope, $http) {
 
             links.forEach(function (link) {
                 link.target = nodes[link.target] ||
-                    (nodes[link.target] = {name: link.target, group: link.td});
+                    (nodes[link.target] = {name: '', group: link.td});
             });
 
             links.forEach(function (link) {
@@ -216,7 +216,7 @@ function GraphNodeCtrl($scope, $http) {
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
-                    return "translate(0," + i * 40 + ")"; });
+                    return "translate(50," + i * 40 + ")"; });
 
             legend.append("rect")
                 .attr("x", width - 18)
@@ -229,7 +229,8 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
-                .text(function(d) { 
+                .text(function(d) {
+                    var desc = $scope.availableDept[d-1] || "External";
                     return $scope.availableDept[d-1]; });
 
             // Curve lines
