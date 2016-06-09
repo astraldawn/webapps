@@ -67,7 +67,7 @@ function GraphNodeCtrl($scope, $http) {
             var endDate = new Date(dates.endDate);
             var startDate = new Date(dates.endDate);
             startDate.setDate(startDate.getDate() - 7);
-            
+
             if (graph === leftGraph) {
                 $scope.leftGraphMinDate = minDate;
                 $scope.leftGraphDateFrom = startDate;
@@ -210,6 +210,25 @@ function GraphNodeCtrl($scope, $http) {
                 .text(function (d) {
                     return d.name;
                 });
+
+            var legend = svg.selectAll(".legend")
+                .data(color.domain())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+            legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+            legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) { return d; });
 
             // Curve lines
             function tick() {
