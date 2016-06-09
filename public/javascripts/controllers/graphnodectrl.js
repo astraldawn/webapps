@@ -63,10 +63,13 @@ function GraphNodeCtrl($scope, $http) {
         var dateUrl = appendEmailUrl + dept + appendDateUrl;
 
         d3.json(dateUrl, function (error, dates) {
-            var startDate = new Date(dates.startDate);
+            var minDate = new Date(dates.startDate);
             var endDate = new Date(dates.endDate);
+            var startDate = new Date(dates.endDate);
+            startDate.setDate(startDate.getDate() - 7);
+            
             if (graph === leftGraph) {
-                $scope.leftGraphMinDate = startDate;
+                $scope.leftGraphMinDate = minDate;
                 $scope.leftGraphDateFrom = startDate;
                 $scope.leftGraphMaxDate = endDate;
                 $scope.leftGraphDateTo = endDate;
@@ -78,11 +81,10 @@ function GraphNodeCtrl($scope, $http) {
                 generateData($scope.dept.selected, graph);
 
             } else {
-                $scope.rightGraphMinDate = startDate;
+                $scope.rightGraphMinDate = minDate;
                 $scope.rightGraphDateFrom = startDate;
                 $scope.rightGraphMaxDate = endDate;
                 $scope.rightGraphDateTo = endDate;
-                $scope.rightGraphDisplay = false;
 
                 $scope.$apply(function () {
                     $scope.rightGraphDisplay = false;
