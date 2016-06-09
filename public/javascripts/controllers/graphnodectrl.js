@@ -260,12 +260,12 @@ function GraphNodeCtrl($scope, $http) {
                     " scale(" + d3.event.scale + ")");
                 svg.selectAll(".legend")
                 .attr("transform", function(d, i) { 
-                    console.log("translate(0," + (i * 20) + d3.event.translate + ")" +
-                    " scale(" + (i * 20) + d3.event.scale + ")");
+                    console.log("translate(0," + ((i * 20) + d3.event.translate[1]) + ")" +
+                    " scale(" + d3.event.scale + ")");
 
-                    
-                    return "translate(0," + (i * 20) + d3.event.translate + ")" +
-                    " scale(" + (i * 20) + d3.event.scale + ")"; });
+
+                    return "translate(0," + ((i * 20) + d3.event.translate[1]) + ")" +
+                    " scale(" + d3.event.scale + ")"; });
 
             }
 
