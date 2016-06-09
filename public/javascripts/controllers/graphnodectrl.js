@@ -154,7 +154,7 @@ function GraphNodeCtrl($scope, $http) {
             var svg = d3.select(graphID).append("svg")
                 .attr("width", width)
                 .attr("height", height)
-                .attr("pointer-events", "all");
+                .attr("pointer-events", "all") ;
                 // .append('svg:g')
                 //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 // .call(zoom);

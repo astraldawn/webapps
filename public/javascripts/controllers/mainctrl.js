@@ -38,6 +38,6 @@ function MainCtrl($scope, posts, auth, $state) {
         navigation: true,
         navigationPosition: 'right',
         scrollingSpeed: 1000
-    }
+    };
 
 }
