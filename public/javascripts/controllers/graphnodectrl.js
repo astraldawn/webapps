@@ -258,9 +258,11 @@ function GraphNodeCtrl($scope, $http) {
                 svg.attr("transform",
                     "translate(" + d3.event.translate + ")" +
                     " scale(" + d3.event.scale + ")");
-                legend.attr("transform",
-                    "translate(" + d3.event.translate + ")" +
-                    " scale(" + d3.event.scale + ")");
+                svg.selectAll(".legend")
+                .attr("transform", function(d, i) { 
+                    return "translate(0," + i * d3.event.translate + ")" +
+                    " scale(" + i*d3.event.scale + ")"; });
+
             }
 
         });
