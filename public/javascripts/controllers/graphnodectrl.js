@@ -108,7 +108,7 @@ function GraphNodeCtrl($scope, $http) {
         }
 
         d3.json(emailUrl, function (error, links) {
-
+            console.log(links);
             var nodes = {};
 
             var maxValue = 0;
@@ -216,8 +216,7 @@ function GraphNodeCtrl($scope, $http) {
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
-                    alert(i);
-                    return "translate(0," + i * 20 + ")"; });
+                    return "translate(0," + i * 30 + ")"; });
 
             legend.append("rect")
                 .attr("x", width - 18)
@@ -230,7 +229,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("y", 9)
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
-                .text(function(d) { return d.group; });
+                .text(function(d) { return d; });
 
             // Curve lines
             function tick() {
