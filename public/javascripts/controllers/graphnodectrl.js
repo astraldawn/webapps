@@ -160,12 +160,17 @@ function GraphNodeCtrl($scope, $http) {
                 //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom);
 
-            
+            svg.append('svg:rect')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('fill', 'none');
+
             var legend = svg.selectAll(".legend")
                 .data(color.domain())
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function(d, i) { 
+                    console.log(i);
                     return "translate(0," + i * 20 + ")"; });
 
             legend.append("rect")
@@ -182,11 +187,6 @@ function GraphNodeCtrl($scope, $http) {
                 .text(function(d) {
                     var desc = $scope.availableDept[d-1] || "External";
                     return desc; });
-
-            svg.append('svg:rect')
-                .attr('width', width)
-                .attr('height', height)
-                .attr('fill', 'none');
 
             // Arrows
             svg.append("svg:defs").selectAll("marker")
