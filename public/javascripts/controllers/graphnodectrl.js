@@ -157,7 +157,7 @@ function GraphNodeCtrl($scope, $http) {
                 .attr("height", height)
                 .attr("pointer-events", "all")
                 .append('svg:g')
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
+                //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ") scale(0.15)")
                 .call(zoom)
                 .append('svg:g');
 
@@ -200,18 +200,17 @@ function GraphNodeCtrl($scope, $http) {
 
             node.append("circle")
                 .attr("r", function (d) {
-                    return 15;
+                    return 10;
                 });
 
             // Text
-            node.append("text")
-                .attr("x", 12)
-                .attr("dy", ".35em")
-                .text(function (d) {
-                    return d.name;
-                });
+            // node.append("text")
+            //     .attr("x", 12)
+            //     .attr("dy", ".35em")
+            //     .text(function (d) {
+            //         return d.name;
+            //     });
 
-            
             var legend = svg.selectAll(".legend")
                 .data(color.domain())
                 .enter().append("g")
@@ -257,6 +256,9 @@ function GraphNodeCtrl($scope, $http) {
 
             function zoomed() {
                 svg.attr("transform",
+                    "translate(" + d3.event.translate + ")" +
+                    " scale(" + d3.event.scale + ")");
+                legend.attr("transform",
                     "translate(" + d3.event.translate + ")" +
                     " scale(" + d3.event.scale + ")");
             }
