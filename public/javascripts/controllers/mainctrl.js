@@ -17,7 +17,6 @@ function MainCtrl($scope, posts, auth, $state) {
 
     $scope.addPost = function () {
         console.log("MESSAGE: " + $scope.msg);
-        console.log("IZZIT TRUE:" + )
 
         // Prevent user from creating a blank post
         if (!$scope.title || $scope.title === '') {
