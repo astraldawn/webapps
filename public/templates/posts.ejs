@@ -1,14 +1,14 @@
+<head>
+    <link href="../stylesheets/graph.css" rel="stylesheet">
+</head>
+
 <div class="container-fluid col-md-8 col-md-offset-2">
     <div class="page-header">
         <h3>
             {{post.title}}
 
-            <br/>
-            Stats
-            <br/>
-            {{post.graphType}}, {{post.leftSubCat}}, {{post.leftFrom}}, {{post.leftTo}}
-            <br/>
-            {{post.rightSubCat}}, {{post.rightFrom}}, {{post.rightTo}}
+            <div id="nodeGraph" class="leftGraph"></div>
+            <div id="compareNodeGraph" class="rightGraph"></div>
 
             <br/>
 

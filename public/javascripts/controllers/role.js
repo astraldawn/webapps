@@ -125,16 +125,13 @@ function RoleCtrl($rootScope, $scope, $http) {
             var maxValue = 0;
 
             var targetGroup = '';
-            if (links[0] !== null || links[0] !== undefined) {
+            if (links[0] !== null) {
                 targetGroup = links[0].td;
             }
 
             links.forEach(function (link) {
                 link.target = nodes[link.target] ||
                     (nodes[link.target] = {name: '', group: link.td});
-            });
-
-            links.forEach(function (link) {
                 link.source = nodes[link.source] ||
                     (nodes[link.source] = {name: '', group: link.sd});
                 maxValue = Math.max(maxValue, link.value);
