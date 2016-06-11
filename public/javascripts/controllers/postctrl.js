@@ -12,21 +12,6 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.availableType = [];
 
-    /*
-            graphType: $state.$current.name,
-            leftSubCat: $scope.msg.leftSubCat,
-            rightSubCat: $scope.msg.rightSubCat,
-            leftFrom: $scope.msg.leftFrom,
-            leftTo: $scope.msg.leftTo,
-            rightFrom: $scope.msg.rightFrom,
-            rightTo: $scope.msg.rightTo
-
-            {post.graphType}}, {{post.leftSubCat}}, {{post.leftFrom}}, {{post.leftTo}}
-            <br/>
-            {{post.rightSubCat}}, {{post.rightFrom}}, {{post.rightTo}}
-    */
-
-    console.log("POST TYPE: " + $scope.post.graphType);
     var typeUrl = (($scope.post.graphType === 'department') ? '/alldept' : '/allrole');
     var dataUrl = (($scope.post.graphType === 'department') ? '/emaildata/' : '/ldapdata/');
 
@@ -43,13 +28,11 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
             }
         );
 
-        console.log("L:" + $scope.post.leftSubCat);
         if($scope.post.leftSubCat !== null && typeof $scope.post.leftSubCat !== 'undefined') {
             generateData($scope.post.leftSubCat, leftGraph, 
                 $scope.post.leftFrom, $scope.post.leftTo);
         }
 
-        console.log("R:" + $scope.post.rightSubCat);
         if($scope.post.rightSubCat !== null && typeof $scope.post.rightSubCat !== 'undefined') {
             generateData(post.rightSubCat, rightGraph,
                 $scope.post.rightFrom, $scope.post.rightTo);
