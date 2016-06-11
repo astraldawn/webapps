@@ -76,8 +76,10 @@ function PostsCtrl($scope, posts, post, auth, $http) {
     function generateData(cat, graphID, fromDate, toDate) {
         
         var url = dataUrl + cat + "/" + fromDate + "/" + toDate;
+        console.log("URL:" + url);
 
         d3.json(url, function (error, links) {
+            console.log(links);
             var nodes = {};
 
             var maxValue = 0;

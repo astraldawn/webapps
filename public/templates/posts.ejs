@@ -10,11 +10,7 @@
             <div id="nodeGraph" class="leftGraph"></div>
             <div id="compareNodeGraph" class="rightGraph"></div>
 
-            <br/>
-
-            Render the post
-
-            <br/>
+            <hr />
 
             <a href='#/view'>Go back</a>
         </h3>
@@ -29,6 +25,8 @@
     </span>
     </div>
 
+    <hr />
+
     <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new comment</h3>
 
@@ -42,6 +40,6 @@
     </form>
 
     <div ng-hide="isLoggedIn()">
-        <h3>Need to login or register before adding a comment</h3>
+        <h5>Please kindly login before adding a comment</h5>
     </div>
 </div>
