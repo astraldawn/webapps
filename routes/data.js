@@ -57,6 +57,26 @@ router.get('/alldept', function (req, res, next) {
                 output.push(data[i]);
             }
         }
+        output.sort();
+        res.json(output);
+    });
+});
+
+/* GET all department names */
+router.get('/allrole', function (req, res, next) {
+    var query = UserData.distinct("role");
+
+    query.exec(function (err, data) {
+        if (err) {
+            return next(err);
+        }
+        var output = [];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i] !== "") {
+                output.push(data[i]);
+            }
+        }
+        output.sort();
         res.json(output);
     });
 });
