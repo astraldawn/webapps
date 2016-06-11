@@ -47,6 +47,14 @@ function posts($http, auth) {
             });
     };
 
+    // Delete a post
+    o.delete = function (id) {
+        console.log("delete post");
+        return $http.delete('/posts/' + id, null, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        });
+    };
+
     // Add a comment
     o.addComment = function (id, comment) {
         return $http.post('/posts/' + id + '/comments', comment, {

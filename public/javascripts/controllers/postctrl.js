@@ -2,12 +2,12 @@
  * Created by mark on 27/05/16.
  */
 
-PostsCtrl.$inject = ['$scope', 'posts', 'post', 'auth'];
+PostsCtrl.$inject = ['$scope', '$state', 'posts', 'post', 'auth'];
 
 angular.module('webapps')
     .controller('PostsCtrl', PostsCtrl);
 
-function PostsCtrl($scope, posts, post, auth) {
+function PostsCtrl($scope, $state, posts, post, auth) {
     $scope.post = post;
     $scope.isLoggedIn = auth.isLoggedIn;
 
@@ -24,6 +24,16 @@ function PostsCtrl($scope, posts, post, auth) {
         });
 
         $scope.body = '';
+    };
+
+    $scope.userMatch = function () {
+        return $scope.post.author === auth.currentUser();
+    };
+
+    $scope.deletePost = function () {
+        posts.delete(post._id).success(function() {
+            $state.go('postview');
+        })
     };
 
     $scope.incrementUpvotes = function (comment) {

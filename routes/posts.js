@@ -64,6 +64,26 @@ router.get('/:post', function (req, res) {
     });
 });
 
+/* Delete a post */
+router.param('postdelete', function (req, res, next, id) {
+    var query = Post.findById(id);
+
+    query.exec(function (err, post) {
+        if (err) {
+            return next(err);
+        }
+        if (!post) {
+            return next(new Error('cannot find post'));
+        }
+        post.remove();
+        return next();
+    });
+});
+
+router.delete('/:postdelete', function (req, res) {
+    res.json(null);
+});
+
 /* Upvote a post */
 router.put('/:post/upvote', auth, function (req, res, next) {
     req.post.upvote(function (err, post) {
