@@ -2,7 +2,7 @@
  * Created by mark on 12/05/16.
  */
 
-var app = angular.module('webapps', ['ui.router', 'ui.select', 'ngSanitize', 'fullPage.js','ngMaterial']);
+var app = angular.module('webapps', ['ui.router', 'ui.select', 'ngSanitize', 'fullPage.js', 'ngMaterial']);
 
 config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
@@ -15,6 +15,22 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
         views: {
             'main': {
                 templateUrl: '/templates/home.ejs',
+                controller: 'MainCtrl',
+                controllerAs: 'main'
+                // resolve: {
+                //     postPromise: ['posts', function (posts) {
+                //         return posts.getAll();
+                //     }]
+                // }
+            }
+        }
+    });
+
+    $stateProvider.state('postview', {
+        url: '/view',
+        views: {
+            'main': {
+                templateUrl: '/templates/postview.ejs',
                 controller: 'MainCtrl',
                 controllerAs: 'main',
                 resolve: {
@@ -109,6 +125,10 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             'main': {
                 templateUrl: 'pages/dept.ejs',
                 controller: 'DeptCtrl'
+            },
+            'footer': {
+                templateUrl: 'templates/graphfooter.ejs',
+                controller: 'MainCtrl'
             }
         }
     });
@@ -119,6 +139,10 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             'main': {
                 templateUrl: 'pages/role.ejs',
                 controller: 'RoleCtrl'
+            },
+            'footer': {
+                templateUrl: 'templates/graphfooter.ejs',
+                controller: 'MainCtrl'
             }
         }
     });

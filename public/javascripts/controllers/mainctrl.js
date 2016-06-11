@@ -11,16 +11,25 @@ function MainCtrl($scope, posts, auth, $state) {
     $scope.posts = posts.posts;
     $scope.isLoggedIn = auth.isLoggedIn;
 
+    $scope.$on('saveGraph', function(event, arg){
+       $scope.msg = arg;
+    });
+
     $scope.addPost = function () {
+
+        var type = $state.$current;
+
+        console.log($scope.msg);
+
         // Prevent user from creating a blank post
         if (!$scope.title || $scope.title === '') {
             return;
         }
 
-        posts.create({
-            title: $scope.title,
-            link: $scope.link
-        });
+        // posts.create({
+        //     title: $scope.title,
+        //     link: $scope.link
+        // });
 
         // Clearing variables
         $scope.title = '';

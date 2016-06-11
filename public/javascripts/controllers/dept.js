@@ -1,9 +1,9 @@
-DeptCtrl.$inject = ['$scope', '$http'];
+DeptCtrl.$inject = ['$rootScope', '$scope', '$http'];
 
 angular.module('webapps')
     .controller('DeptCtrl', DeptCtrl);
 
-function DeptCtrl($scope, $http) {
+function DeptCtrl($rootScope, $scope, $http) {
 
     //Search function
     $scope.dept = {};
@@ -223,6 +223,17 @@ function DeptCtrl($scope, $http) {
                     var desc = $scope.availableDept[d] || "External";
                     return desc;
                 });
+
+            // Broadcast to root scope
+            var broadcastInfo = {};
+            broadcastInfo.leftSubCat = $scope.dept.selected;
+            broadcastInfo.rightSubCat = $scope.compareDept.selected;
+            broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
+            broadcastInfo.leftTo = $scope.leftGraphDateTo;
+            broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
+            broadcastInfo.rightTo = $scope.rightGraphDateTo;
+
+            $rootScope.$broadcast('saveGraph', broadcastInfo);
 
 
             // Text

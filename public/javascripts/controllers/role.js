@@ -1,9 +1,9 @@
-RoleCtrl.$inject = ['$scope', '$http'];
+RoleCtrl.$inject = ['$rootScope', '$scope', '$http'];
 
 angular.module('webapps')
     .controller('RoleCtrl', RoleCtrl);
 
-function RoleCtrl($scope, $http) {
+function RoleCtrl($rootScope, $scope, $http) {
 
     //Search function
     $scope.role = {};
@@ -224,6 +224,17 @@ function RoleCtrl($scope, $http) {
                     var desc = $scope.availableRole[d] || "External";
                     return desc;
                 });
+
+            // Broadcast to root scope
+            var broadcastInfo = {};
+            broadcastInfo.leftSubCat = $scope.role.selected;
+            broadcastInfo.rightSubCat = $scope.compareRole.selected;
+            broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
+            broadcastInfo.leftTo = $scope.leftGraphDateTo;
+            broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
+            broadcastInfo.rightTo = $scope.rightGraphDateTo;
+
+            $rootScope.$broadcast('saveGraph', broadcastInfo);
 
 
             // Text
