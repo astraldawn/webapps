@@ -33,6 +33,7 @@ var auth = require('./routes/auth');
 var posts = require('./routes/posts');
 var data = require('./routes/data');
 var emaildata = require('./routes/emaildata');
+var ldapdata = require('./routes/ldapdata');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/', data);
 app.use('/posts', posts);
 app.use('/users', users);
 app.use('/emaildata', emaildata);
+app.use('/ldapdata', ldapdata);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -63,21 +63,21 @@ function shuffleArray(array) {
     return array;
 }
 
-/* GET email data from a specific department */
-router.param('department', function (req, res, next, dept) {
+/* GET email data from a specific role */
+router.param('role', function (req, res, next, role) {
     async.parallel({
             findUsers: function (cb) {
-                var query = UserData.find({department: dept}, {_id: 0});
+                var query = UserData.find({role: role}, {_id: 0});
                 query.select("user_id");
                 query.exec(cb);
             },
             allUsers: function (cb) {
                 var query = UserData.find({}, {_id: 0});
-                query.select("user_id email department");
+                query.select("user_id email role");
                 query.exec(cb);
             },
             roles: function (cb) {
-                var query = UserData.distinct("department");
+                var query = UserData.distinct("role");
                 query.exec(cb);
             },
             startDate: function (cb) {
@@ -91,7 +91,7 @@ router.param('department', function (req, res, next, dept) {
                 query.exec(cb);
             }
         }, function (err, result) {
-            req.id = dept;
+            req.id = role;
             req.result = result;
             req.startDate = result.startDate[0].date;
             req.endDate = result.endDate[0].date;
@@ -110,9 +110,7 @@ router.param('enddate', function (req, res, next, endDate) {
     return next();
 });
 
-router.get('/:department/:startdate/:enddate', function (req, res) {
-    console.log("department - params");
-
+router.get('/:role/:startdate/:enddate', function (req, res) {
     var aggregatefuncs = [];
 
     var result = req.result;
@@ -120,6 +118,8 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     var startDate = new Date(req.startDate);
     var endDate = new Date(req.endDate);
     var len = result.findUsers.length;
+
+    console.log("role - params", startDate, endDate);
 
     var day_diff = (endDate - startDate) / (3600 * 24 * 1000);
 
@@ -151,22 +151,23 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
         var email = result.allUsers[i].email;
         emailMap[email] = {};
         emailMap[email].user_id = result.allUsers[i].user_id;
-        emailMap[email].department = result.allUsers[i].department;
+        emailMap[email].role = result.allUsers[i].role;
     }
 
-    var departmentMap = {};
+    var roleMap = {};
     var external = result.roles.length;
     for (i = 0; i < result.roles.length; i++) {
-        var department = result.roles[i];
-        departmentMap[department] = i;
+        var role = result.roles[i];
+        roleMap[role] = i;
     }
 
     async.parallel(
         aggregatefuncs,
         function (err, results) {
             var merged = [].concat.apply([], results);
-            var query_dept = departmentMap[id];
+            var query_role = roleMap[id];
             var output = [];
+            console.log(merged.length);
             for (i = 0; i < merged.length; i++) {
                 if (merged[i] !== null && merged[i] !== undefined) {
                     var cur = merged[i].source;
@@ -176,13 +177,13 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
                     output_tmp.value = merged[i].value;
                     if (emailMap[cur] !== undefined) {
                         var cur_id = emailMap[cur].user_id;
-                        var cur_dept = emailMap[cur].department;
+                        var cur_role = emailMap[cur].role;
                         output_tmp.source = cur_id;
-                        output_tmp.sd = departmentMap[cur_dept];
+                        output_tmp.sd = roleMap[cur_role];
                     } else {
                         output_tmp.sd = external;
                     }
-                    output_tmp.td = query_dept;
+                    output_tmp.td = query_role;
                     output.push(output_tmp);
                 }
             }
@@ -191,7 +192,8 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     );
 });
 
-router.get('/:department/getdate', function (req, res) {
+router.get('/:role/getdate', function (req, res) {
+    console.log("role - get date");
     var output = {};
     output.startDate = req.startDate;
     output.endDate = req.endDate;
