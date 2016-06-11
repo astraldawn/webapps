@@ -23,7 +23,7 @@ function MainCtrl($scope, posts, auth, $state) {
             return;
         }
 
-        if($scope.msg !== null || typeof $scope.msg != 'undefined') {
+        if($scope.msg !== null || typeof $scope.msg !== 'undefined') {
             posts.create({
                 title: $scope.title,
                 graphType: $state.$current.name,
