@@ -33,7 +33,7 @@ function PostsCtrl($scope, posts, post, auth, $http) {
     var leftGraph = '#nodeGraph';
     var rightGraph = '#compareNodeGraph';
     
-    if($scope.post !== null) {
+    if($scope.post !== null || typeof $scope.post != 'undefined') {
         $http.get(typeUrl).then(
             function (response) {
                 $scope.availableType = response.data;
@@ -43,12 +43,14 @@ function PostsCtrl($scope, posts, post, auth, $http) {
             }
         );
 
-        if($scope.post.leftSubCat !== null) {
+        console.log("L:" + $scope.post.leftSubCat);
+        if($scope.post.leftSubCat !== null || typeof $scope.post.leftSubCat != 'undefined') {
             generateData($scope.post.leftSubCat, leftGraph, 
                 $scope.post.leftFrom, $scope.post.leftTo);
         }
 
-        if($scope.post.rightSubCat !== null) {
+        console.log("R:" + $scope.post.rightSubCat);
+        if($scope.post.rightSubCat !== null || typeof $scope.post.rightSubCat != 'undefined') {
             generateData(post.rightSubCat, rightGraph,
                 $scope.post.rightFrom, $scope.post.rightTo);
         }

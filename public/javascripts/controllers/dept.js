@@ -124,7 +124,7 @@ function DeptCtrl($rootScope, $scope, $http) {
             var maxValue = 0;
 
             var targetGroup = '';
-            if (links[0] !== null) {
+            if (links[0] !== null || typeof links[0] != 'undefined') {
                 targetGroup = links[0].td;
             }
 
