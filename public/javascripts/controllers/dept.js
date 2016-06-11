@@ -94,6 +94,19 @@ function DeptCtrl($rootScope, $scope, $http) {
         });
     }
 
+    function broadcastData() {
+        var broadcastInfo = {};
+
+        broadcastInfo.leftSubCat = $scope.dept.selected;
+        broadcastInfo.rightSubCat = $scope.compareDept.selected;
+        broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
+        broadcastInfo.leftTo = $scope.leftGraphDateTo;
+        broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
+        broadcastInfo.rightTo = $scope.rightGraphDateTo;
+
+        $rootScope.$broadcast('saveGraph', broadcastInfo);
+    }
+
     function generateData(dept, graphID) {
         var emailUrl;
 
@@ -225,16 +238,7 @@ function DeptCtrl($rootScope, $scope, $http) {
                 });
 
             // Broadcast to root scope
-            var broadcastInfo = {};
-            broadcastInfo.leftSubCat = $scope.dept.selected;
-            broadcastInfo.rightSubCat = $scope.compareDept.selected;
-            broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
-            broadcastInfo.leftTo = $scope.leftGraphDateTo;
-            broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
-            broadcastInfo.rightTo = $scope.rightGraphDateTo;
-
-            $rootScope.$broadcast('saveGraph', broadcastInfo);
-
+            broadcastData();
 
             // Text
             // node.append("text")
