@@ -11,14 +11,11 @@ function MainCtrl($scope, posts, auth, $state) {
     $scope.posts = posts.posts;
     $scope.isLoggedIn = auth.isLoggedIn;
 
-    $scope.$on('saveGraph', function(event, arg){
-       $scope.msg = arg;
+    $scope.$on('saveGraph', function (event, arg) {
+        $scope.msg = arg;
     });
 
     $scope.addPost = function () {
-
-        var type = $state.$current;
-
         console.log($scope.msg);
 
         // Prevent user from creating a blank post
@@ -26,14 +23,19 @@ function MainCtrl($scope, posts, auth, $state) {
             return;
         }
 
-        // posts.create({
-        //     title: $scope.title,
-        //     link: $scope.link
-        // });
+        posts.create({
+            title: $scope.title,
+            graphType: $state.$current.name,
+            leftSubCat: $scope.msg.leftSubCat,
+            rightSubCat: $scope.msg.rightSubCat,
+            leftFrom: $scope.msg.leftFrom,
+            leftTo: $scope.msg.leftTo,
+            rightFrom: $scope.msg.rightFrom,
+            rightTo: $scope.msg.rightTo
+        });
 
         // Clearing variables
         $scope.title = '';
-        $scope.link = '';
     };
 
     // Pass by instance
