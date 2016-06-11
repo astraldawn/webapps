@@ -16,8 +16,6 @@ function MainCtrl($scope, posts, auth, $state) {
     });
 
     $scope.addPost = function () {
-        console.log("MESSAGE: " + $scope.msg);
-
         // Prevent user from creating a blank post
         if (!$scope.title || $scope.title === '') {
             return;
