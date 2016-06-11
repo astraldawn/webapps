@@ -26,29 +26,32 @@ function PostsCtrl($scope, posts, post, auth, $http) {
             {{post.rightSubCat}}, {{post.rightFrom}}, {{post.rightTo}}
     */
 
+    console.log("POST TYPE: " + $scope.post.graphType);
     var typeUrl = (($scope.post.graphType === 'department') ? '/alldept' : '/allrole');
     var dataUrl = (($scope.post.graphType === 'department') ? '/emaildata/' : '/ldapdata/');
 
     var leftGraph = '#nodeGraph';
     var rightGraph = '#compareNodeGraph';
     
-    $http.get(typeUrl).then(
-        function (response) {
-            $scope.availableType = response.data;
-        },
-        function () {
-            console.log('Error');
+    if($scope.post !== null) {
+        $http.get(typeUrl).then(
+            function (response) {
+                $scope.availableType = response.data;
+            },
+            function () {
+                console.log('Error');
+            }
+        );
+
+        if($scope.post.leftSubCat !== null) {
+            generateData($scope.post.leftSubCat, leftGraph, 
+                $scope.post.leftFrom, $scope.post.leftTo);
         }
-    );
 
-    if($scope.post.leftSubCat !== null) {
-        generateData($scope.post.leftSubCat, leftGraph, 
-            $scope.post.leftFrom, $scope.post.leftTo);
-    }
-
-    if($scope.post.rightSubCat !== null) {
-        generateData(post.rightSubCat, rightGraph,
-            $scope.post.rightFrom, $scope.post.rightTo);
+        if($scope.post.rightSubCat !== null) {
+            generateData(post.rightSubCat, rightGraph,
+                $scope.post.rightFrom, $scope.post.rightTo);
+        }
     }
 
     $scope.addComment = function () {
@@ -69,10 +72,8 @@ function PostsCtrl($scope, posts, post, auth, $http) {
     $scope.incrementUpvotes = function (comment) {
         posts.upvoteComment(post, comment);
     };
-}
 
-
-function generateData(cat, graphID, fromDate, toDate) {
+    function generateData(cat, graphID, fromDate, toDate) {
         
         var url = dataUrl + cat + "/" + fromDate + "/" + toDate;
 
@@ -204,3 +205,7 @@ function generateData(cat, graphID, fromDate, toDate) {
 
         });
     }
+}
+
+
+

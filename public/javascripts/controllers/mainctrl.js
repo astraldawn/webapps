@@ -23,16 +23,22 @@ function MainCtrl($scope, posts, auth, $state) {
             return;
         }
 
-        posts.create({
-            title: $scope.title,
-            graphType: $state.$current.name,
-            leftSubCat: $scope.msg.leftSubCat,
-            rightSubCat: $scope.msg.rightSubCat,
-            leftFrom: $scope.msg.leftFrom,
-            leftTo: $scope.msg.leftTo,
-            rightFrom: $scope.msg.rightFrom,
-            rightTo: $scope.msg.rightTo
-        });
+        if($scope.msg !== null) {
+            posts.create({
+                title: $scope.title,
+                graphType: $state.$current.name,
+                leftSubCat: $scope.msg.leftSubCat,
+                rightSubCat: $scope.msg.rightSubCat,
+                leftFrom: $scope.msg.leftFrom,
+                leftTo: $scope.msg.leftTo,
+                rightFrom: $scope.msg.rightFrom,
+                rightTo: $scope.msg.rightTo
+            });
+        } else {
+            posts.create({
+                title: $scope.title
+            });
+        }
 
         // Clearing variables
         $scope.title = '';
