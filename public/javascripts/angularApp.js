@@ -103,12 +103,22 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
         }
     });
 
-    $stateProvider.state('behaviour', {
-        url: '/behaviour',
+    $stateProvider.state('department', {
+        url: '/department',
         views: {
             'main': {
-                templateUrl: 'pages/graph.ejs',
-                controller: 'GraphNodeCtrl'
+                templateUrl: 'pages/dept.ejs',
+                controller: 'DeptCtrl'
+            }
+        }
+    });
+
+    $stateProvider.state('role', {
+        url: '/role',
+        views: {
+            'main': {
+                templateUrl: 'pages/role.ejs',
+                controller: 'RoleCtrl'
             }
         }
     });
