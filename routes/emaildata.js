@@ -119,15 +119,8 @@ router.get('/:department/:startdate/:enddate', function (req, res) {
     var id = req.id;
     var startDate = new Date(req.startDate);
     var endDate = new Date(req.endDate);
+    endDate.setHours(endDate.getHours() + 24);
     var len = result.findUsers.length;
-
-    var day_diff = (endDate - startDate) / (3600 * 24 * 1000);
-
-    // Safety check
-    if (day_diff < 1) {
-        res.json("Invalid request");
-        return;
-    }
 
     var min_weight = 2;
     var threshold = 1;
