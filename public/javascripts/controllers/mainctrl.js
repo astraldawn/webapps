@@ -16,14 +16,15 @@ function MainCtrl($scope, posts, auth, $state) {
     });
 
     $scope.addPost = function () {
-        console.log($scope.msg);
+        console.log("MESSAGE: " + $scope.msg);
+        console.log("IZZIT TRUE:" + )
 
         // Prevent user from creating a blank post
         if (!$scope.title || $scope.title === '') {
             return;
         }
 
-        if($scope.msg !== null || typeof $scope.msg !== 'undefined') {
+        if($scope.msg !== null && typeof $scope.msg !== 'undefined') {
             posts.create({
                 title: $scope.title,
                 graphType: $state.$current.name,
