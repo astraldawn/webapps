@@ -2,11 +2,20 @@
     <div class="page-header">
         <h3>
             {{post.title}}
-
-            <div id="nodeGraph" class="leftGraph"></div>
-            <div id="compareNodeGraph" class="rightGraph"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="nodeGraph" class="leftGraph"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="compareNodeGraph" class="rightGraph"></div>
+                </div>
+            </div>
 
             <hr />
+
+            <form ng-submit="deletePost()" ng-show="userMatch()">
+                <button type="submit" class="btn btn-primary">Delete post</button>
+            </form>
 
             <a href='#/view'>Go back</a>
         </h3>
