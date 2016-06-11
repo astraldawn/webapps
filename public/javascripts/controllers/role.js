@@ -95,6 +95,19 @@ function RoleCtrl($rootScope, $scope, $http) {
         });
     }
 
+    function broadcastData() {
+        var broadcastInfo = {};
+
+        broadcastInfo.leftSubCat = $scope.role.selected;
+        broadcastInfo.rightSubCat = $scope.compareRole.selected;
+        broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
+        broadcastInfo.leftTo = $scope.leftGraphDateTo;
+        broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
+        broadcastInfo.rightTo = $scope.rightGraphDateTo;
+
+        $rootScope.$broadcast('saveGraph', broadcastInfo);
+    }
+
     function generateData(role, graphID) {
         var emailUrl;
 
@@ -226,16 +239,7 @@ function RoleCtrl($rootScope, $scope, $http) {
                 });
 
             // Broadcast to root scope
-            var broadcastInfo = {};
-            broadcastInfo.leftSubCat = $scope.role.selected;
-            broadcastInfo.rightSubCat = $scope.compareRole.selected;
-            broadcastInfo.leftFrom = $scope.leftGraphDateFrom;
-            broadcastInfo.leftTo = $scope.leftGraphDateTo;
-            broadcastInfo.rightFrom = $scope.rightGraphDateFrom;
-            broadcastInfo.rightTo = $scope.rightGraphDateTo;
-
-            $rootScope.$broadcast('saveGraph', broadcastInfo);
-
+            broadcastData();
 
             // Text
             // node.append("text")
