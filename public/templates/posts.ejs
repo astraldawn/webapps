@@ -25,6 +25,10 @@
         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
         {{comment.upvotes}} - by <a href="#/users/{{comment.author}}">{{comment.author}}</a>
 
+        <form ng-submit="deleteComment(comment)" ng-show="userMatch()">
+            <button type="submit" class="btn btn-primary">Delete Comment</button>
+        </form>
+
     <span style="font-size:20px; margin-left:10px;">
         {{comment.body}}
     </span>

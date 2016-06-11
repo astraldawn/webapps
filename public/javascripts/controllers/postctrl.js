@@ -78,11 +78,17 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
     $scope.deletePost = function () {
         posts.delete(post._id).success(function() {
             $state.go('postview');
-        })
+        });
     };
 
     $scope.incrementUpvotes = function (comment) {
         posts.upvoteComment(post, comment);
+    };
+
+    $scope.deleteComment = function (comment) {
+        posts.deleteComment(post, comment).success(function (){
+            $state.go($state.current, {}, {reload: true}); //second parameter is for $stateParams
+        });
     };
 
     function generateData(cat, graphID, fromDate, toDate) {
@@ -220,6 +226,5 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
         });
     }
 }
-
 
 

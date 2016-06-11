@@ -132,7 +132,7 @@ router.get('/:role/:startdate/:enddate', function (req, res) {
 
     var min_weight = 2;
     var threshold = 1;
-    var max_users = 20;
+    var max_users = 100;
 
     /* Scale possibility of each query running to the input size */
     if (len > max_users) {
