@@ -64,23 +64,9 @@ router.get('/:post', function (req, res) {
     });
 });
 
-/* Delete a post */
-router.param('postdelete', function (req, res, next, id) {
-    var query = Post.findById(id);
-
-    query.exec(function (err, post) {
-        if (err) {
-            return next(err);
-        }
-        if (!post) {
-            return next(new Error('cannot find post'));
-        }
-        post.remove();
-        return next();
-    });
-});
-
-router.delete('/:postdelete', function (req, res) {
+/* Delete post */
+router.delete('/:post', function (req, res) {
+    req.post.remove();
     res.json(null);
 });
 
@@ -138,6 +124,12 @@ router.put('/:post/comments/:comment/upvote', auth, function (req, res, next) {
         }
         res.json(comment);
     });
+});
+
+/* Delete comment */
+router.delete('/:post/comments/:comment', function (req, res, next) {
+    req.comment.remove();
+    res.json(null);
 });
 
 module.exports = router;

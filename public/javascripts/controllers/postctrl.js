@@ -39,4 +39,10 @@ function PostsCtrl($scope, $state, posts, post, auth) {
     $scope.incrementUpvotes = function (comment) {
         posts.upvoteComment(post, comment);
     };
+
+    $scope.deleteComment = function (comment) {
+        posts.deleteComment(post, comment).success(function (){
+            $state.go($state.current, {}, {reload: true}); //second parameter is for $stateParams
+        });
+    }
 }
