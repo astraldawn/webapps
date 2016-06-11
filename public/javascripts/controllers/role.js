@@ -24,7 +24,6 @@ function RoleCtrl($scope, $http) {
             function (response) {
                 $scope.availableRole = response.data;
                 console.log(response);
-                alert($scope.availableRole);
             },
             function () {
                 console.log('Error');
