@@ -92,6 +92,7 @@ router.param('role', function (req, res, next, role) {
             }
         }, function (err, result) {
             req.id = role;
+            result.roles.sort();
             req.result = result;
             req.startDate = result.startDate[0].date;
             req.endDate = result.endDate[0].date;
