@@ -24,6 +24,7 @@ function RoleCtrl($scope, $http) {
             function (response) {
                 $scope.availableRole = response.data;
                 console.log(response);
+                alert($scope.availableRole);
             },
             function () {
                 console.log('Error');
@@ -221,7 +222,7 @@ function RoleCtrl($scope, $http) {
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
                 .text(function (d) {
-                    var desc = $scope.availableRole[d - 1] || "External";
+                    var desc = $scope.availableRole[d] || "External";
                     return desc;
                 });
 

@@ -220,7 +220,7 @@ function DeptCtrl($scope, $http) {
                 .attr("dy", ".35em")
                 .style("text-anchor", "end")
                 .text(function (d) {
-                    var desc = $scope.availableDept[d - 1] || "External";
+                    var desc = $scope.availableDept[d] || "External";
                     return desc;
                 });
 

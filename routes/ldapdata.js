@@ -162,6 +162,8 @@ router.get('/:role/:startdate/:enddate', function (req, res) {
         roleMap[role] = i;
     }
 
+    console.log(result.roles);
+
     async.parallel(
         aggregatefuncs,
         function (err, results) {
