@@ -29,15 +29,19 @@
     <hr />
     
     <form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px">
-        <h3>Start a new discussion</h3>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Title" ng-model="title">
+        <div class="row">
+            <div class="col-md-10">
+                <span class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Start a new discussion!"
+                           ng-model="title">
+                </span>
+            </div>
+            <div class="col-md-2 text-right">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
         </div>
-
-        <!-- Add list of departments / roles / start date / end date -->
-
-        <button type="submit" class="btn btn-primary">Post</button>
     </form>
 
     <div ng-hide="isLoggedIn()">

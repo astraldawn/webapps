@@ -2,14 +2,29 @@
  * Created by mark on 12/05/16.
  */
 
-var app = angular.module('webapps', ['ui.router', 'ui.select', 'ngSanitize', 'fullPage.js', 'ngMaterial']);
+var app = angular.module('webapps', ['ui.router', 'ui.select', 'ngSanitize', 'fullPage.js', 'ngMaterial', 'ngNotificationsBar']);
 
-config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', 'notificationsConfigProvider'];
 
 angular.module('webapps')
     .config(config);
 
-function config($stateProvider, $urlRouterProvider, $locationProvider) {
+function config($stateProvider, $urlRouterProvider, $locationProvider, notificationsConfigProvider) {
+    // auto hide
+    notificationsConfigProvider.setAutoHide(true);
+
+    // delay before hide
+    notificationsConfigProvider.setHideDelay(1000);
+
+    // support HTML
+    notificationsConfigProvider.setAcceptHTML(false);
+
+    // Set an animation for hiding the notification
+    notificationsConfigProvider.setAutoHideAnimation('fadeOutNotifications');
+
+    // delay between animation and removing the nofitication
+    notificationsConfigProvider.setAutoHideAnimationDelay(1000);
+
     $stateProvider.state('home', {
         url: '/home',
         views: {

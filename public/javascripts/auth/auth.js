@@ -62,27 +62,31 @@ function auth($http, $window) {
     return auth;
 }
 
-AuthCtrl.$inject = ['$scope', '$state', 'auth'];
+AuthCtrl.$inject = ['$scope', '$state', 'auth', 'notifications'];
 
 angular.module('webapps')
     .controller('AuthCtrl', AuthCtrl);
 
 // Authentication controller
-function AuthCtrl($scope, $state, auth) {
+function AuthCtrl($scope, $state, auth, notifications) {
     $scope.user = {};
 
     $scope.register = function () {
         auth.register($scope.user).error(function (error) {
-            $scope.error = error;
+            // $scope.error = error;
+            notifications.showError({message:error.message});
         }).then(function () {
+            notifications.showSuccess({message:"Registration successful"});
             $state.go('home'); // If no error, send to home
         });
     };
 
     $scope.logIn = function () {
         auth.logIn($scope.user).error(function (error) {
-            $scope.error = error;
+            // $scope.error = error;
+            notifications.showError({message:error.message});
         }).then(function () {
+            notifications.showSuccess({message:"Login successful"});
             $state.go('home');
         });
     };
