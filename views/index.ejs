@@ -46,7 +46,14 @@
     <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline-min.js"></script>
 
     <!-- Graph -->
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="../stylesheets/graph.css" rel="stylesheet">
+
+    <!-- Notifications -->
+    <script src="/vendor/ngNotificationsBar.min.js"></script>
+    <link rel="stylesheet" href="/vendor/ngNotificationsBar.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
     <style>
         .glyphicon-thumbs-up {
@@ -92,6 +99,7 @@
 </nav>
 
 <div class="container-fluid">
+    <notifications-bar class="notifications"></notifications-bar>
     <div class="row">
         <!-- Allows for multiple named views -->
         <div class="col-md-12" ui-view="main"></div>

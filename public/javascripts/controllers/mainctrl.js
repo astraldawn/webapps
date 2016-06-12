@@ -2,12 +2,12 @@
  * Created by mark on 27/05/16.
  */
 
-MainCtrl.$inject = ['$scope', 'posts', 'auth', '$state'];
+MainCtrl.$inject = ['$scope', 'posts', 'auth', '$state', 'notifications'];
 
 angular.module('webapps')
     .controller('MainCtrl', MainCtrl);
 
-function MainCtrl($scope, posts, auth, $state) {
+function MainCtrl($scope, posts, auth, $state, notifications) {
     $scope.posts = posts.posts;
     $scope.isLoggedIn = auth.isLoggedIn;
 
@@ -18,6 +18,7 @@ function MainCtrl($scope, posts, auth, $state) {
     $scope.addPost = function () {
         // Prevent user from creating a blank post
         if (!$scope.title || $scope.title === '') {
+            notifications.showError({message:"Please specify a title"});
             return;
         }
 
@@ -32,10 +33,14 @@ function MainCtrl($scope, posts, auth, $state) {
                 rightFrom: $scope.msg.rightFrom,
                 rightTo: $scope.msg.rightTo,
                 time: new Date()
+            }).success(function(){
+                notifications.showSuccess({message:"Post created"});
             });
         } else {
             posts.create({
                 title: $scope.title
+            }).success(function(){
+                notifications.showSuccess({message:"Post created"});
             });
         }
 

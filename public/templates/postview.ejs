@@ -1,20 +1,24 @@
 <br/>
 <div class="container-fluid col-md-8 col-md-offset-2">
     <h2>Discussions</h2>
-    <hr />
+    <hr/>
     <div ng-repeat="post in posts | orderBy:'-time'">
         <!-- ng-hide hides elements when angular expression evaluates to true -->
         <h4>
-        <span>
-        <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
-        item in the array -->
-        <a href="#/posts/{{post._id}}">{{post.title}}</a>
-        </span>
+            <div class="row">
+                <div class="col-md-6">
+                    <span>
+                    <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
+                    item in the array -->
+                    <a href="#/posts/{{post._id}}">{{post.title}}</a>
+                    </span>
+                </div>
 
-        <span ng-show="post.author">
-        posted by <a href="#/users/{{post.author}}">{{post.author}}</a> at
-            {{post.time | date:"dd-MM-yyyy:H-mm-ss"}}
-        </span>
+                <div class="col-md-6 text-right">
+                    <span class="text-info">{{post.author}}</a></span>
+                    <span class="text-muted small">{{post.time | date:"dd-MM-yyyy:H-mm-ss"}}</span>
+                </div>
+            </div>
         </h4>
     </div>
 

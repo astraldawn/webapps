@@ -2,12 +2,12 @@
  * Created by mark on 27/05/16.
  */
 
-PostsCtrl.$inject = ['$scope', '$state', 'posts', 'post', 'auth', '$http'];
+PostsCtrl.$inject = ['$scope', '$state', 'posts', 'post', 'auth', '$http', 'notifications'];
 
 angular.module('webapps')
     .controller('PostsCtrl', PostsCtrl);
 
-function PostsCtrl($scope, $state, posts, post, auth, $http) {
+function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
     $scope.post = post;
     $scope.isLoggedIn = auth.isLoggedIn;
     $scope.availableType = [];
@@ -17,8 +17,8 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
 
     var leftGraph = '#nodeGraph';
     var rightGraph = '#compareNodeGraph';
-    
-    if($scope.post !== null && typeof $scope.post !== 'undefined') {
+
+    if ($scope.post !== null && typeof $scope.post !== 'undefined') {
         $http.get(typeUrl).then(
             function (response) {
                 $scope.availableType = response.data;
@@ -28,19 +28,20 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
             }
         );
 
-        if($scope.post.leftSubCat !== null && typeof $scope.post.leftSubCat !== 'undefined') {
-            generateData($scope.post.leftSubCat, leftGraph, 
+        if ($scope.post.leftSubCat !== null && typeof $scope.post.leftSubCat !== 'undefined') {
+            generateData($scope.post.leftSubCat, leftGraph,
                 $scope.post.leftFrom, $scope.post.leftTo);
         }
 
-        if($scope.post.rightSubCat !== null && typeof $scope.post.rightSubCat !== 'undefined') {
+        if ($scope.post.rightSubCat !== null && typeof $scope.post.rightSubCat !== 'undefined') {
             generateData(post.rightSubCat, rightGraph,
                 $scope.post.rightFrom, $scope.post.rightTo);
         }
     }
 
     $scope.addComment = function () {
-        if ($scope.body === '') {
+        if (!$scope.body || $scope.body === '') {
+            notifications.showError({message:"Please specify some text for comment"});
             return;
         }
 
@@ -60,7 +61,7 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
     };
 
     $scope.deletePost = function () {
-        posts.delete(post._id).success(function() {
+        posts.delete(post._id).success(function () {
             $state.go('postview');
         });
     };
@@ -70,13 +71,15 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
     };
 
     $scope.deleteComment = function (comment) {
-        posts.deleteComment(post, comment).success(function (){
-            $state.go($state.current, {}, {reload: true}); //second parameter is for $stateParams
+        posts.deleteComment(post, comment).success(function () {
+            // $state.go($state.current, {}, {reload: true}); //second parameter is for $stateParams
+            var index = $scope.post.comments.indexOf(comment);
+            $scope.post.comments.splice(index, 1);
         });
     };
 
     function generateData(cat, graphID, fromDate, toDate) {
-        
+
         var url = dataUrl + cat + "/" + fromDate + "/" + toDate;
         console.log("URL:" + url);
 

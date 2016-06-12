@@ -30,18 +30,15 @@
     <div ng-repeat="comment in post.comments | orderBy:'-time'">
         <div class="row">
             <div class="col-md-10">
-                Posted by <a href="#/users/{{comment.author}}">{{comment.author}}</a> at
-                {{comment.time | date:"dd-MM-yyyy:H-mm-ss"}}
-
-
+                <span class="text-info">{{comment.author}}</span>
+                <span class="text-muted small">[{{comment.time | date:"dd-MM-yyyy:H-mm-ss"}}]</span>
                 <span style="margin-left:5px;">
                     {{comment.body}}
                 </span>
+
             </div>
             <div class="col-md-2 text-right">
-                <form ng-submit="deleteComment(comment)" ng-show="userMatch()">
-                    <button type="submit" class="dustbin-icon">X</button>
-                </form>
+                <i ng-show="userMatch()" ng-click="deleteComment(comment)" class="material-icons">delete</i>
             </div>
         </div>
     </div>
@@ -49,15 +46,19 @@
     <hr/>
 
     <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
-        <h4>Add a new comment</h4>
-
-        <div class="form-group">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Comment"
-                   ng-model="body">
+        <div class="row">
+            <div class="col-md-10">
+                <span class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Add a new comment"
+                           ng-model="body">
+                </span>
+            </div>
+            <div class="col-md-2 text-right">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Post</button>
     </form>
 
     <div ng-hide="isLoggedIn()">
