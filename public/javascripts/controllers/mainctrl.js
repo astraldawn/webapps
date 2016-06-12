@@ -30,7 +30,8 @@ function MainCtrl($scope, posts, auth, $state) {
                 leftFrom: $scope.msg.leftFrom,
                 leftTo: $scope.msg.leftTo,
                 rightFrom: $scope.msg.rightFrom,
-                rightTo: $scope.msg.rightTo
+                rightTo: $scope.msg.rightTo,
+                time: new Date()
             });
         } else {
             posts.create({

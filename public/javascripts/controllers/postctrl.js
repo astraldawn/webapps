@@ -46,7 +46,8 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
 
         posts.addComment(post._id, {
             body: $scope.body,
-            author: 'user'
+            author: 'user',
+            time: new Date()
         }).success(function (comment) {
             $scope.post.comments.push(comment);
         });
