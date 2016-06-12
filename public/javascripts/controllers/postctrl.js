@@ -22,21 +22,23 @@ function PostsCtrl($scope, $state, posts, post, auth, $http) {
         $http.get(typeUrl).then(
             function (response) {
                 $scope.availableType = response.data;
+
+                if($scope.post.leftSubCat !== null && typeof $scope.post.leftSubCat !== 'undefined') {
+                    generateData($scope.post.leftSubCat, leftGraph, 
+                        $scope.post.leftFrom, $scope.post.leftTo);
+                }
+
+                if($scope.post.rightSubCat !== null && typeof $scope.post.rightSubCat !== 'undefined') {
+                    generateData(post.rightSubCat, rightGraph,
+                        $scope.post.rightFrom, $scope.post.rightTo);
+        }
             },
             function () {
                 console.log('Error');
             }
         );
 
-        if($scope.post.leftSubCat !== null && typeof $scope.post.leftSubCat !== 'undefined') {
-            generateData($scope.post.leftSubCat, leftGraph, 
-                $scope.post.leftFrom, $scope.post.leftTo);
-        }
 
-        if($scope.post.rightSubCat !== null && typeof $scope.post.rightSubCat !== 'undefined') {
-            generateData(post.rightSubCat, rightGraph,
-                $scope.post.rightFrom, $scope.post.rightTo);
-        }
     }
 
     $scope.addComment = function () {
