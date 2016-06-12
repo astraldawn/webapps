@@ -6,3 +6,44 @@ body {
 a {
   color: #00B7FF;
 }
+
+.dustbin-icon {
+        position: relative;
+        top: 12em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 12em;
+        height: 14em;
+        background: linear-gradient(90deg, #333 40%, transparent 40%);
+        background-size: 2.8em;
+        border-bottom: 1.6em solid #333;
+        border-radius: 0 0 1em 1em;
+      }
+      .dustbin-icon:before {
+        content: '';
+        position: absolute;
+        top: -3em;
+        left: -1.5em;
+        width: 14em;
+        height: 2.2em;
+        border: 0.6em solid #333;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+        border-radius: 1em 1em 0 0;
+      }
+      .dustbin-icon:after {
+        content: '';
+        position: absolute;
+        top: -5.1em;
+        left: 3em;
+        width: 5em;
+        height: 1.5em;
+        border-radius: 1em 1em 0 0;
+        border-width: 0.6em;
+        border-color: #333;
+        border-style: solid;
+      }

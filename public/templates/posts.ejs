@@ -27,10 +27,12 @@
 
     </div>
 
-    <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+    <div ng-repeat="comment in post.comments | orderBy:'-time'">
         <div class="row">
             <div class="col-md-10">
-                Posted by <a href="#/users/{{comment.author}}">{{comment.author}}</a> :
+                Posted by <a href="#/users/{{comment.author}}">{{comment.author}}</a> at
+                {{comment.time | date:"dd-MM-yyyy:H-mm-ss"}}
+
 
                 <span style="margin-left:5px;">
                     {{comment.body}}
@@ -38,7 +40,7 @@
             </div>
             <div class="col-md-2 text-right">
                 <form ng-submit="deleteComment(comment)" ng-show="userMatch()">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="dustbin-icon">X</button>
                 </form>
             </div>
         </div>

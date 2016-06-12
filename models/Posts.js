@@ -14,6 +14,7 @@ var PostSchema = new mongoose.Schema({
     leftTo: Date,
     rightFrom: Date,
     rightTo: Date,
+    time: Date,
     upvotes: {type: Number, default: 0},
     comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
 });
