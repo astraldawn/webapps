@@ -1,30 +1,19 @@
-<br />
+<br/>
 <div class="container-fluid col-md-8 col-md-offset-2">
 
     <div ng-repeat="post in posts | orderBy:'-upvotes'">
-        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
-        {{post.upvotes}}
-
         <!-- ng-hide hides elements when angular expression evaluates to true -->
-        <span style="font-size:20px; margin-left:10px;">
-        <a ng-show="post.link" href="{{post.link}}">
-        {{post.title}}
-        </a>
-
-        <span ng-hide="post.link">
-        {{post.title}}
+        <h4>
+        <span>
+        <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
+        item in the array -->
+        <a href="#/posts/{{post._id}}">{{post.title}}</a>
         </span>
 
         <span ng-show="post.author">
         posted by <a href="#/users/{{post.author}}">{{post.author}}</a>
         </span>
-
-        <span>
-        <!-- When iterating over an array (posts), ng-repeat makes $index variable available along with each
-        item in the array -->
-        <a href="#/posts/{{post._id}}">Comments</a>
-        </span>
-    </span>
+        </h4>
     </div>
 
     <!--<form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px">-->
