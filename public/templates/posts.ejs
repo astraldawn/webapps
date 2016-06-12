@@ -42,22 +42,23 @@
                 </form>
             </div>
         </div>
-
-        <hr/>
-
-        <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
-            <h4>Add a new comment</h4>
-
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Comment"
-                       ng-model="body">
-            </div>
-            <button type="submit" class="btn btn-primary">Post</button>
-        </form>
-
-        <div ng-hide="isLoggedIn()">
-            <h5>Please kindly login before adding a comment</h5>
-        </div>
     </div>
+
+    <hr/>
+
+    <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
+        <h4>Add a new comment</h4>
+
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Comment"
+                   ng-model="body">
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+
+    <div ng-hide="isLoggedIn()">
+        <h5>Please kindly login before adding a comment</h5>
+    </div>
+</div>
