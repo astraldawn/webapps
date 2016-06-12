@@ -47,5 +47,6 @@ module.exports = function (grunt) {
 
     //register grunt default task
     grunt.registerTask('default', ['ngAnnotate', 'concat', 'uglify']);
-    grunt.registerTask('test', ['jshint', 'jasmine_node']);
+    grunt.registerTask('test', ['jshint']);
+    grunt.registerTask('jasmine', ['jasmine_node']);
 };
