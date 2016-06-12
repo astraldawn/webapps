@@ -28,16 +28,24 @@ module.exports = function (grunt) {
         },
         jshint: {
             all: ['./public/javascripts/**/*.js', './routes/*.js', './models/*.js']
+        },
+        jasmine_node: {
+            options: {
+                forceExit: true
+            },
+            all: []
         }
-    });
+    })
+    ;
 
     //load grunt tasks
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-jasmine-node');
 
     //register grunt default task
     grunt.registerTask('default', ['ngAnnotate', 'concat', 'uglify']);
-    grunt.registerTask('test', ['jshint']);
+    grunt.registerTask('test', ['jshint', 'jasmine_node']);
 };

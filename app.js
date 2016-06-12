@@ -91,4 +91,13 @@ app.use(function (err, req, res, next) {
     });
 });
 
+var server = app.listen(80, function(){
+    console.log("Starting server on port 80");
+});
+
+app.closeServer = function(){
+    server.close();
+    console.log("Closing server");
+};
+
 module.exports = app;
