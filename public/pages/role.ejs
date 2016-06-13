@@ -24,9 +24,20 @@
                     {{role}}
                 </ui-select-choices>
             </ui-select>
-
-            <br/>
-
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            <ui-select ng-model="compareRole.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
+                       on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
+                <ui-select-match placeholder="Select role...">{{compareRole.selected}}</ui-select-match>
+                <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
+                                   repeat="role in availableRole | filter:$select.search">
+                    {{role}}
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div id="nodeGraph" class="leftGraph"></div>
             <div ng-cloak="" class="graphdatepicker">
                 <md-content>
@@ -43,19 +54,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-md-offset-2">
-
-            <ui-select ng-model="compareRole.selected" id="searchBar" class="rightGraph" class="compareSearchBar"
-                       on-select="reloadCompareGraph()" theme="bootstrap" reset-search-input="false">
-                <ui-select-match placeholder="Select role...">{{compareRole.selected}}</ui-select-match>
-                <ui-select-choices refresh="funcAsync($select.search)" position='down' refresh-delay="0"
-                                   repeat="role in availableRole | filter:$select.search">
-                    {{role}}
-                </ui-select-choices>
-            </ui-select>
-
-            <br/>
-
+        <div class="col-md-6">
             <div id="compareNodeGraph" class="rightGraph"></div>
             <div ng-cloak="" class="graphdatepicker">
                 <md-content>
