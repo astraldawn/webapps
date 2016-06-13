@@ -118,6 +118,10 @@ function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
         return $scope.post.author === auth.currentUser();
     };
 
+    $scope.userMatchComment = function (comment) {
+        return comment.author === auth.currentUser();
+    }
+
     $scope.deletePost = function () {
         posts.delete(post._id).success(function () {
             $state.go('postview');
