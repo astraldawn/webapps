@@ -95,13 +95,7 @@ function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
                 }
             }
             else {
-                seconds = Math.ceil(timeDiff);
-                if (seconds === 1) {
-                    return "1 second ago";
-                }
-                else {
-                    return seconds + " seconds ago";
-                }
+                return "A few seconds ago";
             }
         }
         else {
