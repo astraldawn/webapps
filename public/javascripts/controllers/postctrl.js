@@ -105,7 +105,12 @@ function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
             }
         }
         else {
-            return dateDiff + " days ago";
+			if (dateDiff === 1) {
+				return "1 day ago";
+			}
+			else {
+				return dateDiff + " days ago";
+			}
         }
     };
 
