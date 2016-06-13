@@ -120,7 +120,7 @@ function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
 
     $scope.userMatchComment = function (comment) {
         return comment.author === auth.currentUser();
-    }
+    };
 
     $scope.deletePost = function () {
         posts.delete(post._id).success(function () {
