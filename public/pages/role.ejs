@@ -1,3 +1,7 @@
+<head>
+    <link href="../stylesheets/graphdatepick.css" rel="stylesheet">
+</head>
+
 <div class="container-fluid" id="sizeref">
     <div class="col-md-8 col-md-offset-2">
         <h3 class="text-center">Behaviour Analysis - Role</h3>
@@ -36,10 +40,14 @@
             </ui-select>
         </div>
     </div>
+    
+    <br>
+    
     <div class="row">
         <div class="col-md-6">
             <div id="nodeGraph" class="leftGraph"></div>
-            <div ng-cloak="" class="graphdatepicker">
+            <div class="centerBlock">
+                <div ng-cloak="" class="graphdatepicker">
                 <md-content>
                     <h4 ng-hide='leftGraphDisplay'>From:</h4>
                     <md-datepicker ng-model="leftGraphDateFrom" md-placeholder="Date" md-min-date="leftGraphMinDate"
@@ -51,12 +59,14 @@
                                    md-max-date="leftGraphMaxDate" ng-hide='leftGraphDisplay'
                                    ng-change='filterLeftGraphByDate()'></md-datepicker>
                 </md-content>
+                </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div id="compareNodeGraph" class="rightGraph"></div>
-            <div ng-cloak="" class="graphdatepicker">
+            <div class="centerBlock">
+                <div ng-cloak="" class="graphdatepicker">
                 <md-content>
                     <h4 ng-hide='rightGraphDisplay'>From:</h4>
                     <md-datepicker ng-model="rightGraphDateFrom" md-placeholder="Date" md-min-date="rightGraphMinDate"
@@ -68,6 +78,7 @@
                                    md-max-date="rightGraphMaxDate" ng-hide='rightGraphDisplay'
                                    ng-change='filterRightGraphByDate()'></md-datepicker>
                 </md-content>
+                </div>
             </div>
         </div>
     </div>
