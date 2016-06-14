@@ -63,49 +63,40 @@ function PostsCtrl($scope, $state, posts, post, auth, $http, notifications) {
             return new Date(parts[0], parts[1]-1, parts[2], parts[3],
                 parts[4], parts[5], parts[6]);
         })();
-                
-        if (currTime < commentTime) {
-            currTime.setDate(currTime.getUTCDate() + 1);
-        }
-                
-        var dateDiff = (currTime.getYear() - commentTime.getYear())*365 +
-                (currTime.getMonth() - commentTime.getMonth())*12 +
-                currTime.getDate() - commentTime.getDate();
-                        
-        if (dateDiff === 0) {
-            timeDiff = currTime.getTime() - commentTime.getTime();
-            timeDiff = (timeDiff / 1000) - 3600;
-            // Why do I have to subtract 3600???
-            if (timeDiff >= 3600) {
-                hours = Math.floor(timeDiff / 3600);
-                if (hours === 1) {
-                    return "1 hour ago";
-                }
-                else {
-                    return hours + " hours ago";
-                }
-            }
-            else if (timeDiff >= 60) {
-                minutes = Math.floor(timeDiff / 60);
-                if (minutes === 1) {
-                    return "1 minute ago";
-                }
-                else {
-                    return minutes + " minutes ago";
-                }
+        
+        var timeDiff = currTime - commentTime;
+        timeDiff = (timeDiff / 1000) - 3600;
+        
+        if (timeDiff >=  86400) {
+            days = Math.floor(timeDiff / 86400);
+            if (days === 1) {
+                return "Yesterday";
             }
             else {
-                return "A few seconds ago";
+                return days + " days ago";
+            }
+        }
+        else if (timeDiff >= 3600) {
+            hours = Math.floor(timeDiff / 3600);
+            if (hours === 1) {
+                return "One hour ago";
+            }
+            else {
+                return hours + " hours ago";
+            }
+        }
+        else if (timeDiff >= 60) {
+            minutes = Math.floor(timeDiff / 60);
+            if (minutes === 1) {
+                return "One minute ago";
+            }
+            else {
+                return minutes + " minutes ago";
             }
         }
         else {
-			if (dateDiff === 1) {
-				return "1 day ago";
-			}
-			else {
-				return dateDiff + " days ago";
-			}
-        }
+            return "A few seconds ago";
+        }   
     };
 
     $scope.userMatch = function () {
